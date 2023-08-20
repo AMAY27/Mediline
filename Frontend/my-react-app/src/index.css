@@ -1,0 +1,22 @@
+@import 'tailwindcss/base';
+@import 'tailwindcss/components';
+@import 'tailwindcss/utilities';
+
+
+.caraousel-userdash img{
+    width: 100%;
+    height: 20rem;
+    object-fit: cover;
+}
+.caraousel-userdash{
+    height: 20rem;
+    border-radius: 15px;
+}
+.caraousel-div{
+    height: 20rem;
+    background-color: hsl(60, 100%, 75%);
+    border-radius: 15px;
+}
+.caraousel-div img{
+    height: 10rem;
+}
