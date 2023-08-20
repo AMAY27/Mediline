@@ -4,17 +4,18 @@ import { Link, Navigate, useNavigate } from 'react-router-dom';
 import {connect} from 'react-redux'
 import {login} from '../actions/auth'
 import { checkauthenticated, load_user } from '../actions/auth'
+
+import { useDispatch } from 'react-redux';
 //import './loginStyles.css'; // Import the loginStyles.css file
 
 
 const Loginuser = ({login, isAuthenticated}) => {
-
-
+  const dispatch = useDispatch()
   useEffect(()=>{
-    checkauthenticated();
-    load_user();
+    dispatch(checkauthenticated())
+    dispatch(load_user())
   },[])
-  
+
   const[values,setValues] = useState({
     email:'',
     password:''
@@ -36,7 +37,6 @@ const Loginuser = ({login, isAuthenticated}) => {
   }
   return (
     <div>
-      <Navbar/>
       <div className='md:h-screen md:justify-center flex items-center flex-col'>
         <div className='block md:justify-center md:flex md:items-center flex-col'>
           <div className='block m-2'>
@@ -87,7 +87,7 @@ const Loginuser = ({login, isAuthenticated}) => {
     </div>
   )
 }
-const mapStatetoProps = state =>({
+const mapStatetoProps = (state) =>({
   isAuthenticated: state.auth.isAuthenticated
 })
 

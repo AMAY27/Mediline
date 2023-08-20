@@ -16,7 +16,7 @@ function App() {
     <Provider store={store}>
       <Router>
       <Routes>
-        <Route path='/' element={<Loginuser />}/>
+        <Route path='/' element={<Home />}/>
         <Route path='/loginuser' element={<Loginuser/>}/>
         <Route path='/register' element = {<Registeruser/>}/>
         <Route path='/reset_password' element={<Resetpass/>}/>   

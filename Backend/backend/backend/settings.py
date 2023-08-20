@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 """
 
 from pathlib import Path
+from datetime import timedelta
 #from decouple import config
 import os
 
@@ -81,7 +82,9 @@ REST_FRAMEWORK = {
 }
 
 SIMPLE_JWT = {
-   'AUTH_HEADER_TYPES': ('JWT',),
+    'AUTH_HEADER_TYPES': ('JWT',),
+    "ACCESS_TOKEN_LIFETIME": timedelta(minutes=60),
+    "REFRESH_TOKEN_LIFETIME": timedelta(days=1),
 }
 
 DJOSER = {
@@ -92,7 +95,7 @@ DJOSER = {
     'SEND_CONFIRMATION_EMAIL' : True,
     'SET_PASSWORD_RETYPE' : True,
     'USERNAME_RESET_CONFIRM_URL' : '/email/reset/confirm/{uid}/{token}',
-    'PASSWORD_RESET_CONFIRM_URL' : '/password/reset/confirm/{uid}/{token}',
+    'PASSWORD_RESET_CONFIRM_URL' : 'password/reset/confirm/{uid}/{token}',
     'ACTIVATION_URL' : '/activate/{uid}/{token}',
     'SEND_ACTIVATION_EMAIL' : True,
     'SERIALIZERS' : {

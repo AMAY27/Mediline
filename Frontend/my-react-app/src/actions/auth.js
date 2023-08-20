@@ -7,10 +7,15 @@ import {
     LOAD_USER_SUCCESS,
     AUTHENTICATED_SUCCESS,
     AUTHENTICATED_FAIL,
+    PASSWORD_RESET_SUCCESS,
+    PASSWORD_RESET_FAIL,
+    PASSWORD_RESET_CONFIRM_SUCCESS,
+    PASSWORD_RESET_CONFIRM_FAIL,
     LOGOUT
 } from './types'
 
 export const checkauthenticated = () => async dispatch => {
+    console.log('check auth called');
     if(localStorage.getItem('access')){
         const config = {
             headers :{
@@ -26,6 +31,7 @@ export const checkauthenticated = () => async dispatch => {
                 dispatch({
                     type: AUTHENTICATED_SUCCESS
                 })
+                console.log('token authenticated');
             }else{
                 dispatch({
                     type: AUTHENTICATED_FAIL
@@ -35,6 +41,7 @@ export const checkauthenticated = () => async dispatch => {
             dispatch({
                 type: AUTHENTICATED_FAIL
             })
+            console.log('token auth failed');
         }
     }else{
         dispatch({
@@ -91,6 +98,45 @@ export const login = (email, password)=> async dispatch => {
         console.log(error)
     }
 };
+
+export const reset_password = (email)=> async dispatch =>{
+    const config = {
+        headers :{
+            'Content-Type' : 'application/json'
+        }
+    };
+
+    const body = JSON.stringify({ email })
+    try {
+        await axios.post('http://localhost:8000/auth/users/reset_password/',body,config)
+        dispatch({
+            type: PASSWORD_RESET_SUCCESS
+        })
+    } catch (error) {
+        dispatch({
+            type: PASSWORD_RESET_FAIL
+        })
+    }
+}
+
+export const reset_password_confirm = (uid,token,new_pass,re_new_pass) => async dispatch =>{
+    const config = {
+        headers :{
+            'Content-Type' : 'application/json'
+        }
+    };
+    const body = JSON.stringify({ uid,token,new_pass,re_new_pass })
+    try {
+        await axios.post('http://localhost:8000/auth/users/reset_password_confirm/',body,config)
+        dispatch({
+            type: PASSWORD_RESET_CONFIRM_SUCCESS
+        })
+    } catch (error) {
+        dispatch({
+            type: PASSWORD_RESET_CONFIRM_FAIL
+        })
+    }
+}
 
 export const logout = () => dispatch => {
         dispatch({

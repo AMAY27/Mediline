@@ -4,17 +4,29 @@ import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import { Carousel } from 'react-responsive-carousel';
 import 'react-responsive-carousel/lib/styles/carousel.min.css';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import { checkauthenticated, load_user } from '../actions/auth';
+import { connect } from 'react-redux';
+import { useDispatch } from 'react-redux';
+import { Link, Navigate, useNavigate } from 'react-router-dom';
+import { logout } from '../actions/auth'
 
-const Dasboarduser = () => {
+const Dasboarduser = ({isAuthenticated}) => {
+
+    const dispatch = useDispatch()
+    useEffect(()=>{
+        dispatch(checkauthenticated())
+        dispatch(load_user())
+    },[])
     const timeSlots = ['Select','9:00 am', '10:00 am', '11:00 am', '12:00 pm', '1:00 pm', '2:00 pm'];
     const appointmenttype = ['Select','Test', 'Consultation', 'Health Checkup']
     const [selectedDate, setSelectedDate] = useState(null);
     const [selectedTimeSlot, setSelectedTimeSlot] = useState(timeSlots[0]);
     const [msg , setmsg] = useState('')
+    const navigate = useNavigate();
 
     const handleDateChange = date => {
-    setSelectedDate(date);
+        setSelectedDate(date);
     };
 
   const handleTimeSlotChange = event => {
@@ -29,6 +41,9 @@ const Dasboarduser = () => {
     } catch (error) {
         console.log('error in connection',error);
     }
+  }
+  if(!isAuthenticated){
+    navigate('/loginuser')
   }
   return (
     <>
@@ -144,5 +159,8 @@ const Dasboarduser = () => {
     </>
   )
 }
+const mapStatetoProps = (state) =>({
+    isAuthenticated: state.auth.isAuthenticated
+  })
 
-export default Dasboarduser
+export default connect(mapStatetoProps, {logout}, null,{checkauthenticated,load_user})(Dasboarduser);

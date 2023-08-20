@@ -1,8 +1,32 @@
 import React from 'react';
 import { useEffect, useState } from 'react';
 import { disableBodyScroll, enableBodyScroll } from 'body-scroll-lock';
+import { connect, useDispatch } from 'react-redux'
+import { logout } from '../actions/auth'
 
-const Navbar = () => {
+const Navbar = ({logout, isAuthenticated}) => {
+    const GuestauthLinks = () =>{
+      if(isAuthenticated){
+        return(
+          <div className='hidden md:flex items-center space-x-7'>
+            <div className='text-black'>Dashboard</div>
+            <div className='text-black'>Profile</div>
+          </div>
+        )
+      }else{
+        return(
+          <div className='hidden md:flex items-center space-x-7'>
+            <div className='text-black'>Dashboard</div>
+            <div className='text-black'>Profile</div>
+            <button className='text-black' onClick={handleSignIn}>Sign In</button>
+            <button className='text-black'>Register</button>
+          </div>
+        )
+      }
+    }
+    const handleLogout = () =>{
+      logout();
+    }
     const [showMenu, setShowMenu] = useState(false);
     const [isMobile, setIsMobile] = useState(false);
     const [isClickedsignin, setIsclickedsignin] = useState(false);
@@ -22,6 +46,19 @@ const Navbar = () => {
       )
     }
     const NavOverlay = ({ onClose }) => {
+      if (isAuthenticated) {
+        return (
+          <div className='z-10 fixed inset-0 flex justify-center items-center bg-black bg-opacity-50'>
+            <div className='bg-white p-4 rounded-lg'>
+              <div className='text-black'>Dashboard</div>
+              <div className='text-black'>Profile</div>
+              <button className='mt-4 text-black' onClick={onClose}>
+                Close
+              </button>
+            </div>
+          </div>
+        )
+      }else{
         return (
           <div className='z-10 fixed inset-0 flex justify-center items-center bg-black bg-opacity-50'>
             <div className='bg-white p-4 rounded-lg'>
@@ -34,6 +71,7 @@ const Navbar = () => {
             </div>
           </div>
         );
+      }
       };
       useEffect(() => {
         // Disable body scroll when the toggle menu is open
@@ -78,12 +116,13 @@ const Navbar = () => {
       )}
 
       {!isMobile && (
-        <div className='hidden md:flex items-center space-x-7'>
-          <div className='text-black'>Dashboard</div>
-          <div className='text-black'>Profile</div>
-          <button className='text-black' onClick={handleSignIn}>Sign In</button>
-          <button className='text-black'>Register</button>
-        </div>
+        <GuestauthLinks/>
+        // <div className='hidden md:flex items-center space-x-7'>
+        //   <div className='text-black'>Dashboard</div>
+        //   <div className='text-black'>Profile</div>
+        //   <button className='text-black' onClick={handleSignIn}>Sign In</button>
+        //   <button className='text-black'>Register</button>
+        // </div>
       )}
       <div className='hidden md:flex w-8' />
 
@@ -91,7 +130,7 @@ const Navbar = () => {
       <div className='hidden md:flex items-center space-x-2'>
         <span className='text-black font-bold text-2xl text-green-300'>Welcome, User</span>
         <div className='hidden md:flex items-center space-x-2'>
-          <button className='text-black mx-1'>Logout</button>
+          <button className='text-black mx-1' onClick={logout}>Logout</button>
         </div>
       </div>
 
@@ -102,8 +141,10 @@ const Navbar = () => {
   );
   
 };
-
-export default Navbar;
+const mapStatetoProps = state =>({
+  isAuthenticated: state.auth.isAuthenticated
+})
+export default connect(mapStatetoProps, {logout})(Navbar);
 
 
 
