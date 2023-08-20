@@ -8,10 +8,13 @@ import { checkauthenticated, load_user } from '../actions/auth'
 
 
 const Loginuser = ({login, isAuthenticated}) => {
+
+
   useEffect(()=>{
     checkauthenticated();
     load_user();
   },[])
+  
   const[values,setValues] = useState({
     email:'',
     password:''
