@@ -3,7 +3,7 @@ import { Link, Navigate, useNavigate, useParams } from 'react-router-dom';
 import {connect, useDispatch} from 'react-redux'
 import {reset_password_confirm} from '../actions/auth'
 
-const Resetpassconfirm = ({match, reset_password_confirm}) => {
+const Resetpassconfirm = ({ reset_password_confirm }) => {
   const [requestSent, setRequestSent] = useState(false)
   const routeParams = useParams()
   const[values,setValues] = useState({
@@ -21,6 +21,7 @@ const Resetpassconfirm = ({match, reset_password_confirm}) => {
     e.preventDefault()  
     const uid = routeParams.uid
     const token = routeParams.token
+    console.log(values.re_new_pass);
     reset_password_confirm(uid, token, values.new_pass, values.re_new_pass);
     setRequestSent(true)
   }

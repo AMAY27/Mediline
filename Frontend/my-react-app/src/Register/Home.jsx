@@ -3,6 +3,7 @@ import Navbar from '../extras/Navbar'
 import { Navigate, useNavigate, Link } from 'react-router-dom'
 
 const Home = () => {
+  
   return (
     <>
     <Navbar/>
@@ -23,7 +24,7 @@ const Home = () => {
         <div className='md:justify-center flex items-center rounded-lg mt-5 mx-7 bg-green-300 ... p-1 md:w-140 md:mx-5 md:mt-6'><h1 className='text-xl font-bold'>Health subscriptions</h1></div>
         <div className='md:justify-center flex items-center rounded-lg mt-5 mx-7 bg-green-300 ... p-1 md:w-140 md:mx-5  md:h-40 '><h1 className='text-xl font-bold'>Fitness</h1></div>
       </div>
-      <div className='md:h-76 md:my-20 border-2 border-green-300'>
+      <div className='md:h-76 md:my-20 '>
         <div className='grid grid-cols-1 md:grid-cols-2'>
           <div className='md:flex md:justify-center bg-green-300 place-content-center'
             style={{

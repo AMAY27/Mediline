@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import Navbar from '../extras/Navbar';
 import { Link, Navigate, useNavigate } from 'react-router-dom';
 import {connect} from 'react-redux'
 import {login} from '../actions/auth'
