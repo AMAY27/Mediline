@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin
 from django.contrib.auth.base_user import BaseUserManager
+from django.conf import settings
 
 # Create your models here.
 class AppUserManager(BaseUserManager):
@@ -14,7 +15,7 @@ class AppUserManager(BaseUserManager):
         return user
 
 class AppUser(AbstractBaseUser, PermissionsMixin):
-    #user_id = models.AutoField(primary_key=True)
+    #userid = models.UUIDField(primary_key=False, editable=False)
     email = models.EmailField(max_length=255, unique=True)
     name = models.CharField(max_length=255)
     is_active = models.BooleanField(default=True)
@@ -33,3 +34,14 @@ class AppUser(AbstractBaseUser, PermissionsMixin):
     
     def __str__(self):
         return self.email
+
+class Files(models.Model):
+    user_id= models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    type = models.CharField(max_length=255)
+    doc_name = models.CharField(max_length=255)
+    time_created = models.DateTimeField(auto_now_add=True)
+    details = models.CharField(max_length=255)
+    pdf = models.FileField(upload_to='store/pdfs/')
+
+    def __str__(self):
+        return self.pdf
