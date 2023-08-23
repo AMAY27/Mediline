@@ -36,12 +36,15 @@ class AppUser(AbstractBaseUser, PermissionsMixin):
         return self.email
 
 class Files(models.Model):
-    user_id= models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    uid= models.ForeignKey(AppUser, on_delete=models.CASCADE)
     type = models.CharField(max_length=255)
     doc_name = models.CharField(max_length=255)
     time_created = models.DateTimeField(auto_now_add=True)
     details = models.CharField(max_length=255)
     pdf = models.FileField(upload_to='store/pdfs/')
+
+    def user_id(self):
+        return self.uid.id
 
     def __str__(self):
         return self.pdf

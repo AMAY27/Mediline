@@ -3,6 +3,7 @@ from django.contrib.auth import get_user_model
 from rest_framework import serializers
 from .models import Files
 User = get_user_model()
+File = Files
 
 
 class UserCreateSerializer(UserCreateSerializer):
@@ -12,5 +13,5 @@ class UserCreateSerializer(UserCreateSerializer):
 
 class Fileserializer(serializers.ModelSerializer):
     class Meta:
-        model : Files
-        fields = ['id','type','doc_name','time_created','details','pdf','user_id_id']
+        model = File
+        fields = ['id','type','doc_name','time_created','details','pdf','uid']
