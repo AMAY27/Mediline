@@ -69,6 +69,8 @@ export const load_user = ()=> async dispatch => {
                 type: LOAD_USER_SUCCESS,
                 payload: res.data
             })
+            console.log(res.data.id);
+            localStorage.setItem('userid',res.data.id)
         } catch (error) {
             dispatch({
                 type: LOAD_USER_FAIL

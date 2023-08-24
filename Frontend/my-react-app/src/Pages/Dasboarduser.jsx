@@ -10,13 +10,15 @@ import { connect } from 'react-redux';
 import { useDispatch } from 'react-redux';
 import { Link, Navigate, useNavigate } from 'react-router-dom';
 import { logout } from '../actions/auth'
+import axios from 'axios';
 
 const Dasboarduser = ({isAuthenticated}) => {
-
+    const uid = localStorage.getItem('userid')
     const dispatch = useDispatch()
     useEffect(()=>{
         dispatch(checkauthenticated())
         dispatch(load_user())
+        handleGetreports()
     },[])
     const timeSlots = ['Select','9:00 am', '10:00 am', '11:00 am', '12:00 pm', '1:00 pm', '2:00 pm'];
     const appointmenttype = ['Select','Test', 'Consultation', 'Health Checkup']
@@ -42,6 +44,22 @@ const Dasboarduser = ({isAuthenticated}) => {
         console.log('error in connection',error);
     }
   }
+
+  const handleGetreports = async (e) => {
+    try {
+        const config = {
+            headers :{
+                'Content-Type' : 'application/json',
+                'Accept' : 'application/json'
+            }
+        };
+        const res = await axios.get(`http://127.0.0.1:8000/api/files/?uid=${uid}`)
+        console.log(res.data);
+    } catch (error) {
+        
+    }
+  }
+
   if(!isAuthenticated){
     navigate('/loginuser')
   }
@@ -152,6 +170,9 @@ const Dasboarduser = ({isAuthenticated}) => {
                     </div>
                     <div className='mt-4 md:mt-6'>
                         <h1 className='md:text-4xl font-bold'>Health Diagnosis</h1>
+                        <div>
+                            <button className='bg-green-300 text-black py-1 px-4 rounded' onClick={()=> navigate('/reportupload')}>Upload Report</button>
+                        </div>
                     </div>
                 </div>
             </div>
