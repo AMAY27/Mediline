@@ -1,7 +1,7 @@
 from django.http import HttpResponse, JsonResponse
-from .models import Files
+from .models import Files, Doctors
 from rest_framework import viewsets
-from .serializers import Fileserializer
+from .serializers import Fileserializer, Doctorserializer
 import django_filters.rest_framework
 
 def index(request):
@@ -20,4 +20,10 @@ class FilesViewSet(viewsets.ModelViewSet):
         user_id = self.request.query_params.get('uid')
         if user_id:
             return Files.objects.filter(uid=user_id)
+        return self.queryset
+    
+class DocViewSet(viewsets.ModelViewSet):
+    queryset = Doctors.objects.all()
+    serializer_class = Doctorserializer
+    def doctorlist(self):
         return self.queryset

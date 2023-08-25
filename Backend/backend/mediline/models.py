@@ -48,3 +48,36 @@ class Files(models.Model):
 
     def __str__(self):
         return self.pdf
+    
+class Doctors(models.Model):
+    email = models.EmailField(max_length=255, unique=True)
+    first_name = models.CharField(max_length=255)
+    last_name = models.CharField(max_length=255)
+    professional_details = models.CharField(max_length=1000)
+    practicing_from = models.DateTimeField()
+    is_active = models.BooleanField(default=True)
+    date_joined = models.DateTimeField()
+
+    class Meta:
+        db_table = "doctors"
+    
+class Qualifications(models.Model):
+    docid = models.ForeignKey(Doctors, on_delete=models.CASCADE)
+    qualification_name = models.CharField(max_length=255)
+    institute_name = models.CharField(max_length=255)
+    procurement_year = models.TimeField()
+
+class Specialization(models.Model):
+    specialization_name = models.CharField(max_length=255)
+
+class Doc_specialization(models.Model):
+    docid = models.ForeignKey(Doctors, on_delete=models.CASCADE)
+    specialization_id = models.ForeignKey(Specialization, on_delete=models.CASCADE)
+
+class Clinic(models.Model):
+    docid = models.ForeignKey(Doctors, on_delete=models.CASCADE)
+    address = models.TextField(max_length=500)
+    city = models.CharField(max_length=255)
+    state = models.CharField(max_length=255)
+    country = models.CharField(max_length=255)
+    zip = models.CharField(max_length=100)
