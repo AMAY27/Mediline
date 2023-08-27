@@ -7,6 +7,7 @@ import Resetpassconfirm from './Register/Resetpassconfirm'
 import Registeruser from './Register/Registeruser'
 import Activate from './Register/Activate'
 import Repoertupload from './Pages/Repoertupload'
+import Appointmentbook from './Pages/Appointmentbook'
 import {BrowserRouter as Router , Routes, Route} from 'react-router-dom'
 import store from './store'
 import {Provider} from 'react-redux'
@@ -25,6 +26,7 @@ function App() {
         <Route path='/activate/:uid/:token' element={<Activate/>}/>
         <Route path='/dashboard' element={<Dasboarduser/>}/>
         <Route path='/reportupload' element={<Repoertupload/>}/>
+        <Route path='/appointmentbook' element={<Appointmentbook/>}/>
 
       </Routes>
     </Router>

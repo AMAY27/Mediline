@@ -43,9 +43,6 @@ class Files(models.Model):
     details = models.CharField(max_length=255)
     pdf = models.FileField(upload_to='store/pdfs/')
 
-    def user_id(self):
-        return self.uid.id
-
     def __str__(self):
         return self.pdf
     
@@ -66,6 +63,9 @@ class Qualifications(models.Model):
     qualification_name = models.CharField(max_length=255)
     institute_name = models.CharField(max_length=255)
     procurement_year = models.TimeField()
+    def doc_id(self):
+        return self.docid.id
+
 
 class Specialization(models.Model):
     specialization_name = models.CharField(max_length=255)
@@ -73,6 +73,8 @@ class Specialization(models.Model):
 class Doc_specialization(models.Model):
     docid = models.ForeignKey(Doctors, on_delete=models.CASCADE)
     specialization_id = models.ForeignKey(Specialization, on_delete=models.CASCADE)
+    def doc_id(self):
+        return self.docid.id
 
 class Clinic(models.Model):
     docid = models.ForeignKey(Doctors, on_delete=models.CASCADE)
@@ -81,3 +83,24 @@ class Clinic(models.Model):
     state = models.CharField(max_length=255)
     country = models.CharField(max_length=255)
     zip = models.CharField(max_length=100)
+
+    def doc_id(self):
+        return self.docid.id
+    
+    def user_id(self):
+        return self.uid.id
+
+
+class Appointment(models.Model):
+    uid = models.ForeignKey(AppUser,on_delete=models.CASCADE)
+    clinicid = models.ForeignKey(Clinic, on_delete=models.CASCADE)
+    appointment_type = models.CharField(max_length=255)
+    appointment_start_date = models.DateField(auto_now_add=True)
+    appointment_status = models.CharField(max_length=255)
+    appointment_date = models.DateField()
+
+    #def user_id(self):
+    #    return self.uid.id
+    
+    def clinic_id(self):
+        return self.clinicid.id
