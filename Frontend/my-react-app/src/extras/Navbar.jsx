@@ -19,11 +19,9 @@ const Navbar = ({logout, isAuthenticated}) => {
           <div className='hidden md:flex items-center space-x-7'>
             <div className='text-black'>Dashboard</div>
             <div className='text-black'>Profile</div>
+            <div className='text-black' onClick={logout}>Logout</div>
             <div className='hidden md:flex items-center space-x-2'>
               <span className='text-black font-bold text-2xl text-green-300'>Welcome, User</span>
-              <div className='hidden md:flex items-center space-x-2'>
-                <button className='text-black mx-1' onClick={logout}>Logout</button>
-              </div>
             </div>
           </div>
         )

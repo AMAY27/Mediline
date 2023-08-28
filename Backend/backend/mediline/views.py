@@ -42,5 +42,9 @@ class AppointmentViewSet(viewsets.ModelViewSet):
 class ClinicViewSet(viewsets.ModelViewSet):
     queryset = Clinic.objects.all()
     serializer_class = Clinicserializer
-    def clinic(self):
+    filter_backends = [django_filters.rest_framework.DjangoFilterBackend]
+    def get_queryset(self):
+        location = self.request.query_params.get('city')
+        if location:
+            return Clinic.objects.filter(city = location)
         return self.queryset
