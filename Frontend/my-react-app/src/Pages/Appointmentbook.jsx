@@ -10,6 +10,7 @@ const Appointmentbook = () => {
   const [selectedDate, setSelectedDate] = useState(null);
   const [selectedTimeSlot, setSelectedTimeSlot] = useState(timeSlots[0]);
   const [clinicList , setClinicList] = useState([])
+  const [testcenters, setTestcenters] = useState([])
   const [docList, setDoclist] = useState([])
   const [testclick, setTestclick ] = useState(false)
   const [consultclick, setConsultclick ] = useState(true)
@@ -25,28 +26,33 @@ const Appointmentbook = () => {
       setIsMobile(window.innerWidth < 768);
       setShowMenu(false); // Close the overlay on resize for mobile
     };
+    handleTestcenterdata()
 
     handleResize(); // Initial check
     window.addEventListener('resize', handleResize);
     return () => {
       window.removeEventListener('resize', handleResize);
     };
+
   },[])
 
   const handleTestclick = ()=>{
     setTestclick(true)
     setConsultclick(false)
     setHealthclick(false)
+    setIsOpen(!isOpen)
   }
   const handleConsultclick = ()=>{
     setTestclick(false)
     setConsultclick(true)
     setHealthclick(false)
+    setIsOpen(!isOpen)
   }
   const handleHealthclick = ()=>{
     setTestclick(false)
     setConsultclick(false)
     setHealthclick(true)
+    setIsOpen(!isOpen)
   }
   const handleClinicdata = async(e)=>{
     const config = {
@@ -58,6 +64,19 @@ const Appointmentbook = () => {
     const res = await axios.get(`http://127.0.0.1:8000/api/clinic/`,config)
     const cliniclist = res.data
     setClinicList(cliniclist)
+  }
+
+  const handleTestcenterdata = async(e)=>{
+    const config = {
+      headers : {
+        'Content-Type':'application/json',
+        'Accept' : 'application/json'
+      }
+    }
+    const res = await axios.get(`http://127.0.0.1:3000/centers`,config)
+    const centerlist = res.data.centers
+    setTestcenters(centerlist)
+    console.log(res.data.centers);
   }
 
   const handledoctordata = async(e)=>{
@@ -88,7 +107,7 @@ const Appointmentbook = () => {
             className='bg-green-200 p-2 rounded border'
             onClick={() => setIsOpen(!isOpen)}
           >
-            Select an Option
+            {consultclick ? 'Consultation (click to change)' : testclick ? 'Test and Diagnosis (click to change)' : healthclick ? 'Health Checkups (click to change)' : 'Select an Option'}
           </button>
           {isOpen && (
             <div className='absolute bg-white border rounded mt-1 w-48'>
@@ -141,6 +160,20 @@ const Appointmentbook = () => {
         })}
       </div>
       }
+      {testclick && 
+               <div className='grid grid-cols-1 gap-5 mt-5 mx-6'>
+                {testcenters.map((value)=>{
+                  return(
+                    <div className='border-2 border-green-300 shadow-md rounded'>
+                          <h2 className='mx-3 md:text-sm p-1'>Center : {value.center_name}</h2>
+                          <h2 className='mx-3 md:text-sm p-1'>Address : {value.address}</h2>
+                          <button className='mx-3 my-2 bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline'>Details</button>
+                          <button className='mx-2 my-2 bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline'>Book test</button>
+                    </div> 
+                  )
+                })}
+              </div>
+              }
       </div>
       ) : (
         <div className='md:h-screen md:flex md:flex-col'>
@@ -229,6 +262,20 @@ const Appointmentbook = () => {
                           <h2 className='mx-3 md:text-sm p-1'>City : {value.city}</h2>
                           <button className='mx-3 my-2 bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline'>Details</button>
                           <button className='mx-2 my-2 bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline'>Book appointment</button>
+                    </div> 
+                  )
+                })}
+              </div>
+              }
+              {testclick && 
+               <div className='grid grid-cols-1 md:grid-cols-3 gap-5 md:my-8'>
+                {testcenters.map((value)=>{
+                  return(
+                    <div className='border-2 border-green-300 shadow-md rounded'>
+                          <h2 className='mx-3 md:text-sm p-1'>Center : {value.center_name}</h2>
+                          <h2 className='mx-3 md:text-sm p-1'>Address : {value.address}</h2>
+                          <button className='mx-3 my-2 bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline'>Details</button>
+                          <button className='mx-2 my-2 bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline'>Book test</button>
                     </div> 
                   )
                 })}

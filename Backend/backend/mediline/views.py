@@ -1,7 +1,7 @@
 from django.http import HttpResponse, JsonResponse
-from .models import Files, Doctors, Appointment, Clinic
+from .models import Files, Doctors, Appointment, Clinic, Specialization, Doc_specialization
 from rest_framework import viewsets
-from .serializers import Fileserializer, Doctorserializer, Appointmentserializer, Clinicserializer
+from .serializers import Fileserializer, Doctorserializer, Appointmentserializer, Clinicserializer, Specializationserializer, Docspecserializer
 import django_filters.rest_framework
 
 def index(request):
@@ -47,4 +47,16 @@ class ClinicViewSet(viewsets.ModelViewSet):
         location = self.request.query_params.get('city')
         if location:
             return Clinic.objects.filter(city = location)
+        return self.queryset
+    
+class SpecializationViewSet(viewsets.ModelViewSet):
+    queryset = Specialization.objects.all()
+    serializer_class = Specializationserializer
+    def get_querysey(self):
+        return self.queryset
+    
+class DocspecViewSet(viewsets.ModelViewSet):
+    queryset = Doc_specialization.objects.all()
+    serializer_class = Docspecserializer
+    def get_querysey(self):
         return self.queryset

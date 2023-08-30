@@ -2,7 +2,7 @@ from djoser.serializers import UserCreateSerializer
 from django.contrib.auth import get_user_model
 from rest_framework import serializers
 from .models import Files
-from .models import Doctors, Appointment, Clinic
+from .models import Doctors, Appointment, Clinic, Specialization, Doc_specialization
 User = get_user_model()
 File = Files
 
@@ -31,3 +31,16 @@ class Clinicserializer(serializers.ModelSerializer):
     class Meta:
         model = Clinic
         fields = ['id','docid','address','city','state','country','zip']
+
+class Specializationserializer(serializers.ModelSerializer):
+    class Meta:
+        model = Specialization
+        fields = '__all__'
+
+class Docspecserializer(serializers.ModelSerializer):
+    class Meta:
+        model = Doc_specialization
+        fields = '__all__'
+
+
+#fields = '__all__'

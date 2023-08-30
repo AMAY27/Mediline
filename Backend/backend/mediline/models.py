@@ -104,3 +104,15 @@ class Appointment(models.Model):
     
     def clinic_id(self):
         return self.clinicid.id
+    
+class Availability(models.Model):
+    docid = models.ForeignKey(Doctors, on_delete=models.CASCADE)
+    clinicid = models.ForeignKey(Clinic, on_delete=models.CASCADE)
+    weekday = models.CharField(max_length=100)
+    morning_slot = models.CharField(max_length=100, null=True, blank=True)
+    evening_slot = models.CharField(max_length=100, null=True, blank=True)
+    is_available = models.BooleanField()
+
+
+    def doc_id(self):
+        return self.docid.id

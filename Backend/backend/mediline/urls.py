@@ -1,13 +1,15 @@
 from django.urls import path, include
 from . import views
 from rest_framework.routers import DefaultRouter
-from .views import FilesViewSet, DocViewSet, AppointmentViewSet, ClinicViewSet
+from .views import FilesViewSet, DocViewSet, AppointmentViewSet, ClinicViewSet, SpecializationViewSet, DocspecViewSet
 
 router  = DefaultRouter()
 router.register('files', FilesViewSet, basename='files')
 router.register('doctors', DocViewSet, basename='doctors')
 router.register('appointment', AppointmentViewSet, basename='appointment')
 router.register('clinic',ClinicViewSet, basename='clinic')
+router.register('specialization',SpecializationViewSet, basename='specialization')
+router.register('docspec',DocspecViewSet, basename='docspec')
 
 urlpatterns = [
     path('api/', include(router.urls)),
