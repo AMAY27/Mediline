@@ -116,3 +116,12 @@ class Availability(models.Model):
 
     def doc_id(self):
         return self.docid.id
+
+class Testappointment(models.Model):
+    uid = models.ForeignKey(AppUser,on_delete=models.CASCADE)
+    centerid = models.CharField(max_length=500)
+    appointment_date = models.DateField()
+    status = models.CharField(max_length=100)
+    test_name = models.CharField(max_length=255)
+    description = models.CharField(max_length=500)
+    patient_name = models.CharField(max_length=255)

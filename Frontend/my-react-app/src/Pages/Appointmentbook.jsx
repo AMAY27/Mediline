@@ -3,6 +3,7 @@ import { useState } from 'react';
 import DatePicker from 'react-datepicker';
 import axios from 'axios';
 import Navbar from '../extras/Navbar';
+import { useNavigate } from 'react-router-dom';
 
 const Appointmentbook = () => {
   const timeSlots = ['Select','9:00 am', '10:00 am', '11:00 am', '12:00 pm', '1:00 pm', '2:00 pm'];
@@ -18,6 +19,7 @@ const Appointmentbook = () => {
   const [showMenu, setShowMenu] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
+  const navigate = useNavigate()
 
   useEffect(()=>{
     handleClinicdata()
@@ -98,6 +100,14 @@ const Appointmentbook = () => {
   const handleTimeSlotChange = event => {
     setSelectedTimeSlot(event.target.value);
   };
+
+  function handleBooktest(id){
+    console.log(id);
+    localStorage.setItem('testcenter_id',id)
+    navigate('/testappointment')
+    
+  }
+
   return (
     <div>
       <Navbar/>
@@ -168,7 +178,7 @@ const Appointmentbook = () => {
                           <h2 className='mx-3 md:text-sm p-1'>Center : {value.center_name}</h2>
                           <h2 className='mx-3 md:text-sm p-1'>Address : {value.address}</h2>
                           <button className='mx-3 my-2 bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline'>Details</button>
-                          <button className='mx-2 my-2 bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline'>Book test</button>
+                          <button className='mx-2 my-2 bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline' onClick={()=>handleBooktest(value._id)}>Book test</button>
                     </div> 
                   )
                 })}
@@ -275,7 +285,7 @@ const Appointmentbook = () => {
                           <h2 className='mx-3 md:text-sm p-1'>Center : {value.center_name}</h2>
                           <h2 className='mx-3 md:text-sm p-1'>Address : {value.address}</h2>
                           <button className='mx-3 my-2 bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline'>Details</button>
-                          <button className='mx-2 my-2 bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline'>Book test</button>
+                          <button className='mx-2 my-2 bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline' onClick={()=>handleBooktest(value._id)}>Book test</button>
                     </div> 
                   )
                 })}
