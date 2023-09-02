@@ -2,7 +2,7 @@ from djoser.serializers import UserCreateSerializer
 from django.contrib.auth import get_user_model
 from rest_framework import serializers
 from .models import Files
-from .models import Doctors, Appointment, Clinic, Specialization, Doc_specialization
+from .models import Doctors, Appointment, Clinic, Specialization, Doc_specialization, Availability
 User = get_user_model()
 File = Files
 
@@ -40,6 +40,12 @@ class Specializationserializer(serializers.ModelSerializer):
 class Docspecserializer(serializers.ModelSerializer):
     class Meta:
         model = Doc_specialization
+        fields = '__all__'
+
+
+class Availabilityserializer(serializers.ModelSerializer):
+    class Meta:
+        model = Availability
         fields = '__all__'
 
 

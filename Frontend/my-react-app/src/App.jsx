@@ -10,6 +10,7 @@ import Repoertupload from './Pages/Repoertupload'
 import Appointmentbook from './Pages/Appointmentbook'
 import Testcenter from './extras/Testcenter'
 import Testappointmentbook from './Pages/Testappointmentbook'
+import Clinicappointment from './Pages/Clinicappointment'
 import {BrowserRouter as Router , Routes, Route} from 'react-router-dom'
 import store from './store'
 import {Provider} from 'react-redux'
@@ -31,7 +32,7 @@ function App() {
         <Route path='/appointmentbook' element={<Appointmentbook/>}/>
         <Route path='/testcenter' element={<Testcenter/>}/>
         <Route path='/testappointment' element={<Testappointmentbook/>}/>
-
+        <Route path='/clinicappointment' element={<Clinicappointment/>}/>
       </Routes>
     </Router>
     </Provider>

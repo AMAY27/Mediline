@@ -1,8 +1,9 @@
 from django.http import HttpResponse, JsonResponse
-from .models import Files, Doctors, Appointment, Clinic, Specialization, Doc_specialization
+from .models import Files, Doctors, Appointment, Clinic, Specialization, Doc_specialization, Availability
 from rest_framework import viewsets
-from .serializers import Fileserializer, Doctorserializer, Appointmentserializer, Clinicserializer, Specializationserializer, Docspecserializer
+from .serializers import Fileserializer, Doctorserializer, Appointmentserializer, Clinicserializer, Specializationserializer, Docspecserializer, Availabilityserializer
 import django_filters.rest_framework
+from django.shortcuts import get_object_or_404
 
 def index(request):
     return HttpResponse("Hello world")
@@ -52,11 +53,43 @@ class ClinicViewSet(viewsets.ModelViewSet):
 class SpecializationViewSet(viewsets.ModelViewSet):
     queryset = Specialization.objects.all()
     serializer_class = Specializationserializer
-    def get_querysey(self):
+    filter_backends = [django_filters.rest_framework.DjangoFilterBackend]
+    def get_queryset(self):
+        spec = self.request.query_params.get('specid')
+        if spec:
+            return Specialization.objects.filter(id = spec)
         return self.queryset
     
 class DocspecViewSet(viewsets.ModelViewSet):
     queryset = Doc_specialization.objects.all()
-    serializer_class = Docspecserializer
-    def get_querysey(self):
+    serializer_class = Specializationserializer
+    filter_backends = [django_filters.rest_framework.DjangoFilterBackend]
+    def get_queryset(self):
+        #doctor = self.request.query_params.get('docid')
+        docid = self.request.query_params.get('docid')
+
+        if docid:
+            # Filter the Doc_specialization queryset based on the provided 'docid'
+            doc_specializations = Doc_specialization.objects.filter(docid=docid)
+            
+            # Use values_list to fetch the specialization_id values
+            specialization_ids = doc_specializations.values_list('specialization_id', flat=True)
+            
+            # Use the specialization_ids to filter the Specialization queryset
+            specializations = Specialization.objects.filter(id__in=specialization_ids)
+            
+            # Extract and return only the specialization_name values
+            
+            return specializations
+
+        return Specialization.objects.none()
+    
+class AvailabilityViewSet(viewsets.ModelViewSet):
+    queryset = Availability.objects.all()
+    serializer_class = Availabilityserializer
+    filter_backends = [django_filters.rest_framework.DjangoFilterBackend]
+    def get_queryset(self):
+        doctor = self.request.query_params.get('docid')
+        if doctor:
+            return Availability.objects.filter(docid = doctor)
         return self.queryset

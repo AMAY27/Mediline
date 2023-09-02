@@ -107,6 +107,12 @@ const Appointmentbook = () => {
     navigate('/testappointment')
     
   }
+  function handleBookconsultation(id){
+    console.log(id);
+    localStorage.setItem('docid',id)
+    navigate('/clinicappointment')
+    
+  }
 
   return (
     <div>
@@ -164,7 +170,7 @@ const Appointmentbook = () => {
                   <h2 className='text-sm md:text-sm p-1'>Address : {value.address}</h2>
                   <h2 className='text-sm md:text-sm p-1'>City : {value.city}</h2>
                   <button className='mx-3 my-2 bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline'>Details</button>
-                  <button className='mx-2 my-2 bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline'>Book appointment</button>
+                  <button className='mx-2 my-2 bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline' onClick={()=>handleBookconsultation(value.docid)}>Book appointment</button>
             </div> 
           )
         })}
@@ -271,7 +277,7 @@ const Appointmentbook = () => {
                           <h2 className='mx-3 md:text-sm p-1'>Address : {value.address}</h2>
                           <h2 className='mx-3 md:text-sm p-1'>City : {value.city}</h2>
                           <button className='mx-3 my-2 bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline'>Details</button>
-                          <button className='mx-2 my-2 bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline'>Book appointment</button>
+                          <button className='mx-2 my-2 bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline' onClick={()=>handleBookconsultation(value.docid)}>Book appointment</button>
                     </div> 
                   )
                 })}
