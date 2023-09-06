@@ -17,7 +17,7 @@ class AppUserManager(BaseUserManager):
 class AppUser(AbstractBaseUser, PermissionsMixin):
     #userid = models.UUIDField(primary_key=False, editable=False)
     email = models.EmailField(max_length=255, unique=True)
-    name = models.CharField(max_length=255)
+    name = models.CharField(max_length=255, unique=True)
     is_active = models.BooleanField(default=True)
     is_staff = models.BooleanField(default=False)
     date_joined = models.DateTimeField(auto_now_add=True)
@@ -34,6 +34,7 @@ class AppUser(AbstractBaseUser, PermissionsMixin):
     
     def __str__(self):
         return self.email
+
 
 class Files(models.Model):
     uid= models.ForeignKey(AppUser, on_delete=models.CASCADE)

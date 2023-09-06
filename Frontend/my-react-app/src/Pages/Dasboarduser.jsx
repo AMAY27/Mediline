@@ -33,7 +33,7 @@ const Dasboarduser = ({isAuthenticated}) => {
             }
         };
         const res = await axios.get(`http://127.0.0.1:8000/api/files/?uid=${uid}`,config)
-        //console.log(res);
+        console.log(res);
     } catch (error) {
         console.log(error);
     }

@@ -4,6 +4,9 @@ from rest_framework import viewsets
 from .serializers import Fileserializer, Doctorserializer, Appointmentserializer, Clinicserializer, Specializationserializer, Docspecserializer, Availabilityserializer
 import django_filters.rest_framework
 from django.shortcuts import get_object_or_404
+from django.db import connection
+from rest_framework.response import Response
+from django.db.models import Q
 
 def index(request):
     return HttpResponse("Hello world")
@@ -39,6 +42,23 @@ class AppointmentViewSet(viewsets.ModelViewSet):
         if user_id:
             return Appointment.objects.filter(uid=user_id)
         return self.queryset
+
+class ClinicappointmentsViewSet(viewsets.ModelViewSet):
+    queryset = Appointment.objects.all()
+    serializer_class = Appointmentserializer
+    filter_backends = [django_filters.rest_framework.DjangoFilterBackend]
+
+    def get_queryset(self):
+        queryset = Appointment.objects.all()
+        clinic_id = self.request.query_params.get('clinicid')
+        date = self.request.query_params.get('date')
+
+        if clinic_id and date:
+            queryset = queryset.filter(Q(clinicid=clinic_id) & Q(appointment_date=date))
+        elif clinic_id:
+            queryset = queryset.filter(clinicid=clinic_id)
+
+        return queryset
 
 class ClinicViewSet(viewsets.ModelViewSet):
     queryset = Clinic.objects.all()
