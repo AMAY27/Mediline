@@ -1,10 +1,16 @@
 import React, { useEffect, useState } from 'react'
 import Navbar from '../extras/Navbar'
 import DatePicker from 'react-datepicker'
+import { checkauthenticated, load_user, logout } from '../actions/auth';
+import { useDispatch, connect } from 'react-redux';
 import axios from 'axios'
 
-const Clinicappointment = () => {
+const Clinicappointment = ({isAuthenticated}) => {
     const doctorid = localStorage.getItem('docid')
+    const clinicid = localStorage.getItem('clinicid')
+    const uid = localStorage.getItem('userid')
+    const dispatch = useDispatch()
+    const [name, setName] = useState('')
     const [docspecialization, setDocspecialization] = useState([])
     const [specid, setSpecid] = useState([])
     const [availableWeekdays, setAvailableWeekdays] = useState([])
@@ -19,6 +25,8 @@ const Clinicappointment = () => {
     const [timeslot, setTimeslot] = useState(null)
 
     useEffect(()=>{
+        dispatch(checkauthenticated())
+        dispatch(load_user())
         loadAvailabilitydata()
         loadSpeciddata()
     },[])
@@ -40,8 +48,8 @@ const Clinicappointment = () => {
     },[availableWeekdays])
 
     useEffect(()=>{
-        console.log(timeslot);
-    },[timeslot])
+        console.log(selectedDate);
+    },[selectedDate])
 
 
     async function loadAvailabilitydata(){
@@ -94,6 +102,34 @@ const Clinicappointment = () => {
         })
 
       };
+    
+    async function handleSubmit(e){
+        e.preventDefault();
+        const inputDate = new Date(selectedDate);
+        const day = inputDate.getDate();
+        const month = inputDate.getMonth() + 1;
+        const year = inputDate.getFullYear();
+        const formattedDate = `${year}-${month < 10 ? '0' : ''}${month}-${day < 10 ? '0' : ''}${day}`;
+        console.log(formattedDate);
+        const config = {
+            headers : {
+                'Content-Type' : 'application/json'
+            }
+        }
+        const body = JSON.stringify({
+            uid : uid,
+            clinicid : clinicid,
+            docid : doctorid,
+            appointment_status : "active",
+            appointment_date : formattedDate,
+            times_slot : timeslot
+        })
+        await axios.post('http://127.0.0.1:8000/api/appointment/',body,config)
+    }
+
+    // if(!isAuthenticated){
+    //     navigate('/loginuser')
+    //   }
 
 
   return (
@@ -102,14 +138,14 @@ const Clinicappointment = () => {
         <div className='md:h-screen md:justify-center flex items-center flex-col'>
             <div className='md:w-3/4 h-auto md:h-auto bg-green-300 border-2 border-green-300 grid grid-cols-2'>
                 <div className='col-span-1'>
-                    <form action="">
+                    <form action="" onSubmit={handleSubmit}>
                         <div className='mb-4 mx-4'>
                             <label htmlFor="" className='block text-gray-700 text-sm font-bold mb-2'>Enter Name</label>
                             <input 
                                 type='text' 
                                 placeholder='Patient Name' 
                                 name='name' 
-                                //onChange={handleChange}
+                                onChange={(e)=>setName(e.target.value)}
                                 className='shadow appearance-none rounded-lg w-1/2 py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
                             />
                         </div>  
@@ -118,7 +154,7 @@ const Clinicappointment = () => {
                             <DatePicker
                                 selected={selectedDate}
                                 onChange={handleDateChange}
-                                dateFormat="yyyy/MM/dd"
+                                dateFormat="dd/MM/yyyy"
                                 minDate={new Date()}
                                 maxDate={selectableDates[selectableDates.length - 1]}
                                 filterDate={(date)=>{
@@ -167,5 +203,8 @@ const Clinicappointment = () => {
     </div>
   )
 }
+const mapStatetoProps = (state) =>({
+    isAuthenticated: state.auth.isAuthenticated
+  })
 
-export default Clinicappointment
+export default connect(mapStatetoProps, {logout}, null, {checkauthenticated,load_user}) (Clinicappointment)

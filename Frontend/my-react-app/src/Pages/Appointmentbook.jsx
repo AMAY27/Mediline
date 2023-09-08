@@ -3,9 +3,12 @@ import { useState } from 'react';
 import DatePicker from 'react-datepicker';
 import axios from 'axios';
 import Navbar from '../extras/Navbar';
+import { checkauthenticated, logout, load_user } from '../actions/auth';
+import { useDispatch, connect } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 
-const Appointmentbook = () => {
+const Appointmentbook = ({isAuthenticated}) => {
+  const dispatch = useDispatch()
   const timeSlots = ['Select','9:00 am', '10:00 am', '11:00 am', '12:00 pm', '1:00 pm', '2:00 pm'];
   const appointmenttype = ['Select','Test', 'Consultation', 'Health Checkup']
   const [selectedDate, setSelectedDate] = useState(null);
@@ -22,6 +25,8 @@ const Appointmentbook = () => {
   const navigate = useNavigate()
 
   useEffect(()=>{
+    dispatch(checkauthenticated())
+    dispatch(load_user())
     handleClinicdata()
     handledoctordata()
     const handleResize = () => {
@@ -107,12 +112,16 @@ const Appointmentbook = () => {
     navigate('/testappointment')
     
   }
-  function handleBookconsultation(id){
+  function handleBookconsultation(id, clinicid){
     console.log(id);
     localStorage.setItem('docid',id)
+    localStorage.setItem('clinicid',clinicid)
     navigate('/clinicappointment')
     
   }
+  // if(!isAuthenticated){
+  //   navigate('/loginuser')
+  // }
 
   return (
     <div>
@@ -170,7 +179,7 @@ const Appointmentbook = () => {
                   <h2 className='text-sm md:text-sm p-1'>Address : {value.address}</h2>
                   <h2 className='text-sm md:text-sm p-1'>City : {value.city}</h2>
                   <button className='mx-3 my-2 bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline'>Details</button>
-                  <button className='mx-2 my-2 bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline' onClick={()=>handleBookconsultation(value.docid)}>Book appointment</button>
+                  <button className='mx-2 my-2 bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline' onClick={()=>handleBookconsultation(value.docid, value.id)}>Book appointment</button>
             </div> 
           )
         })}
@@ -277,7 +286,7 @@ const Appointmentbook = () => {
                           <h2 className='mx-3 md:text-sm p-1'>Address : {value.address}</h2>
                           <h2 className='mx-3 md:text-sm p-1'>City : {value.city}</h2>
                           <button className='mx-3 my-2 bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline'>Details</button>
-                          <button className='mx-2 my-2 bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline' onClick={()=>handleBookconsultation(value.docid)}>Book appointment</button>
+                          <button className='mx-2 my-2 bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline' onClick={()=>handleBookconsultation(value.docid,value.id)}>Book appointment</button>
                     </div> 
                   )
                 })}
@@ -305,4 +314,10 @@ const Appointmentbook = () => {
   )
 }
 
-export default Appointmentbook
+const mapStatetoProps= (state)=>({
+  isAuthenticated: state.auth.isAuthenticated
+})
+
+
+
+export default connect(mapStatetoProps, {logout}, null, {checkauthenticated, load_user}) (Appointmentbook)

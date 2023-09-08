@@ -92,13 +92,14 @@ class Clinic(models.Model):
         return self.uid.id
 
 
-class Appointment(models.Model):
+class Appointmentconsultations(models.Model):
     uid = models.ForeignKey(AppUser,on_delete=models.CASCADE)
     clinicid = models.ForeignKey(Clinic, on_delete=models.CASCADE)
-    appointment_type = models.CharField(max_length=255)
+    docid = models.ForeignKey(Doctors, on_delete=models.CASCADE)
     appointment_start_date = models.DateField(auto_now_add=True)
     appointment_status = models.CharField(max_length=255)
     appointment_date = models.DateField()
+    times_slot = models.CharField(max_length=255)
 
     #def user_id(self):
     #    return self.uid.id

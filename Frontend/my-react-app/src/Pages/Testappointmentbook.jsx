@@ -1,11 +1,14 @@
 import axios from 'axios'
 import React, { useEffect, useState } from 'react'
 import DatePicker from 'react-datepicker';
+import { checkauthenticated, load_user, logout } from '../actions/auth';
+import { useDispatch, connect } from 'react-redux';
 import Navbar from '../extras/Navbar';
 
-const Testappointmentbook = () => {
+const Testappointmentbook = ({isAuthenticated}) => {
     const [testcenterData , setTestcenterData] = useState({})
     const testcenterid = localStorage.getItem('testcenter_id')
+    const dispatch = useDispatch()
     const user_id = localStorage.getItem('userid')
     const [selectedDate, setSelectedDate] = useState(null);
     const [testData, setTestdata] = useState([]);
@@ -16,6 +19,8 @@ const Testappointmentbook = () => {
 
 
     useEffect(()=>{
+        dispatch(checkauthenticated())
+        dispatch(load_user())
         loadTestdata();
     },[])
 
@@ -58,7 +63,8 @@ const Testappointmentbook = () => {
         setSelectedDate(date);
     };
 
-    async function handleSubmit(){
+    async function handleSubmit(e){
+        e.preventDefault();
         const config = {
             headers : {
                 'Content-Type' : 'application/json'
@@ -76,6 +82,10 @@ const Testappointmentbook = () => {
         const res = await axios.post('http://localhost:3000/appointment/book',body,config)
         console.log(values);
     }
+
+    // if(!isAuthenticated){
+    //     navigate('/loginuser')
+    //   }
 
   return (
     <div>
@@ -152,4 +162,8 @@ const Testappointmentbook = () => {
   )
 }
 
-export default Testappointmentbook
+const mapStatetoProps = (state) =>({
+    isAuthenticated: state.auth.isAuthenticated
+  })
+
+export default connect(mapStatetoProps, {logout}, null, {checkauthenticated,load_user}) (Testappointmentbook)

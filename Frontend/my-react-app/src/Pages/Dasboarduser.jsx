@@ -21,6 +21,9 @@ const Dasboarduser = ({isAuthenticated}) => {
         handleGetreports()
         handleGetAppointments()
     },[])
+    useEffect(()=>{
+        console.log(appointmentList);
+    },[appointmentList])
     const [msg , setmsg] = useState('')
     const navigate = useNavigate();
 
@@ -49,7 +52,7 @@ const Dasboarduser = ({isAuthenticated}) => {
     const res = await axios.get(`http://127.0.0.1:8000/api/appointment/?uid=${uid}`,config)
     const appList = res.data
     setAppointmentList(appList)
-    console.log(appointmentList[0].appointment_status);  
+    console.log(appList);  
   }
 
   if(!isAuthenticated){
@@ -77,7 +80,7 @@ const Dasboarduser = ({isAuthenticated}) => {
                                 if(key.appointment_status === 'active'){
                                     return (
                                         <div className='flex justify-between m-2 pt-2'>
-                                            <h2 className='font-bold'>{key.appointment_type}</h2>
+                                            <h2 className='font-bold'>{key.appointment_date}</h2>
                                             <button className='bg-green-300 text-black py-1 px-4 rounded'>View details</button>
                                         </div>
                                     )
@@ -102,49 +105,6 @@ const Dasboarduser = ({isAuthenticated}) => {
                             })}
                         </div>
                     </div>
-                    {/* <form className='z-5 border-2 border-gray-200 shadow-md rounded-t-lg px-8 pt-6 pb-8 my-4 mr-10 ml-4 relative'>
-                        <div className=' mb-6 bg-green-300 absolute top-0 left-0 inset-x-0 w-full rounded-t-lg'><h1 className='text-2xl md:text-2xl p-2'>Book an Appointment</h1></div>
-                        <div className='mb-4 mt-10'>
-                            <label htmlFor="" className='block text-gray-700 text-sm font-bold mb-2'>Appointment for:</label>
-                            <select name="appointmenttype"
-                                className='shadow appearance-none rounded-lg w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
-                            >
-                                {appointmenttype.map(type =>(
-                                    <option value={type} key={type}>{type}</option>
-                                ))}
-                            </select>
-                        </div>
-                        <div className='mb-4'>
-                            <label htmlFor="" className='block text-gray-700 text-sm font-bold mb-2'>Enter Email</label>
-                            <input type='email' placeholder='email' name='email' className='shadow appearance-none rounded-lg w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'/>
-                        </div>
-                        <div className='mb-4'>
-                            <label htmlFor="" className='block text-gray-700 text-sm font-bold mb-2'>Enter Full Name</label>
-                            <input type='text' placeholder='name' name='name' className='shadow appearance-none rounded-lg w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'/>
-                        </div>
-                        <div className='mb-4'>
-                            <label htmlFor="" className='block text-gray-700 text-sm font-bold mb-2'>Select Date:</label>
-                            <DatePicker
-                                selected={selectedDate}
-                                onChange={handleDateChange}
-                                dateFormat="yyyy/MM/dd"
-                                className='shadow appearance-none rounded-lg w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
-                            />
-                        </div>
-                        <div className='mb-4'>
-                            <label htmlFor="" className='block text-gray-700 text-sm font-bold mb-2'>Select Time Slot:</label>
-                            <select
-                                name='timeSlot'
-                                onChange={handleTimeSlotChange}
-                                value={selectedTimeSlot}
-                                className='shadow appearance-none rounded-lg w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
-                            >
-                                {timeSlots.map(slot => (
-                                    <option key={slot} value={slot}>{slot}</option>
-                                ))}
-                            </select>
-                        </div>
-                    </form> */}
                 </div>
                 <div className='md:col-span-2'>
                     <div className='caraousel-userdash md:h-40'>

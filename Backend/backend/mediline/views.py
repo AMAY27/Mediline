@@ -1,5 +1,5 @@
 from django.http import HttpResponse, JsonResponse
-from .models import Files, Doctors, Appointment, Clinic, Specialization, Doc_specialization, Availability
+from .models import Files, Doctors, Appointmentconsultations, Clinic, Specialization, Doc_specialization, Availability
 from rest_framework import viewsets
 from .serializers import Fileserializer, Doctorserializer, Appointmentserializer, Clinicserializer, Specializationserializer, Docspecserializer, Availabilityserializer
 import django_filters.rest_framework
@@ -33,23 +33,23 @@ class DocViewSet(viewsets.ModelViewSet):
         return self.queryset
     
 class AppointmentViewSet(viewsets.ModelViewSet):
-    queryset = Appointment.objects.all()
+    queryset = Appointmentconsultations.objects.all()
     serializer_class = Appointmentserializer
     filter_backends = [django_filters.rest_framework.DjangoFilterBackend]
 
     def get_queryset(self):
         user_id = self.request.query_params.get('uid')
         if user_id:
-            return Appointment.objects.filter(uid=user_id)
+            return Appointmentconsultations.objects.filter(uid=user_id)
         return self.queryset
 
 class ClinicappointmentsViewSet(viewsets.ModelViewSet):
-    queryset = Appointment.objects.all()
+    queryset = Appointmentconsultations.objects.all()
     serializer_class = Appointmentserializer
     filter_backends = [django_filters.rest_framework.DjangoFilterBackend]
 
     def get_queryset(self):
-        queryset = Appointment.objects.all()
+        queryset = Appointmentconsultations.objects.all()
         clinic_id = self.request.query_params.get('clinicid')
         date = self.request.query_params.get('date')
 
