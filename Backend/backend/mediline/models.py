@@ -96,6 +96,7 @@ class Appointmentconsultations(models.Model):
     uid = models.ForeignKey(AppUser,on_delete=models.CASCADE)
     clinicid = models.ForeignKey(Clinic, on_delete=models.CASCADE)
     docid = models.ForeignKey(Doctors, on_delete=models.CASCADE)
+    patient_name = models.CharField(max_length=255)
     appointment_start_date = models.DateField(auto_now_add=True)
     appointment_status = models.CharField(max_length=255)
     appointment_date = models.DateField()
