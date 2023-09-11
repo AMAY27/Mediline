@@ -16,6 +16,7 @@ import {BrowserRouter as Router , Routes, Route} from 'react-router-dom'
 import store from './store'
 import {Provider} from 'react-redux'
 import ReactDOM from 'react-dom'
+import Blogs from './Pages/Blogs'
 function App() {
 
   return (
@@ -35,6 +36,7 @@ function App() {
         <Route path='/testappointment' element={<Testappointmentbook/>}/>
         <Route path='/clinicappointment' element={<Clinicappointment/>}/>
         <Route path='/clinicdashboard' element={<Clinicdashboard/>}/>
+        <Route path='/blogs' element={<Blogs/>}/>
       </Routes>
     </Router>
     </Provider>

@@ -8,7 +8,7 @@ const Home = () => {
     <>
     <Navbar/>
       <div className='login-parent grid grid-cols-1 md:grid-rows-2 md:grid-cols-5 gap-4 md:m-10'>
-        <div className='md:justify-center flex items-center rounded-lg mt-5 mx-7 h-40 bg-green-300 ... p-1 md:w-140 md:mx-5 md:mt-6'><h1 className='text-xl font-bold'>Discounts</h1></div>
+        <div className='md:justify-center flex items-center rounded-lg mt-5 mx-7 h-40 bg-white-300 ... p-1 md:w-140 md:mx-5 md:mt-6 border-2 border-green-300 hover:bg-green-300'><h1 className='text-xl text-green-700 font-bold'>Discounts</h1></div>
         <div className='md:justify-center flex items-center rounded-lg mt-7 mx-7 h-100 row-start-1 md:row-span-2 border-2 border-green-300 ... p-1 md:w-140 md:mx-5 md:col-span-2 md:mt-6 '
           style={{
             backgroundImage: "url('src/assets/medical-5459632.svg')",
@@ -18,11 +18,11 @@ const Home = () => {
         >
           <p className='text-2xl md:text-4xl text-black font-bold'>ALL<br/> your medical needs<br/>At one place.</p>
         </div>
-        <div className='md:justify-center flex items-center rounded-lg mt-5 mx-7 bg-green-300 ... p-1 md:w-140 md:mx-5 md:mt-6'><h1 className='text-xl font-bold'>Pharmacy</h1></div>
-        <div className='md:justify-center flex items-center rounded-lg mt-5 mx-7 bg-green-300 ... p-1 md:w-140 md:mx-5 md:mt-6'><h1 className='text-xl font-bold'>Tests and Diagnosis</h1></div>
-        <div className='md:justify-center flex items-center rounded-lg mt-5 mx-7 bg-green-300 ... p-1 md:w-140 md:mx-5 md:mt-6'><h1 className='text-xl font-bold'>Reports</h1></div>
-        <div className='md:justify-center flex items-center rounded-lg mt-5 mx-7 bg-green-300 ... p-1 md:w-140 md:mx-5 md:mt-6'><h1 className='text-xl font-bold'>Health subscriptions</h1></div>
-        <div className='md:justify-center flex items-center rounded-lg mt-5 mx-7 bg-green-300 ... p-1 md:w-140 md:mx-5  md:h-40 '><h1 className='text-xl font-bold'>Fitness</h1></div>
+        <div className='md:justify-center flex items-center rounded-lg mt-5 mx-7 bg-white-300 ... p-1 md:w-140 md:mx-5 md:mt-6 border-2 border-green-300 hover:bg-green-300'><h1 className='text-xl font-bold text-green-700'>Pharmacy</h1></div>
+        <div className='md:justify-center flex items-center rounded-lg mt-5 mx-7 bg-white-300 ... p-1 md:w-140 md:mx-5 md:mt-6 border-2 border-green-300 hover:bg-green-300'><h1 className='text-xl font-bold text-green-700'>Tests and Diagnosis</h1></div>
+        <div className='md:justify-center flex items-center rounded-lg mt-5 mx-7 bg-white-300 ... p-1 md:w-140 md:mx-5 md:mt-6 border-2 border-green-300 hover:bg-green-300'><h1 className='text-xl font-bold text-green-700'>Reports</h1></div>
+        <div className='md:justify-center flex items-center rounded-lg mt-5 mx-7 bg-white-300 ... p-1 md:w-140 md:mx-5 md:mt-6 border-2 border-green-300 hover:bg-green-300'><h1 className='text-xl font-bold text-green-700'>Health subscriptions</h1></div>
+        <div className='md:justify-center flex items-center rounded-lg mt-5 mx-7 bg-white-300 ... p-1 md:w-140 md:mx-5  md:h-40 border-2 border-green-300 hover:bg-green-300'><h1 className='text-xl font-bold text-green-700'>Fitness</h1></div>
       </div>
       <div className='md:h-76 md:my-20 '>
         <div className='grid grid-cols-1 md:grid-cols-2'>
