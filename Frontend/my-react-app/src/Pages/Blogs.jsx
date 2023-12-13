@@ -3,6 +3,7 @@ import Navbar from '../extras/Navbar'
 import { bloglist } from './Bloglist'
 import Blogsnav from '../extras/Blogsnav'
 import { useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 
 
 const Blogs = () => {
@@ -10,6 +11,7 @@ const Blogs = () => {
     const [selectedCategory, setSelectedCategory] = useState('All');
     const [searchterm, setSearchterm] = useState('')
     const [filteredList, setFilteredList] = useState([]);
+    const navigate = useNavigate()
     useEffect(()=>{
         const newFilteredList = selectedCategory === 'All' ? list : list.filter(blog => blog.category === selectedCategory);
         const finalFilteredList = newFilteredList.filter(term => 
@@ -25,6 +27,17 @@ const Blogs = () => {
     const handleChange = (e) =>{
         e.preventDefault()
         setSearchterm(e.target.value)
+    }
+
+    const handleClick = (props) =>{
+        localStorage.setItem('title' , props.title)
+        localStorage.setItem('author' , props.author)
+        localStorage.setItem('text', props.text)
+        localStorage.setItem('category', props.category)
+        localStorage.setItem('tags',JSON.stringify(props.tags))
+        localStorage.setItem('content', JSON.stringify(props.content))
+        console.log(props.content);
+        navigate('/blogpage')
     }
   return (
     <>
@@ -49,9 +62,13 @@ const Blogs = () => {
                 </div>
                 <div className='md:col-span-3 mx-8'>
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                        {filteredList.map((value)=>{
+                        {filteredList.map((value, index)=>{
                             return (
-                                <div className='col-span-1 shadow-md appearance-none rounded-lg border-1 border-grey-200 hover:bg-green-200'>
+                                <div 
+                                    key={index}
+                                    className='col-span-1 shadow-md appearance-none rounded-lg border-1 border-grey-200 hover:bg-green-200'
+                                    onClick={()=>handleClick(value)}
+                                >
                                     <h2 className='p-2 text-xl font-bold text-green-600'>{value.title}</h2>
                                     <p className='p-2 text-md'>{value.author}</p>
                                     <div className='grid grid-cols-3 md:grid-cols-5 p-2 gap-1'>

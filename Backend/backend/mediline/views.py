@@ -60,6 +60,23 @@ class ClinicappointmentsViewSet(viewsets.ModelViewSet):
 
         return queryset
 
+class DoctorsappointmentsViewSet(viewsets.ModelViewSet):
+    queryset = Appointmentconsultations.objects.all()
+    serializer_class = Appointmentserializer
+    filter_backends = [django_filters.rest_framework.DjangoFilterBackend]
+
+    def get_queryset(self):
+        queryset = Appointmentconsultations.objects.all()
+        docid_id = self.request.query_params.get('docid')
+        date = self.request.query_params.get('date')
+
+        if docid_id and date:
+            queryset = queryset.filter(Q(docid=docid_id) & Q(appointment_date=date))
+        elif docid_id:
+            queryset = queryset.filter(docid=docid_id)
+
+        return queryset
+
 class ClinicViewSet(viewsets.ModelViewSet):
     queryset = Clinic.objects.all()
     serializer_class = Clinicserializer

@@ -16,6 +16,14 @@ const testSchema = new mongoose.Schema({
   });
 
 const centerSchema = new mongoose.Schema({
+    email :{
+        type: String,
+        required: true
+    },
+    password : {
+        type: String,
+        required : true
+    },
     center_name :{
         type: String,
         required: true

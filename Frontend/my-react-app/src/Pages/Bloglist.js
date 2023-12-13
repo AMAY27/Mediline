@@ -8,6 +8,12 @@ export const bloglist = [
             "Neurology"    
         ],
         text : "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam eget feugiat justo, vel tristique metus. Fusce sed diam in lorem vulputate facilisis.",
+        content : [
+            { "type": "paragraph", "text": "This is the Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam eget feugiat justo, vel tristique metus. Fusce sed diam in lorem vulputate facilisis. paragraph." },
+            { "type": "image", "src": "src/assets/medical-5459661.svg", "alt": "Image 1" },
+            { "type": "paragraph", "text": "This is the Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam eget feugiat justo, vel tristique metus. Fusce sed diam in lorem vulputate facilisis. paragraph." },
+            { "type": "image", "src": "src/assets/medical-5459661.svg", "alt": "Image 2" }
+        ],
         category : "Medicine"
     },
     {
@@ -18,7 +24,14 @@ export const bloglist = [
             "Cardiology" ,
             "Heart Diseases"   
         ],
-        text : "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam eget feugiat justo, vel tristique metus. Fusce sed diam in lorem vulputate facilisis.",
+        text : "Proof that tony stark has a heart",
+        content : [
+            { "type": "paragraph", "text": "This is the Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam eget feugiat justo, vel tristique metus. Fusce sed diam in lorem vulputate facilisis. paragraph." },
+            { "type": "image", "src": "src/assets/medical-5459661.svg", "alt": "Image 1" },
+            { "type": "paragraph", "text": "This is the Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam eget feugiat justo, vel tristique metus. Fusce sed diam in lorem vulputate facilisis. paragraph. This is the Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam eget feugiat justo, vel tristique metus. Fusce sed diam in lorem vulputate facilisis. paragraph. This is the Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam eget feugiat justo, vel tristique metus. Fusce sed diam in lorem vulputate facilisis. paragraph." },
+            { "type": "paragraph", "text": "This is the Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam eget feugiat justo, vel tristique metus. Fusce sed diam in lorem vulputate facilisis. paragraph." },
+            { "type": "image", "src": "src/assets/medical-5459661.svg", "alt": "Image 2" }
+        ],
         category : "Diseases"
     },
     {
@@ -30,7 +43,14 @@ export const bloglist = [
             "Neurology"    
         ],
         text : "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam eget feugiat justo, vel tristique metus. Fusce sed diam in lorem vulputate facilisis.",
-        category : "Fitness"
+        content : [
+            { "type": "paragraph", "text": "This is the Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam eget feugiat justo, vel tristique metus. Fusce sed diam in lorem vulputate facilisis. paragraph. This is the Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam eget feugiat justo, vel tristique metus. Fusce sed diam in lorem vulputate facilisis. paragraph. This is the Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam eget feugiat justo, vel tristique metus. Fusce sed diam in lorem vulputate facilisis. paragraph." },
+            { "type": "paragraph", "text": "This is the Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam eget feugiat justo, vel tristique metus. Fusce sed diam in lorem vulputate facilisis. paragraph." },
+            { "type": "image", "src": "src/assets/medical-5459661.svg", "alt": "Image 1" },
+            { "type": "paragraph", "text": "This is the Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam eget feugiat justo, vel tristique metus. Fusce sed diam in lorem vulputate facilisis. paragraph." },
+            { "type": "image", "src": "src/assets/medical-5459661.svg", "alt": "Image 2" }
+        ],
+        category : "Fitness",
     },
     {
         title : "The night is darkest just before the dawn",
@@ -41,6 +61,13 @@ export const bloglist = [
             "Neurology"    
         ],
         text : "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam eget feugiat justo, vel tristique metus. Fusce sed diam in lorem vulputate facilisis.",
+        content : [
+            { "type": "paragraph", "text": "This is the Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam eget feugiat justo, vel tristique metus. Fusce sed diam in lorem vulputate facilisis. paragraph." },
+            { "type": "paragraph", "text": "This is the Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam eget feugiat justo, vel tristique metus. Fusce sed diam in lorem vulputate facilisis. paragraph. This is the Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam eget feugiat justo, vel tristique metus. Fusce sed diam in lorem vulputate facilisis. paragraph. This is the Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam eget feugiat justo, vel tristique metus. Fusce sed diam in lorem vulputate facilisis. paragraph." },
+            { "type": "image", "src": "src/assets/medical-5459661.svg", "alt": "Image 1" },
+            { "type": "paragraph", "text": "This is the Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam eget feugiat justo, vel tristique metus. Fusce sed diam in lorem vulputate facilisis. paragraph." },
+            { "type": "image", "src": "src/assets/medical-5459661.svg", "alt": "Image 2" }
+        ],
         category : "Diet"
     },
 ]

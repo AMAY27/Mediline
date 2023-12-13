@@ -4,6 +4,8 @@ import axios from "axios";
 
 const Testcenter = () => {
     const [values, setValues] = useState({
+        email : '',
+        password : '',
         center_name : '',
         address : "",
         zip : '',
@@ -35,15 +37,14 @@ const Testcenter = () => {
             description: testvalues.description,
             cost: testvalues.cost,
         };
-
-        setTests([...tests, newTest]);
-        console.log(tests);
-
         setTestvalues({
             test_name: "",
             description: "",
             cost: "",
         });
+        setTests([...tests, newTest]);
+        console.log(tests);
+
     }
     const handleDelete= (e)=>{
         e.preventDefault()
@@ -57,20 +58,52 @@ const Testcenter = () => {
             }
         }
         const body = JSON.stringify({
+            email : values.email,
+            password : values.password,
             center_name : values.center_name,
             address : values.address,
             zip : values.zip,
             contact : values.contact,
             tests : tests
         })
-        const res = await axios.post('http://localhost:3000/registercenter',body,config)
         console.log(values);
+        const res = await axios.post('http://localhost:3000/registercenter',body,config)
     }
 
   return (
     <div className="grid md:grid-cols-2 gap-4 md:m-8">
         <div>
         <form className="border-2 border-green-300 shadow-md rounded px-8 pt-6 pb-8 mb-4 w-3/4" onSubmit={handleSubmit}>
+            <div className="mb-4 mt-10">
+                <label 
+                    htmlFor="center_name"
+                    className="block text-gray-700 text-sm font-bold mb-2"
+                >
+                   Center Email 
+                </label>
+                <input 
+                    type="text"
+                    name="email"
+                    placeholder='email'
+                    onChange={handleChange}
+                    className='shadow appearance-none rounded-lg w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
+                />
+            </div>
+            <div className="mb-4 mt-10">
+                <label 
+                    htmlFor="center_name"
+                    className="block text-gray-700 text-sm font-bold mb-2"
+                >
+                   Password 
+                </label>
+                <input 
+                    type="text"
+                    name="password"
+                    placeholder='password'
+                    onChange={handleChange}
+                    className='shadow appearance-none rounded-lg w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
+                />
+            </div>
             <div className="mb-4 mt-10">
                 <label 
                     htmlFor="center_name"
