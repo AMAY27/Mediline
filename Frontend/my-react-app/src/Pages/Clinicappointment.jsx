@@ -136,8 +136,8 @@ const Clinicappointment = ({isAuthenticated}) => {
     <div>
         <Navbar/>
         <div className='md:h-screen md:justify-center flex items-center flex-col'>
-            <div className='md:w-3/4 h-auto md:h-auto bg-green-300 border-2 border-green-300 grid grid-cols-2'>
-                <div className='col-span-1'>
+            <div className='md:w-2/3 h-auto md:h-auto border-2 border-green-300 grid grid-cols-4 py-12 px-6'>
+                <div className='col-span-3'>
                     <form action="" onSubmit={handleSubmit}>
                         <div className='mb-4 mx-4'>
                             <label htmlFor="" className='block text-gray-700 text-sm font-bold mb-2'>Enter Name</label>
@@ -189,7 +189,8 @@ const Clinicappointment = ({isAuthenticated}) => {
                             </button>            
                     </form>
                 </div>
-                <div className="col-span-1">
+                <div className="col-span-1 bg-green-100 border-2 border-green-500 py-6 px-4">
+                    <h1 className='font-bold flex justify-center items-center text-lg'>Specializations</h1>
                     <ul>
                         {docspecialization.map((ele,index)=>{
                             return(

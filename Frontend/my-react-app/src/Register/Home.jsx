@@ -3,6 +3,12 @@ import Navbar from '../extras/Navbar'
 import { Navigate, useNavigate, Link } from 'react-router-dom'
 
 const Home = () => {
+
+  const navigate = useNavigate();
+
+  const handleHeroDivsClick = (path) => {
+    navigate(`/${path}`)
+  }
   
   return (
     <>
@@ -16,13 +22,13 @@ const Home = () => {
             backgroundPosition: 'center',
           }}
         >
-          <p className='text-2xl md:text-4xl text-black font-bold'>ALL<br/> your medical needs<br/>At one place.</p>
+          <p className='text-2xl md:text-4xl text-black font-bold opacity-100'>ALL<br/> your medical needs<br/>At one place.</p>
         </div>
         <div className='md:justify-center flex items-center rounded-lg mt-5 mx-7 bg-white-300 ... p-1 md:w-140 md:mx-5 md:mt-6 border-2 border-green-300 hover:bg-green-300'><h1 className='text-xl font-bold text-green-700'>Pharmacy</h1></div>
-        <div className='md:justify-center flex items-center rounded-lg mt-5 mx-7 bg-white-300 ... p-1 md:w-140 md:mx-5 md:mt-6 border-2 border-green-300 hover:bg-green-300'><h1 className='text-xl font-bold text-green-700'>Tests and Diagnosis</h1></div>
+        <div onClick={()=>handleHeroDivsClick("appointmentbook")} className='md:justify-center flex items-center rounded-lg mt-5 mx-7 bg-white-300 ... p-1 md:w-140 md:mx-5 md:mt-6 border-2 border-green-300 hover:bg-green-300'><h1 className='text-xl font-bold text-green-700'>Tests and Diagnosis</h1></div>
         <div className='md:justify-center flex items-center rounded-lg mt-5 mx-7 bg-white-300 ... p-1 md:w-140 md:mx-5 md:mt-6 border-2 border-green-300 hover:bg-green-300'><h1 className='text-xl font-bold text-green-700'>Reports</h1></div>
         <div className='md:justify-center flex items-center rounded-lg mt-5 mx-7 bg-white-300 ... p-1 md:w-140 md:mx-5 md:mt-6 border-2 border-green-300 hover:bg-green-300'><h1 className='text-xl font-bold text-green-700'>Health subscriptions</h1></div>
-        <div className='md:justify-center flex items-center rounded-lg mt-5 mx-7 bg-white-300 ... p-1 md:w-140 md:mx-5  md:h-40 border-2 border-green-300 hover:bg-green-300'><h1 className='text-xl font-bold text-green-700'>Fitness</h1></div>
+        <div onClick={()=>handleHeroDivsClick("blogs")} className='md:justify-center flex items-center rounded-lg mt-5 mx-7 bg-white-300 ... p-1 md:w-140 md:mx-5  md:h-40 border-2 border-green-300 hover:bg-green-300'><h1 className='text-xl font-bold text-green-700'>Blogs</h1></div>
       </div>
       <div className='md:h-76 md:my-20 '>
         <div className='grid grid-cols-1 md:grid-cols-2'>

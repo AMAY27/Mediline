@@ -204,10 +204,16 @@ const Appointmentbook = ({isAuthenticated}) => {
         <div className='md:h-screen md:flex md:flex-col'>
         <div className='grid grid-cols-1 md:grid-cols-3 gap-4 md:m-8'>
           <div className='md:col-span-1 md:h-screen'>
-            <form action="" className='border-2 border-green-300 shadow-md rounded px-8 pt-6 pb-8 mb-4 mx-6'>
-              {/* <div className='mb-6 bg-green-300 relative top-0 left-0 inset-x-0 w-full rounded-t-lg'>
+            <div className='border-2 border-green-300 shadow-md rounded px-8 pt-6 pb-8 mb-4 mx-6'>
+              <h1 className='flex justify-center items-center text-xl font-bold text-green-500'>Clinic and Diagnostic centers</h1>
+              <input className='flex justify-center items-center mt-5 p-3 rounded-xl w-full shadow-xl' placeholder='Search filter coming soon'/>
+              <div className='rounded-md shadow-md border-2 border-green-300 py-12 px-4 my-4 bg-yellow-100'>Ads and Placcards</div>
+              <div className='rounded-md shadow-md border-2 border-green-300 py-12 px-4 my-4 bg-yellow-100'>Ads and Placcards</div>
+            </div>
+            {/* <form action="" className='border-2 border-green-300 shadow-md rounded px-8 pt-6 pb-8 mb-4 mx-6'>
+              <div className='mb-6 bg-green-300 relative top-0 left-0 inset-x-0 w-full rounded-t-lg'>
                 <h1 className='text-2xl md:text-2xl p-2'>Book an Appointment</h1>
-              </div> */}
+              </div>
               <div className='mb-4 mt-10'>
                 <label htmlFor="" className='block text-gray-700 text-sm font-bold mb-2'>Appointment for:</label>
                 <select name="appointmenttype"
@@ -248,7 +254,7 @@ const Appointmentbook = ({isAuthenticated}) => {
                   ))}
                 </select>
               </div>
-            </form>
+            </form> */}
           </div>
           <div className='md:col-span-2'>
             <div className='grid grid-cols-1 md:grid-cols-3'>

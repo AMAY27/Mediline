@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
 import axios from 'axios'
+import Navbar from '../extras/Navbar'
 
 const Repoertupload = () => {
     const uid = localStorage.getItem('userid')
@@ -47,7 +48,12 @@ const Repoertupload = () => {
         //console.log('Form Submitted');
     }
   return (
-    <div>
+    <>
+    <Navbar/>
+    <div className='mt-24 mx-44'>
+      <div className='flex justify-center items-center mb-12'>
+        <h2 className='text-2xl font-bold'>Upload your reports</h2>
+      </div>
         <form action="" onSubmit={handleSubmit} className='border-2 border-green-300 shadow-md rounded px-8 pt-6 pb-8 mb-4'>
             <div className='mb-4'>
               <label htmlFor="type" className='block text-gray-700 text-sm font-bold mb-2'>Report Type</label>
@@ -75,6 +81,7 @@ const Repoertupload = () => {
             </div>
           </form>
     </div>
+    </>
   )
 }
 

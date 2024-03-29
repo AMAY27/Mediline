@@ -6,7 +6,6 @@ const jwtMiddleWare = {
         if(!token){
             return res.status(401).json({ msg: 'No token, authorization denied' });
         }
-
         try {
             jwt.verify(token, 'secret_for_test', (error, decoded) =>{
                 if(error){

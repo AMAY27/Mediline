@@ -124,10 +124,10 @@ const Dasboarduser = ({isAuthenticated}) => {
                             </div>
                         </Carousel>
                     </div>
-                    <div className='mt-4 md:mt-6'>
+                    <div className='mt-4 md:mt-6 flex justify-between items-center'>
                         <h1 className='md:text-4xl font-bold'>Health Diagnosis</h1>
                         <div>
-                            <button className='bg-green-300 text-black py-1 px-4 rounded' onClick={()=> navigate('/reportupload')}>Upload Report</button>
+                            <button className='border-2 border-green-300 hover:bg-green-300 text-black py-3 px-8 rounded' onClick={()=> navigate('/reportupload')}>Upload Report</button>
                         </div>
                     </div>
                 </div>

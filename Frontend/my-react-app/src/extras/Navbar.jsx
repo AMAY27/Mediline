@@ -17,9 +17,10 @@ const Navbar = ({logout, isAuthenticated}) => {
       if(isAuthenticated){
         return(
           <div className='hidden md:flex items-center space-x-7'>
-            <div className='text-black'>Dashboard</div>
-            <div className='text-black'>Profile</div>
-            <div className='text-black' onClick={logout}>Logout</div>
+            <Link to={'/blogs'}><div className='text-black cursor-pointer hover:text-green-300 hover:font-bold'>Blogs</div></Link>
+            <Link to={'/dashboard'}><div className='text-black cursor-pointer hover:text-green-300 hover:font-bold'>Dashboard</div></Link>
+            <div className='text-black cursor-pointer hover:text-green-300 hover:font-bold'>Profile</div>
+            <div className='text-black cursor-pointer hover:text-green-300 hover:font-bold' onClick={logout}>Logout</div>
             <div className='hidden md:flex items-center space-x-2'>
               <span className='text-black font-bold text-2xl text-green-300'>Welcome, User</span>
             </div>
@@ -29,6 +30,7 @@ const Navbar = ({logout, isAuthenticated}) => {
         return(
           
           <div className='hidden md:flex items-center space-x-2'>
+            <Link to={'/'} className='font-bold mx-4 hover:text-green-500 cursor-pointer'>Home</Link>
             <button className='mx-2 my-1 bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline' onClick={handleSignIn}>Sign In</button>
             <button className='mx-2 my-1 bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline' onClick={handleRegisterclick}>Register</button>
           </div>

@@ -91,7 +91,7 @@ const Testappointmentbook = ({isAuthenticated}) => {
     <div>
         <Navbar/>
         <div className='md:h-screen md:justify-center flex items-center flex-col'>
-            <div className='md:w-3/4 h-auto md:h-auto bg-green-300 border-2 border-green-300 grid grid-cols-1 md:grid-cols-4 gap-4'>
+            <div className='md:w-3/4 h-auto md:h-auto border-2 border-green-300 grid grid-cols-1 md:grid-cols-4 gap-4 py-12 px-6'>
                 <div className='md:col-span-1'>
                     <form action="" onSubmit={handleSubmit}>
                         <div className='mb-4 mx-4'>
