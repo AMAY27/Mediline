@@ -4,6 +4,7 @@ import DatePicker from 'react-datepicker'
 import { checkauthenticated, load_user, logout } from '../actions/auth';
 import { useDispatch, connect } from 'react-redux';
 import axios from 'axios'
+import { BACKEND_URL } from '../utils/constants';
 
 const Clinicappointment = ({isAuthenticated}) => {
     const doctorid = localStorage.getItem('docid')
@@ -59,7 +60,7 @@ const Clinicappointment = ({isAuthenticated}) => {
                 'Accept' : 'application/json'
             }
         }
-        const res = await axios.get(`http://localhost:8000/api/availability/?docid=${doctorid}`,config)
+        const res = await axios.get(`${BACKEND_URL}/api/availability/?docid=${doctorid}`,config)
         //setDoctordata(res.data.center)
         console.log(res.data);
         const arr = res.data
@@ -81,7 +82,7 @@ const Clinicappointment = ({isAuthenticated}) => {
                 'Accept' : 'application/json'
             }
         }
-        const res = await axios.get(`http://localhost:8000/api/docspec/?docid=${doctorid}`,config)
+        const res = await axios.get(`${BACKEND_URL}/api/docspec/?docid=${doctorid}`,config)
         console.log(res);
         setDocspecialization(res.data)
 
@@ -124,7 +125,7 @@ const Clinicappointment = ({isAuthenticated}) => {
             appointment_date : formattedDate,
             times_slot : timeslot
         })
-        await axios.post('http://127.0.0.1:8000/api/appointment/',body,config)
+        await axios.post(`${BACKEND_URL}/api/appointment/`,body,config)
     }
 
     // if(!isAuthenticated){

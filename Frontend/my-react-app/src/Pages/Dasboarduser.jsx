@@ -10,6 +10,7 @@ import { useDispatch } from 'react-redux';
 import { Link, Navigate, useNavigate } from 'react-router-dom';
 import { logout } from '../actions/auth'
 import axios from 'axios';
+import { BACKEND_URL } from '../utils/constants';
 
 const Dasboarduser = ({isAuthenticated}) => {
     const uid = localStorage.getItem('userid')
@@ -35,7 +36,7 @@ const Dasboarduser = ({isAuthenticated}) => {
                 'Accept' : 'application/json'
             }
         };
-        const res = await axios.get(`http://127.0.0.1:8000/api/files/?uid=${uid}`,config)
+        const res = await axios.get(`${BACKEND_URL}/api/files/?uid=${uid}`,config)
         console.log(res);
     } catch (error) {
         console.log(error);
@@ -49,7 +50,7 @@ const Dasboarduser = ({isAuthenticated}) => {
                 'Accept' : 'application/json'
             }
         };
-    const res = await axios.get(`http://127.0.0.1:8000/api/appointment/?uid=${uid}`,config)
+    const res = await axios.get(`${BACKEND_URL}/api/appointment/?uid=${uid}`,config)
     const appList = res.data
     setAppointmentList(appList)
     console.log(appList);  

@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
 import axios from 'axios'
 import Navbar from '../extras/Navbar'
+import { BACKEND_URL } from '../utils/constants'
 
 const Repoertupload = () => {
     const uid = localStorage.getItem('userid')
@@ -40,7 +41,7 @@ const Repoertupload = () => {
             }
         }
         try {
-            const res = await axios.post('http://localhost:8000/api/files/',formData,config)
+            const res = await axios.post(`${BACKEND_URL}/api/files/`,formData,config)
             console.log(res);
         } catch (error) {
             console.log(error);

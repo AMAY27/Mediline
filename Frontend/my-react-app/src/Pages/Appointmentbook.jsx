@@ -1,18 +1,14 @@
 import React, { useEffect } from 'react'
 import { useState } from 'react';
-import DatePicker from 'react-datepicker';
 import axios from 'axios';
 import Navbar from '../extras/Navbar';
 import { checkauthenticated, logout, load_user } from '../actions/auth';
 import { useDispatch, connect } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
+import { BACKEND_URL } from '../utils/constants';
 
 const Appointmentbook = ({isAuthenticated}) => {
   const dispatch = useDispatch()
-  const timeSlots = ['Select','9:00 am', '10:00 am', '11:00 am', '12:00 pm', '1:00 pm', '2:00 pm'];
-  const appointmenttype = ['Select','Test', 'Consultation', 'Health Checkup']
-  const [selectedDate, setSelectedDate] = useState(null);
-  const [selectedTimeSlot, setSelectedTimeSlot] = useState(timeSlots[0]);
   const [clinicList , setClinicList] = useState([])
   const [testcenters, setTestcenters] = useState([])
   const [docList, setDoclist] = useState([])
@@ -68,7 +64,7 @@ const Appointmentbook = ({isAuthenticated}) => {
         'Accept' : 'application/json'
       }
     }
-    const res = await axios.get(`http://127.0.0.1:8000/api/clinic/`,config)
+    const res = await axios.get(`${BACKEND_URL}/api/clinic/`,config)
     const cliniclist = res.data
     setClinicList(cliniclist)
   }
@@ -93,18 +89,10 @@ const Appointmentbook = ({isAuthenticated}) => {
         'Accept' : 'application/json'
       }
     }
-    const res = await axios.get(`http://127.0.0.1:8000/api/doctors/`,config)
+    const res = await axios.get(`${BACKEND_URL}/api/doctors/`,config)
     const doclist = res.data
     setDoclist(doclist)
   }
-
-  const handleDateChange = date => {
-    setSelectedDate(date);
-  };
-
-  const handleTimeSlotChange = event => {
-    setSelectedTimeSlot(event.target.value);
-  };
 
   function handleBooktest(id){
     console.log(id);
@@ -210,51 +198,6 @@ const Appointmentbook = ({isAuthenticated}) => {
               <div className='rounded-md shadow-md border-2 border-green-300 py-12 px-4 my-4 bg-yellow-100'>Ads and Placcards</div>
               <div className='rounded-md shadow-md border-2 border-green-300 py-12 px-4 my-4 bg-yellow-100'>Ads and Placcards</div>
             </div>
-            {/* <form action="" className='border-2 border-green-300 shadow-md rounded px-8 pt-6 pb-8 mb-4 mx-6'>
-              <div className='mb-6 bg-green-300 relative top-0 left-0 inset-x-0 w-full rounded-t-lg'>
-                <h1 className='text-2xl md:text-2xl p-2'>Book an Appointment</h1>
-              </div>
-              <div className='mb-4 mt-10'>
-                <label htmlFor="" className='block text-gray-700 text-sm font-bold mb-2'>Appointment for:</label>
-                <select name="appointmenttype"
-                  className='shadow appearance-none rounded-lg w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
-                >
-                  {appointmenttype.map(type =>(
-                    <option value={type} key={type}>{type}</option>
-                  ))}
-                </select>
-              </div>
-              <div className='mb-4'>
-                <label htmlFor="" className='block text-gray-700 text-sm font-bold mb-2'>Enter Email</label>
-                <input type='email' placeholder='email' name='email' className='shadow appearance-none rounded-lg w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'/>
-              </div>
-              <div className='mb-4'>
-                <label htmlFor="" className='block text-gray-700 text-sm font-bold mb-2'>Enter Full Name</label>
-                <input type='text' placeholder='name' name='name' className='shadow appearance-none rounded-lg w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'/>
-              </div>
-              <div className='mb-4'>
-                <label htmlFor="" className='block text-gray-700 text-sm font-bold mb-2'>Select Date:</label>
-                <DatePicker
-                  selected={selectedDate}
-                  onChange={handleDateChange}
-                  dateFormat="yyyy/MM/dd"
-                  className='shadow appearance-none rounded-lg w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
-                />
-              </div>
-              <div className='mb-4'>
-                <label htmlFor="" className='block text-gray-700 text-sm font-bold mb-2'>Select Time Slot:</label>
-                <select
-                  name='timeSlot'
-                  onChange={handleTimeSlotChange}
-                  value={selectedTimeSlot}
-                  className='shadow appearance-none rounded-lg w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
-                >
-                  {timeSlots.map(slot => (
-                    <option key={slot} value={slot}>{slot}</option>
-                  ))}
-                </select>
-              </div>
-            </form> */}
           </div>
           <div className='md:col-span-2'>
             <div className='grid grid-cols-1 md:grid-cols-3'>
