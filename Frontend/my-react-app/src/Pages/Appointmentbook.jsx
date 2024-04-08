@@ -5,9 +5,10 @@ import Navbar from '../extras/Navbar';
 import { checkauthenticated, logout, load_user } from '../actions/auth';
 import { useDispatch, connect } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { BACKEND_URL } from '../utils/constants';
+//import { BACKEND_URL } from '../utils/constants';
 
 const Appointmentbook = ({isAuthenticated}) => {
+  const BACKEND_URL = import.meta.env.VITE_BACKEND_API_URL;
   const dispatch = useDispatch()
   const [clinicList , setClinicList] = useState([])
   const [testcenters, setTestcenters] = useState([])

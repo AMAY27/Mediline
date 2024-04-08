@@ -10,9 +10,10 @@ import { useDispatch } from 'react-redux';
 import { Link, Navigate, useNavigate } from 'react-router-dom';
 import { logout } from '../actions/auth'
 import axios from 'axios';
-import { BACKEND_URL } from '../utils/constants';
+//import { BACKEND_URL } from '../utils/constants';
 
 const Dasboarduser = ({isAuthenticated}) => {
+    const BACKEND_URL = import.meta.env.VITE_BACKEND_API_URL;
     const uid = localStorage.getItem('userid')
     const [appointmentList, setAppointmentList] = useState([])
     const dispatch = useDispatch()

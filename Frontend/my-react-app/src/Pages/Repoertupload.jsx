@@ -2,9 +2,10 @@ import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
 import axios from 'axios'
 import Navbar from '../extras/Navbar'
-import { BACKEND_URL } from '../utils/constants'
+//import { BACKEND_URL } from '../utils/constants'
 
 const Repoertupload = () => {
+  const BACKEND_URL = import.meta.env.VITE_BACKEND_API_URL;
     const uid = localStorage.getItem('userid')
     const [values, setValues] = useState({
         type:'',

@@ -4,9 +4,10 @@ import DatePicker from 'react-datepicker'
 import { checkauthenticated, load_user, logout } from '../actions/auth';
 import { useDispatch, connect } from 'react-redux';
 import axios from 'axios'
-import { BACKEND_URL } from '../utils/constants';
+//import { BACKEND_URL } from '../utils/constants';
 
 const Clinicappointment = ({isAuthenticated}) => {
+    const BACKEND_URL = import.meta.env.VITE_BACKEND_API_URL;
     const doctorid = localStorage.getItem('docid')
     const clinicid = localStorage.getItem('clinicid')
     const uid = localStorage.getItem('userid')
