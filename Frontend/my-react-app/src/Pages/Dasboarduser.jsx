@@ -81,9 +81,12 @@ const Dasboarduser = ({isAuthenticated}) => {
                             {appointmentList.map((key)=>{
                                 if(key.appointment_status === 'active'){
                                     return (
-                                        <div className='flex justify-between m-2 pt-2'>
-                                            <h2 className='font-bold'>{key.appointment_date}</h2>
-                                            <button className='bg-green-300 text-black py-1 px-4 rounded'>View details</button>
+                                        <div>
+                                            <div className='text-green-500 mx-2 pt-2'>{key.patient_name}</div>
+                                            <div className='flex items-center justify-between m-2'>
+                                                <h2 className='font-bold'>{key.appointment_date}</h2>
+                                                <button className='border-2 border-green-300 hover:bg-green-300 text-black py-1 px-4 rounded'>View details</button>
+                                            </div>
                                         </div>
                                     )
                                 }
@@ -127,7 +130,7 @@ const Dasboarduser = ({isAuthenticated}) => {
                         </Carousel>
                     </div>
                     <div className='mt-4 md:mt-6 flex justify-between items-center'>
-                        <h1 className='md:text-4xl font-bold'>Health Diagnosis</h1>
+                        <h1 className='md:text-4xl font-bold'>Reports and Diagnostics</h1>
                         <div>
                             <button className='border-2 border-green-300 hover:bg-green-300 text-black py-3 px-8 rounded' onClick={()=> navigate('/reportupload')}>Upload Report</button>
                         </div>
@@ -137,7 +140,7 @@ const Dasboarduser = ({isAuthenticated}) => {
         </div>
     </>
   )
-}
+}   
 const mapStatetoProps = (state) =>({
     isAuthenticated: state.auth.isAuthenticated
   })
