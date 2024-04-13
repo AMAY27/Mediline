@@ -43,6 +43,50 @@ class AppointmentViewSet(viewsets.ModelViewSet):
             return Appointmentconsultations.objects.filter(uid=user_id)
         return self.queryset
 
+class AppointmentDetailsViewSet(viewsets.ModelViewSet):
+    queryset = Appointmentconsultations.objects.all()
+    serializer_class = Appointmentserializer
+    filter_backends = [django_filters.rest_framework.DjangoFilterBackend]
+
+    
+    def retrieve(self, request, *args, **kwargs):
+        appointment_id = kwargs.get('appid')
+        print(appointment_id)
+        if appointment_id:
+            try:
+                # Retrieve the appointment instance
+                appointment_instance = Appointmentconsultations.objects.get(id=appointment_id)
+
+                # Serialize appointment details
+                appointment_serializer = self.get_serializer(appointment_instance)
+                appointment_data = appointment_serializer.data
+
+                # Retrieve and serialize doctor details
+                doctor_id = appointment_instance.docid.id
+                doctor_instance = Doctors.objects.get(id=doctor_id)
+                doctor_serializer = Doctorserializer(doctor_instance)
+                doctor_data = doctor_serializer.data
+
+                # Retrieve and serialize clinic details
+                clinic_id = appointment_instance.clinicid.id
+                clinic_instance = Clinic.objects.get(id=clinic_id)
+                clinic_serializer = Clinicserializer(clinic_instance)
+                clinic_data = clinic_serializer.data
+
+                # Combine all data into a dictionary
+                merged_data = {
+                    **appointment_data,
+                    'doctor_details': doctor_data,
+                    'clinic_details': clinic_data
+                }
+
+                return Response(merged_data)
+            except Appointmentconsultations.DoesNotExist:
+                return Response({'error': 'Appointment not found'})
+        else:
+            return Response({'error': 'appid parameter is required'})
+
+    
 class ClinicappointmentsViewSet(viewsets.ModelViewSet):
     queryset = Appointmentconsultations.objects.all()
     serializer_class = Appointmentserializer

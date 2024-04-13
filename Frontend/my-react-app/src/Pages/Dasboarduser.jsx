@@ -15,7 +15,9 @@ import axios from 'axios';
 const Dasboarduser = ({isAuthenticated}) => {
     const BACKEND_URL = import.meta.env.VITE_BACKEND_API_URL;
     const uid = localStorage.getItem('userid')
-    const [appointmentList, setAppointmentList] = useState([])
+    const [appointmentList, setAppointmentList] = useState([]);
+    const [appDetailsOpen, setAppDetailsOpen] = useState(false);
+    const [docDetails, setDocDetails] = useState()
     const dispatch = useDispatch()
     useEffect(()=>{
         dispatch(checkauthenticated())
@@ -54,7 +56,18 @@ const Dasboarduser = ({isAuthenticated}) => {
     const res = await axios.get(`${BACKEND_URL}/api/appointment/?uid=${uid}`,config)
     const appList = res.data
     setAppointmentList(appList)
-    console.log(appList);  
+  }
+
+  const handleAppointmentDetailsClick = async (appointmentid) => {
+    const config = {
+        headers :{
+            'Content-Type' : 'application/json',
+            'Accept' : 'application/json'
+        }
+    };
+    const res = await axios.get(`${BACKEND_URL}/api/appointmentdetails/${appointmentid}/`, config)
+    console.log(res);
+    setAppDetailsOpen(true);
   }
 
   if(!isAuthenticated){
@@ -85,7 +98,7 @@ const Dasboarduser = ({isAuthenticated}) => {
                                             <div className='text-green-500 mx-2 pt-2'>{key.patient_name}</div>
                                             <div className='flex items-center justify-between m-2'>
                                                 <h2 className='font-bold'>{key.appointment_date}</h2>
-                                                <button className='border-2 border-green-300 hover:bg-green-300 text-black py-1 px-4 rounded'>View details</button>
+                                                <button className='border-2 border-green-300 hover:bg-green-300 text-black py-1 px-4 rounded' onClick={() => handleAppointmentDetailsClick(key.id)}>View details</button>
                                             </div>
                                         </div>
                                     )
