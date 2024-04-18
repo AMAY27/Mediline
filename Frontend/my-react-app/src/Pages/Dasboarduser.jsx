@@ -10,6 +10,7 @@ import { useDispatch } from 'react-redux';
 import { Link, Navigate, useNavigate } from 'react-router-dom';
 import { logout } from '../actions/auth'
 import axios from 'axios';
+import AppointmentDetails from '../Components/AppointmentDetails';
 //import { BACKEND_URL } from '../utils/constants';
 
 const Dasboarduser = ({isAuthenticated}) => {
@@ -17,7 +18,7 @@ const Dasboarduser = ({isAuthenticated}) => {
     const uid = localStorage.getItem('userid')
     const [appointmentList, setAppointmentList] = useState([]);
     const [appDetailsOpen, setAppDetailsOpen] = useState(false);
-    const [docDetails, setDocDetails] = useState()
+    const [appointmentDetails, setAppointmentDetails] = useState()
     const dispatch = useDispatch()
     useEffect(()=>{
         dispatch(checkauthenticated())
@@ -67,7 +68,12 @@ const Dasboarduser = ({isAuthenticated}) => {
     };
     const res = await axios.get(`${BACKEND_URL}/api/appointmentdetails/${appointmentid}/`, config)
     console.log(res);
+    setAppointmentDetails(res);
     setAppDetailsOpen(true);
+  }
+
+  const handleAppointmentDetailsClose = () => {
+    setAppDetailsOpen(false);
   }
 
   if(!isAuthenticated){
@@ -75,6 +81,7 @@ const Dasboarduser = ({isAuthenticated}) => {
   }
   return (
     <>
+    <AppointmentDetails appDetails={appointmentDetails} isOpen={appDetailsOpen} onClose={handleAppointmentDetailsClose} />
       <Navbar/>
         <div className='md:h-screen md:flex md:flex-col ' id='dashboard-user'>
             <div className='grid grid-cols-1 md:grid-cols-3 gap-4 md:m-8'>
@@ -86,11 +93,8 @@ const Dasboarduser = ({isAuthenticated}) => {
                         Book an appointment
                     </button>
                     {msg && <p>{msg}</p>}
-                    <div className='m-5 md:ml-4 md:mr-10 border-2 border-green-300 shadow-md rounded-t-lg relative'>
-                        <div className=' mb-6 bg-green-300 absolute top-0 left-0 inset-x-0 w-full rounded-t-lg'>
-                            <h1 className='text-2xl md:text-2xl p-2'>Upcoming Appointments</h1>
-                        </div>
-                        <div className='grid grid-cols-1 divide-y divide-green-300 px-8 mt-16 mb-8'>
+                    <div className='m-5 md:ml-4 md:mr-10 border-2 border-green-300 rounded-lg'>
+                        <div className='grid grid-cols-1 divide-y divide-green-300 px-8 mt-8 mb-8'>
                             {appointmentList.map((key)=>{
                                 if(key.appointment_status === 'active'){
                                     return (
@@ -106,8 +110,8 @@ const Dasboarduser = ({isAuthenticated}) => {
                             })}
                         </div>
                     </div>
-                    <div className='m-5 md:ml-4 md:mr-10 border-2 border-green-300 shadow-md rounded-t-lg relative'>
-                        <div className=' mb-6 bg-green-300 absolute top-0 left-0 inset-x-0 w-full rounded-t-lg'>
+                    {/* <div className='m-5 md:ml-4 md:mr-10 border-2 border-green-300 shadow-md rounded-t-lg relative'>
+                        <div className=' mb-6 bg-green-300 absolute top-0 left-0 w-full rounded-t-lg'>
                             <h1 className='text-2xl md:text-2xl p-2'>Previous Appointments</h1>
                         </div>
                         <div className='grid grid-cols-1 divide-y divide-green-300 px-8 mt-16 mb-8'>
@@ -122,7 +126,7 @@ const Dasboarduser = ({isAuthenticated}) => {
                                 }
                             })}
                         </div>
-                    </div>
+                    </div> */}
                 </div>
                 <div className='md:col-span-2'>
                     <div className='caraousel-userdash md:h-40'>
