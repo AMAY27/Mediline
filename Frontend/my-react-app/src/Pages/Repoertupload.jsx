@@ -43,9 +43,18 @@ const Repoertupload = () => {
         }
         try {
             const res = await axios.post(`${BACKEND_URL}/api/files/`,formData,config)
-            console.log(res);
+            if(res.status===201){
+              setValues({
+                type:'',
+                name:'',
+                details:'',
+              })
+              setFile(null)
+              window.alert("Unable to upload the file please try again")
+            }
         } catch (error) {
             console.log(error);
+            window.alert("Unable to upload the file please try again")
         }
         //console.log('Form Submitted');
     }

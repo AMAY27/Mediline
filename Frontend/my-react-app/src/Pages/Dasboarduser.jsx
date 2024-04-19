@@ -69,7 +69,6 @@ const Dasboarduser = ({isAuthenticated}) => {
         }
     };
     const res = await axios.get(`${BACKEND_URL}/api/appointmentdetails/${appointmentid}/`, config)
-    console.log(res.data);
     setAppointmentDetails(res.data);
     setZindexBool(true);
     setAppDetailsOpen(true);

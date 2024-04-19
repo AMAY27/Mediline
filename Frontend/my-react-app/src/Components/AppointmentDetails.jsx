@@ -10,6 +10,8 @@ const AppointmentDetails = ({appDetails, isOpen, onClose}) => {
               <h2 className='text-lg mx-4 my-3'><span className='font-bold'>Patient Name: </span>{appDetails.patient_name}</h2>
               <p className='mx-4'><span className='font-bold'>Date:</span> {appDetails.appointment_date}</p>
               <p className='mx-4'><span className='font-bold'>Address:</span> {appDetails.clinic_details.address}</p>
+              <p className='mx-4'>Dr. {appDetails.doctor_details.first_name} {appDetails.doctor_details.last_name}</p>
+              <p className='mx-4'><span className='font-bold'>Appointement time slot: </span>{appDetails.times_slot}</p>
               <button className='mx-4 mt-3 px-4 py-2 border-2 border-green-300 hover:bg-green-300 rounded-md' onClick={onClose}>Close</button>
             </div>
         </div>
