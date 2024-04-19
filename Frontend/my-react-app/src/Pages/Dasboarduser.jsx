@@ -19,6 +19,8 @@ const Dasboarduser = ({isAuthenticated}) => {
     const [appointmentList, setAppointmentList] = useState([]);
     const [appDetailsOpen, setAppDetailsOpen] = useState(false);
     const [appointmentDetails, setAppointmentDetails] = useState()
+    const [zindexBool, setZindexBool] = useState(false);
+    const z_index = zindexBool ? "z-[-1]" : "z-0";
     const dispatch = useDispatch()
     useEffect(()=>{
         dispatch(checkauthenticated())
@@ -67,13 +69,15 @@ const Dasboarduser = ({isAuthenticated}) => {
         }
     };
     const res = await axios.get(`${BACKEND_URL}/api/appointmentdetails/${appointmentid}/`, config)
-    console.log(res);
-    setAppointmentDetails(res);
+    console.log(res.data);
+    setAppointmentDetails(res.data);
+    setZindexBool(true);
     setAppDetailsOpen(true);
   }
 
   const handleAppointmentDetailsClose = () => {
     setAppDetailsOpen(false);
+    setZindexBool(false);
   }
 
   if(!isAuthenticated){
@@ -99,10 +103,12 @@ const Dasboarduser = ({isAuthenticated}) => {
                                 if(key.appointment_status === 'active'){
                                     return (
                                         <div>
-                                            <div className='text-green-500 mx-2 pt-2'>{key.patient_name}</div>
+                                            <div className='flex items-center justify-between mt-3'>
+                                                <h2 className='text-green-500'>{key.patient_name}</h2>
+                                                <button className='border-2 border-green-300 hover:bg-green-300 text-black py-1 px-4 rounded' onClick={() => handleAppointmentDetailsClick(key.id)}>View details</button>
+                                            </div>
                                             <div className='flex items-center justify-between m-2'>
                                                 <h2 className='font-bold'>{key.appointment_date}</h2>
-                                                <button className='border-2 border-green-300 hover:bg-green-300 text-black py-1 px-4 rounded' onClick={() => handleAppointmentDetailsClick(key.id)}>View details</button>
                                             </div>
                                         </div>
                                     )
@@ -130,7 +136,7 @@ const Dasboarduser = ({isAuthenticated}) => {
                 </div>
                 <div className='md:col-span-2'>
                     <div className='caraousel-userdash md:h-40'>
-                        <Carousel showThumbs={false} showStatus={false} infiniteLoop={true} className='carousel'>
+                        <Carousel showThumbs={false} showStatus={false} infiniteLoop={true} className={`carousel ${z_index}`}>
                             <div>
                                 <div className='caraousel-div'><h1 className='text-3xl p-8 font-bold'>Upto 30% off on Full health checkups</h1>
                                 </div>
