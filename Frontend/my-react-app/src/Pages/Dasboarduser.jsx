@@ -134,7 +134,7 @@ const Dasboarduser = ({isAuthenticated}) => {
                     </div> */}
                 </div>
                 <div className='md:col-span-2'>
-                    <div className='caraousel-userdash md:h-40'>
+                    {/* <div className='caraousel-userdash md:h-40'>
                         <Carousel showThumbs={false} showStatus={false} infiniteLoop={true} className={`carousel ${z_index}`}>
                             <div>
                                 <div className='caraousel-div'><h1 className='text-3xl p-8 font-bold'>Upto 30% off on Full health checkups</h1>
@@ -150,7 +150,7 @@ const Dasboarduser = ({isAuthenticated}) => {
                                 <p className='legend'>Image 1</p>
                             </div>
                         </Carousel>
-                    </div>
+                    </div> */}
                     <div className='mt-4 md:mt-6 flex justify-between items-center'>
                         <h1 className='md:text-4xl font-bold'>Reports and Diagnostics</h1>
                         <div>
