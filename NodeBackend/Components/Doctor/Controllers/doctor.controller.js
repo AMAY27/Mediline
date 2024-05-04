@@ -5,7 +5,7 @@ const { createToken } = require('../../../util/TokenCreation.js');
 const doctorController = {
     registerDoctor: async(req, res) => {
         try {
-            const doctor = Doctor.findOne({email: req.body.email})
+            const doctor = await Doctor.findOne({email: req.body.email})
             if(doctor){
                 res.status(400).json({status : 'email already used'});
             }else{
@@ -21,6 +21,7 @@ const doctorController = {
                     is_active: req.body.is_active,
                     specializations: req.body.specializations
                 })
+                res.status(201).json({status : 'ok'})
             }
         } catch (error) {
             res.status(400).json({status :'error'})
