@@ -1,27 +1,26 @@
-const mongoose = require('mongoose');
-const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');
-const User = require('../schemas/user.schema.js');
+const Doctor = require('../Schemas/doctor.schema.js');
 const { createToken } = require('../../../util/TokenCreation.js');
 
-const userController = {
-    registerUser: async (req,res) => {
+const doctorController = {
+    registerDoctor: async(req, res) => {
         try {
-            const user = await User.findOne({email : req.body.email});
-            if(user){
-                res.status(400).json({status : 'unavail'});
+            const doctor = Doctor.findOne({email: req.body.email})
+            if(doctor){
+                res.status(400).json({status : 'email already used'});
             }else{
                 const salt = await bcrypt.genSalt(10);
                 let encryptPassword = req.body.password
                 encryptPassword = await bcrypt.hash(encryptPassword, salt);
-                const user = await User.create({
+                const doctor = await Doctor.create({
                     email: req.body.email,
                     password: encryptPassword,
                     name: req.body.name,
+                    professional_details: req.body.professional_details,
+                    date_joined: Date.now(),
                     is_active: req.body.is_active,
-                    date_joined: Date.now()
-                });
-                res.status(201).json({status : 'ok'})
+                    specializations: req.body.specializations
+                })
             }
         } catch (error) {
             res.status(400).json({status :'error'})
@@ -29,26 +28,26 @@ const userController = {
         }
     },
 
-    loginUser: async (req,res) => {
+    loginDoctor: async(req, res) => {
         try {
-            const user = await User.findOne({email: req.body.email});
-            if(!user){
+            const doctor = await Doctor.findOne({email: req.body.email});
+            if(!doctor){
                 return res.status(400).json({status:'email incorrect'})
             }
-            const isPass = await bcrypt.compare(req.body.password, user.password);
+            const isPass = await bcrypt.compare(req.body.password, doctor.password);
             if(!isPass){
                 return res.status(400).json({status:'password incorrect'})
             }
-            const token = createToken(user._id)
+            const token = createToken(doctor._id)
             res.cookie("token", token,{
                 withCredentials: true,
                 httpOnly: false,
             });
-            res.status(201).json({message: "User logged in sucsessfully", success: true});
+            res.status(201).json({message: "logged in sucsessfully", success: true});
         } catch (error) {
             console.error(error);
         }
     }
 }
 
-module.exports = userController
+module.exports = doctorController
