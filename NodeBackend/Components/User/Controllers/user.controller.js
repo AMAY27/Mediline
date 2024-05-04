@@ -36,7 +36,7 @@ const userController = {
             if(!user){
                 return res.status(400).json({status:'email incorrect'})
             }
-            const isPass = await bcrypt.compare(password, center.password);
+            const isPass = await bcrypt.compare(req.body.password, user.password);
             if(!isPass){
                 return res.status(400).json({status:'password incorrect'})
             }
@@ -46,9 +46,10 @@ const userController = {
                 httpOnly: false,
             });
             res.status(201).json({message: "User logged in sucsessfully", success: true});
-            createNextState()
         } catch (error) {
             console.error(error);
         }
     }
 }
+
+module.exports = userController
