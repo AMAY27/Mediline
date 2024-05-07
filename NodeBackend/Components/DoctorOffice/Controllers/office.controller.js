@@ -11,7 +11,7 @@ const officeController = {
                 officename : req.body.officename,
                 address : req.body.address,
                 pincode : req.body.pincode,
-                servicetags : req.body.servicetags
+                service_tags : req.body.servicetags
             })
             res.status(201).json({status : "Registered"})
         } catch (error) {

@@ -9,13 +9,14 @@ const Appointment = require('./models/appointmentmodel')
 const centerRoutes = require('./routes/centerRoutes')
 const userRoutes = require('./Components/User/Routes/user.routes')
 const doctorRoutes = require('./Components/Doctor/Routes/doctor.routes')
+const officeRoutes = require('./Components/DoctorOffice/Routes/office.routes')
 app.use(cors());
 app.use(express.json())
 mongoose.connect(MONGO_URL);
 
 app.use( centerRoutes);
 app.use(userRoutes);
-app.use(doctorRoutes);
+app.use(doctorRoutes, officeRoutes);
 
 app.listen(PORT,()=>{
     console.log(`server started at port ${PORT}`);
