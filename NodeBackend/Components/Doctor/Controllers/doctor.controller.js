@@ -1,6 +1,8 @@
 const bcrypt = require('bcryptjs');
 const Doctor = require('../Schemas/doctor.schema.js');
+const Docavailability = require('../Schemas/docavailability.schema.js')
 const { createToken } = require('../../../util/TokenCreation.js');
+const cron = require('node-cron');
 
 const doctorController = {
     registerDoctor: async(req, res) => {
@@ -47,6 +49,30 @@ const doctorController = {
             res.status(201).json({message: "logged in sucsessfully", success: true});
         } catch (error) {
             console.error(error);
+        }
+    },
+    availabilityAddition: async(req,res) => {
+        try {
+            const weekdays = {
+                "Monday" : 1,
+                "Tuesday" : 2,
+                "Wednesday" : 3,
+                "Thursday" : 4,
+                "Friday" : 5,
+                "Saturday" : 6,
+                "Sunday" : 7
+            }
+            const curr_weekday = await weekdays[req.body.weekday]
+            const availability = await Docavailability.create({
+                weekday : curr_weekday,
+                time_slots : req.body.time_slots,
+                is_available : true,
+                officeid : req.body.officeid,
+                docid : req.body.docid
+            })
+            res.status(201).json({message : "Created"});
+        } catch (error) {
+            res.status(500).json({message : "Internal server error"})
         }
     }
 }

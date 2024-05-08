@@ -18,6 +18,32 @@ const officeController = {
             res.status(500).json({message : "Internal Server error"})
             console.log(error);
         }
+    },
+    availabilityAddition: async(req,res) => {
+        try {
+            const weekdays = {
+                "Monday" : 1,
+                "Tuesday" : 2,
+                "Wednesday" : 3,
+                "Thursday" : 4,
+                "Friday" : 5,
+                "Saturday" : 6,
+                "Sunday" : 7
+            }
+            const curr_weekday = await weekdays[req.body.weekday]
+            const availability = {
+                weekday : curr_weekday,
+                time_slots : req.body.time_slots,
+                is_available : true,
+                docid : req.body.docid
+            }
+            const updateavailability = { $push: {weekly_availability : availability} } 
+            const office = {_id : req.body.officeid}
+            const update_availability = await Office.findOneAndUpdate(office, updateavailability);
+            res.status(201).json({message : "Update with addition of availability"});
+        } catch (error) {
+            res.status(500).json({message : "Internal server error"})
+        }
     }
 }
 
