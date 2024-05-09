@@ -4,6 +4,6 @@ const officeController = require('../Controllers/office.controller')
 const jwtmiddleware = require('../../../middlewares/jwtMiddleware')
 
 router.post('/officeregister',jwtmiddleware.verification, officeController.registerOffice)
-router.put('/office/docavailability', officeController.availabilityAddition)
+//router.put('/office/docavailability', officeController.availabilityAddition)
 
 module.exports = router

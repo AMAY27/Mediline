@@ -31,4 +31,5 @@ const docavailability = mongoose.Schema({
     }
 },{collection: "Docavailability"})
 
+
 module.exports = mongoose.model("Docavailability", docavailability)
