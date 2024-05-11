@@ -22,7 +22,11 @@ const appointmentSchema = mongoose.Schema({
         required: true
     },
     appointment_date : {
-        type: Date,
+        type: String,
+        required: true
+    },
+    appointment_day : {
+        type: Number,
         required: true
     },
     time_slot : {
@@ -31,4 +35,6 @@ const appointmentSchema = mongoose.Schema({
     },
     prescriptions : [],
     reports: []
-})
+}, {collection : "ConsultationAppointment"})
+
+module.exports = mongoose.model("Consultation", appointmentSchema)

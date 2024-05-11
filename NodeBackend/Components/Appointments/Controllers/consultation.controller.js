@@ -9,25 +9,41 @@ const consultationAppointments = {
     addAppointment : async(req,res) => {
         try {
             const doctor = await Doctor.findOne({_id : req.body.docid})
-            const appointment = await Consultation.create({
-                docid : req.body.docid,
-                userid : req.body.userid,
-                patient_name : req.body.patient_name,
-                doc_name : doctor.name,
-                appointment_date : req.body.appointment_date
-            })
-            res.status(201).json({message : 'Appointment booked'})
+            const user = await User.findOne({_id : req.body.userid})
+            const appointement = await Consultation.find({appointment_date : req.body.appointment_date, officeid : req.body.officeid, docid : req.body.docid, userid : req.body.userid})
+            if(appointement) {
+                res.status(409).json({message : "Appointment already booked for this date"})
+            }
+            else{
+                const appointment = await Consultation.create({
+                    docid : req.body.docid,
+                    officeid : req.body.officeid,
+                    userid : req.body.userid,
+                    patient_name : user.name,
+                    doc_name : doctor.name,
+                    appointment_date : req.body.appointment_date,
+                    appointment_day : req.body.day,
+                    time_slot : req.body.time_slot
+                })
+                res.status(201).json({message : 'Appointment booked'})
+            }
         } catch (error) {
+            console.log(error);
             res.status(500).json({message : 'Internal Server error'})
         }
     },
     checkAvailability : async(req,res) => {
         try {
-            const datetobechecked = req.body.date
-            //const appointements = await Consultation.find({appointment_date : datetobechecked, officeid : req.body.officeid, docid : req.body.docid})
-            const availability = await Availability.find({officeid : req.body.officeid, docid : req.body.docid})
-            console.log(availability);
-            res.status(200).json({availability})
+            const appointements = await Consultation.find({appointment_date : req.body.date, officeid : req.body.officeid, docid : req.body.docid})
+            const availability = await Availability.findOne({officeid : req.body.officeid, docid : req.body.docid, weekday : req.body.day})
+            let available_slots = [];
+            const available_time_slots = await availability.time_slots
+            await available_time_slots.forEach(value => {
+                if(value.max_patients >= appointements.length){
+                    available_slots.push(value.slot)
+                }
+            })
+            available_slots.length > 0 ? res.status(200).json({ available_slots })  : res.status(409).json({ available_slots });
         } catch (error) {
             res.status(500).json({error})
             console.log(error);
