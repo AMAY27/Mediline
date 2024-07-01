@@ -43,7 +43,7 @@ const consultationAppointments = {
                     available_slots.push(value.slot)
                 }
             })
-            available_slots.length > 0 ? res.status(200).json({ available_slots })  : res.status(409).json({ available_slots });
+            available_slots.length > 0 ? res.status(200).json({ available_slots })  : res.status(409).json({ message :"No slots available" });
         } catch (error) {
             res.status(500).json({error})
             console.log(error);

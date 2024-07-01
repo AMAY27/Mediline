@@ -20,7 +20,7 @@ const doctorController = {
                     name: req.body.name,
                     professional_details: req.body.professional_details,
                     date_joined: Date.now(),
-                    is_active: req.body.is_active,
+                    is_active: true,
                     specializations: req.body.specializations
                 })
                 res.status(201).json({status : 'ok'})
@@ -73,6 +73,14 @@ const doctorController = {
             res.status(201).json({message : "Created"});
         } catch (error) {
             res.status(500).json({message : "Internal server error"})
+        }
+    },
+    fetchDocAvailability: async(req,res) => {
+        try {
+            const availability = await Docavailability.find({docid: req.body.docid, officeid: req.body.officeid})
+            res.status(200).json({availability})
+        } catch (error) {
+            res.status(500).json({error:error})
         }
     }
 }

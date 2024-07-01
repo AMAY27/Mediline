@@ -50,6 +50,14 @@ const officeController = {
     //         res.status(500).json({message : "Internal server error"})
     //     }
     // }
+    fetchAllOffices : async (req,res) => {
+        try {
+            const office = await Office.find()
+            res.status(200).json({office})
+        } catch (error) {
+            console.log(error);
+        }
+    }
 }
 
 module.exports = officeController

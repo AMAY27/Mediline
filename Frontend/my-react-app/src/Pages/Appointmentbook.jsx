@@ -8,7 +8,7 @@ import { useNavigate } from 'react-router-dom';
 //import { BACKEND_URL } from '../utils/constants';
 
 const Appointmentbook = ({isAuthenticated}) => {
-  const BACKEND_URL = import.meta.env.VITE_BACKEND_API_URL;
+  const BACKEND_URL = import.meta.env.VITE_NODE_BACKEND_URL;
   const dispatch = useDispatch()
   const [clinicList , setClinicList] = useState([])
   const [testcenters, setTestcenters] = useState([])
@@ -65,8 +65,9 @@ const Appointmentbook = ({isAuthenticated}) => {
         'Accept' : 'application/json'
       }
     }
-    const res = await axios.get(`${BACKEND_URL}/api/clinic/`,config)
-    const cliniclist = res.data
+    const res = await axios.get(`${BACKEND_URL}/office/fetchAllOffice`,config)
+    console.log(res);
+    const cliniclist = res.data.office
     setClinicList(cliniclist)
   }
 
@@ -156,7 +157,8 @@ const Appointmentbook = ({isAuthenticated}) => {
         {clinicList.map((value)=>{
           return(
             <div className='border-2 border-green-300 shadow-md rounded'>
-                  {docList.map((key)=>{
+              <h2 className='text-lg md:text-lg font-bold text-center p-2'>Dr. {value.docname}</h2>
+                  {/* {docList.map((key)=>{
                     if(value.docid===key.id){
                       return(
                         <div>
@@ -164,7 +166,7 @@ const Appointmentbook = ({isAuthenticated}) => {
                         </div>
                       )
                     }
-                  })}
+                  })} */}
                   <h2 className='text-sm md:text-sm p-1'>Address : {value.address}</h2>
                   <h2 className='text-sm md:text-sm p-1'>City : {value.city}</h2>
                   <button className='mx-3 my-2 bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline'>Details</button>
@@ -223,16 +225,18 @@ const Appointmentbook = ({isAuthenticated}) => {
                 {clinicList.map((value)=>{
                   return(
                     <div className='border-2 border-green-300 shadow-md rounded'>
-                          {docList.map((key)=>{
+                      <img src='src/assets/medical-5459631.svg' alt='med2' className='h-40'/>
+                      <h2 className='text-lg md:text-lg font-bold text-center p-2'>Dr. {value.docname}</h2>
+                          {/* {docList.map((key)=>{
                             if(value.docid===key.id){
                               return(
                                 <div>
                                   <img src='src/assets/medical-5459631.svg' alt='med2' className='h-40'/>
-                                  <h2 className='text-2xl md:text-lg font-bold text-center p-2'>Dr. {key.first_name} {key.last_name}</h2>
+                                  <h2 className='text-2xl mdv :text-lg font-bold text-center p-2'>Dr. {key.first_name} {key.last_name}</h2>
                                 </div>
                               )
                             }
-                          })}
+                          })} */}
                           <h2 className='mx-3 md:text-sm p-1'>Address : {value.address}</h2>
                           <h2 className='mx-3 md:text-sm p-1'>City : {value.city}</h2>
                           <button className='mx-3 my-2 bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline'>Details</button>
