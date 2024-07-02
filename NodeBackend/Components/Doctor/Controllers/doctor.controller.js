@@ -77,7 +77,8 @@ const doctorController = {
     },
     fetchDocAvailability: async(req,res) => {
         try {
-            const availability = await Docavailability.find({docid: req.body.docid, officeid: req.body.officeid})
+            console.log(req.query.docid);
+            const availability = await Docavailability.find({docid: req.query.docid, officeid: req.query.officeid})
             res.status(200).json({availability})
         } catch (error) {
             res.status(500).json({error:error})

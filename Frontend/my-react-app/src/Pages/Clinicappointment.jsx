@@ -7,7 +7,7 @@ import axios from 'axios'
 //import { BACKEND_URL } from '../utils/constants';
 
 const Clinicappointment = ({isAuthenticated}) => {
-    const BACKEND_URL = import.meta.env.VITE_BACKEND_API_URL;
+    const BACKEND_URL = import.meta.env.VITE_NODE_BACKEND_URL;
     const doctorid = localStorage.getItem('docid')
     const clinicid = localStorage.getItem('clinicid')
     const uid = localStorage.getItem('userid')
@@ -61,7 +61,8 @@ const Clinicappointment = ({isAuthenticated}) => {
                 'Accept' : 'application/json'
             }
         }
-        const res = await axios.get(`${BACKEND_URL}/api/availability/?docid=${doctorid}`,config)
+        //const res = await axios.get(`${BACKEND_URL}/api/availability/?docid=${doctorid}`,config)
+        const res = await axios.get(`${BACKEND_URL}/fetchavailability?docid=${doctorid}&officeid=${clinicid}`,config)
         //setDoctordata(res.data.center)
         console.log(res.data);
         const arr = res.data
