@@ -88,7 +88,16 @@ const Dasboarduser = ({isAuthenticated}) => {
       <Navbar/>
         <div className='md:h-screen md:flex md:flex-col ' id='dashboard-user'>
             <div className='grid grid-cols-1 md:grid-cols-3 gap-4 md:m-8'>
-                <div className='md:col-span-1 md:h-screen'>
+                <div className='hidden md:grid grid-cols-3 bg-green-300 rounded-xl'>
+                    <div className='col-span-1 items-center pl-4'>
+                        <h2 className="text-[3rem] text-white font-bold">Welcome,</h2>
+                        <h2 className="text-[3rem] text-white font-bold">User</h2>
+                    </div>
+                    <div className="col-span-2">
+                        <img src="assets/doctor-6810751.svg" className="h-80" alt="" />
+                    </div>
+                </div>
+                {/* <div className='md:col-span-1 md:h-screen'>
                     <button className="m-4 md:ml-4 bg-white-500 hover:bg-green-300 text-black border-2 border-green-300 font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" 
                         type="button"
                         onClick={()=>navigate('/appointmentbook')}
@@ -131,8 +140,8 @@ const Dasboarduser = ({isAuthenticated}) => {
                                 }
                             })}
                         </div>
-                    </div> */}
-                </div>
+                    </div>
+                </div> */}
                 <div className='md:col-span-2'>
                     {/* <div className='caraousel-userdash md:h-40'>
                         <Carousel showThumbs={false} showStatus={false} infiniteLoop={true} className={`carousel ${z_index}`}>

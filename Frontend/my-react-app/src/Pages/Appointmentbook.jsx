@@ -5,6 +5,7 @@ import Navbar from '../extras/Navbar';
 import { checkauthenticated, logout, load_user } from '../actions/auth';
 import { useDispatch, connect } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
+import "./Appointmentbook.css"
 //import { BACKEND_URL } from '../utils/constants';
 
 const Appointmentbook = ({isAuthenticated}) => {
@@ -183,7 +184,7 @@ const Appointmentbook = ({isAuthenticated}) => {
               }
       </div>
       ) : ( */}
-      <div className='md:h-screen md:flex md:flex-col bg-green-100'>
+      <div className='md:h-screen md:flex md:flex-col' id='appointmentParentDiv'>
         <div className='grid grid-cols-1 md:grid-cols-3 gap-4 md:m-8'>
           <div className='hidden md:block md:col-span-1 md:h-screen'>
             <div className='border-2 border-green-300 shadow-md rounded px-8 pt-6 pb-8 mb-4 mx-6 bg-white'>
@@ -212,9 +213,18 @@ const Appointmentbook = ({isAuthenticated}) => {
               </div>
             </div>
             <div className='mx-4 my-2 md:hidden'>
-              <select name="" id="" className='w-full rounded-md py-2 px-2'>
-                <option value="">Consultation</option>
-                <option value="">Diagnostics</option>
+              <select 
+                className='w-full rounded-md py-2 px-2'
+                onChange={(e)=>{
+                  if(e.target.value === "consultation"){
+                    handleConsultclick();
+                  } else if(e.target.value === "diagnostics"){
+                    handleTestclick();
+                  }
+                }}
+              >
+                <option value="consultation" onSelect={handleConsultclick}>Consultation</option>
+                <option value="diagnostics" onSelect={handleTestclick}>Diagnostics</option>
               </select>
             </div>
               {consultclick && 
@@ -222,7 +232,7 @@ const Appointmentbook = ({isAuthenticated}) => {
                 {clinicList.map((value)=>{
                   return(
                     <div className='md:shadow-xl mx-4 md:mx-0 rounded-md bg-white md:border-2 border-green-300'>
-                      <img src='src/assets/medical-5459631.svg' alt='med2' className='h-40'/>
+                      <img src='assets/medical-5459631.svg' alt='med2' className='h-40'/>
                       <h2 className='text-lg md:text-lg font-bold text-center p-2'>Dr. {value.docname}</h2>
                           {/* {docList.map((key)=>{
                             if(value.docid===key.id){
