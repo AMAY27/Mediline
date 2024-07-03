@@ -17,6 +17,10 @@ const reportSchema = new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         required: true
     },
+    s3Key:{
+        type: String,
+        required: true
+    },
     appointmentIds : [mongoose.Schema.Types.ObjectId],
 },{collection:"Reports"})
 

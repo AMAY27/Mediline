@@ -73,6 +73,7 @@ const userController = {
             }
 
             const files = req.files;
+            const userId = req.headers['user-id'];
 
             if (!files || files.length === 0) {
                 return res.status(400).json({ error: 'No files provided.' });
@@ -92,11 +93,23 @@ const userController = {
                     };
 
                     await s3.send(new PutObjectCommand(params));
-                    return fileKey;
+                    return {
+                        key: fileKey,
+                        name: file.originalname
+                    };
                 });
 
                 const uploadedFiles = await Promise.all(uploadPromises);
-                
+                console.log(uploadedFiles);
+                uploadedFiles.map((file)=>{
+                    const report = Report.create({
+                        title: file.name,
+                        // description: req.body.description,
+                        date: Date.now(),
+                        userId : userId,
+                        s3Key: file.key
+                    })
+                })
 
                 res.status(200).json({ message: 'Files uploaded successfully.', files: uploadedFiles });
             } catch (error) {
