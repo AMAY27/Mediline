@@ -91,12 +91,14 @@ export const login = (email, password)=> async dispatch => {
     };
     const body = JSON.stringify({email, password});
     try {
-        const res = await axios.post('http://localhost:8000/auth/jwt/create/',body,config)
+        const res = await axios.post('http://localhost:3000/login',body,config)
         dispatch({
             type: LOGIN_SUCCESS,
             payload: res.data
         })
-        dispatch(load_user());
+        console.log(res);
+        localStorage.setItem("userId", res.data.user_id)
+        //dispatch(load_user());
     } catch (error) {
         dispatch({
             type: LOGIN_FAIL

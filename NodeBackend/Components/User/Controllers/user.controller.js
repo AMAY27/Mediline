@@ -60,7 +60,7 @@ const userController = {
                 withCredentials: true,
                 httpOnly: false,
             });
-            res.status(201).json({message: "User logged in sucsessfully", success: true});
+            res.status(201).json({message: "User logged in sucsessfully", success: true, user_id: user._id});
         } catch (error) {
             console.error(error);
         }
@@ -68,12 +68,12 @@ const userController = {
     uploadReport: async (req, res) => {
         upload.array('files')(req, res, async (err) => {
             if (err) {
-
+                console.log(err);
                 return res.status(500).json({ error: 'File upload failed.' });
             }
 
             const files = req.files;
-            const userId = req.headers['user-id'];
+            const userId = req.headers['userid'];
 
             if (!files || files.length === 0) {
                 return res.status(400).json({ error: 'No files provided.' });
