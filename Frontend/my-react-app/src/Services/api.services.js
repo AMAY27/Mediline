@@ -18,4 +18,35 @@ const uploadReport = async(files, userId) => {
     }
 }
 
-export {uploadReport}
+const getReports = async (userid) => {
+    try {
+        const config = {
+            headers :{
+                'Content-Type' : 'application/json',
+                'Accept' : 'application/json'
+            }
+        };
+        const res = await axios.get(`${BACKEND_URL}/getReports?userid=${userid}`,config);
+        console.log(res);
+        return res.data.reports
+    } catch (error) {
+        console.log(error);
+    }
+}
+
+const getDetailsForBookingAppointments = async (officeid, docid) => {
+    try {
+        const config = {
+            headers :{
+                'Content-Type' : 'application/json',
+                'Accept' : 'application/json'
+            }
+        };
+        const res = await axios.get(`${BACKEND_URL}/detailsForBooking?officeid=${officeid}&docid=${docid}`);
+        return res.data
+    } catch (error) {
+        
+    }
+}
+
+export {uploadReport, getReports, getDetailsForBookingAppointments}

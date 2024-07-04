@@ -32,7 +32,7 @@ const ReportUploadForm = () => {
             console.log(resp);
             if(resp.status===200){
                 setFiles([]);
-                alert("Files uploaded Successfully")
+                alert("Reports uploaded Successfully")
             }
             else{
                 alert("Error While adding file, try again")
@@ -51,7 +51,7 @@ const ReportUploadForm = () => {
     }
   return (
     <div className='flex-col items-center justify-items-center text-center pb-8'>
-        <form action="" className='md:px-36 pt-8' onSubmit={handleUpload}>
+        <form action="" onSubmit={handleUpload}>
             <label htmlFor="images" className='mb-2 block text-md font-medium py-8 mb-4 rounded-md border-dashed border-2 border-green-500 bg-green-100'>
                 <p className='mb-4 block font-medium pt-4'>Upload reports from the device</p>
                 <span className="font-bold text-green-500 border-2 border-green-500 hover:bg-green-500 hover:text-white p-2 rounded-md">Browse</span>

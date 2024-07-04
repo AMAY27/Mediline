@@ -118,6 +118,15 @@ const userController = {
             }
         });
     },
+    getReportsForUser : async(req,res) => {
+        try {
+            const reports = await Report.find({userId : req.query.userid})
+            res.status(200).json({reports: reports})
+        } catch (error) {
+            console.error(error);
+            res.status(500).json({error:'Internal server error'})
+        }
+    }
 }
 
 module.exports = userController

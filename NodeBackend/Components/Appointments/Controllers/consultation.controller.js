@@ -3,6 +3,7 @@ const Consultation = require('../../Appointments/Schemas/consultationappointment
 const Availability = require('../../../Components/Doctor/Schemas/docavailability.schema')
 const Doctor = require('../../../Components/Doctor/Schemas/doctor.schema')
 const User = require('../../../Components/User/schemas/user.schema')
+const Office = require('../../DoctorOffice/Schemas/office.schema')
 
 
 const consultationAppointments = {
@@ -44,6 +45,20 @@ const consultationAppointments = {
                 }
             })
             available_slots.length > 0 ? res.status(200).json({ available_slots })  : res.status(409).json({ message :"No slots available" });
+        } catch (error) {
+            res.status(500).json({error})
+            console.log(error);
+        }
+    },
+    getDetailsForBookingAppointment : async(req,res) => {
+        try {
+            const details = await Office.findOne({admin_docid: req.query.docid, _id: req.query.officeid});
+            const avilability = await Availability.find({officeid: req.query.officeid, docid: req.query.docid});
+            const doctor = await Doctor.findOne(
+                { _id: req.query.docid },
+                { professional_details: 1 }
+            );
+            res.status(200).json({officeDetails: details, availabilityDetails: avilability, professional_details: doctor.professional_details})
         } catch (error) {
             res.status(500).json({error})
             console.log(error);

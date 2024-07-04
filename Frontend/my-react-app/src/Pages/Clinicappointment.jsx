@@ -4,16 +4,19 @@ import DatePicker from 'react-datepicker'
 import { checkauthenticated, load_user, logout } from '../actions/auth';
 import { useDispatch, connect } from 'react-redux';
 import axios from 'axios'
+import { getDetailsForBookingAppointments } from '../Services/api.services';
+import { FaLocationDot } from "react-icons/fa6";
+import Calendar from '../Components/Calendar';
 //import { BACKEND_URL } from '../utils/constants';
 
 const Clinicappointment = ({isAuthenticated}) => {
     const BACKEND_URL = import.meta.env.VITE_NODE_BACKEND_URL;
     const doctorid = localStorage.getItem('docid')
-    const clinicid = localStorage.getItem('clinicid')
+    const officeid = localStorage.getItem('clinicid')
     const uid = localStorage.getItem('userid')
     const dispatch = useDispatch()
     const [name, setName] = useState('')
-    const [docspecialization, setDocspecialization] = useState([])
+    // const [docspecialization, setDocspecialization] = useState([])
     const [specid, setSpecid] = useState([])
     const [availableWeekdays, setAvailableWeekdays] = useState([])
     const [selectableDates, setSelectableDates] = useState([]);
@@ -25,12 +28,22 @@ const Clinicappointment = ({isAuthenticated}) => {
         evening : ""
     })
     const [timeslot, setTimeslot] = useState(null)
+    const [officeData, setOfficeData] = useState({
+        _id:'',
+        admin_docid :'',
+        docname: '',
+        officename:'',
+        service_tags: [],
+        address: '',
+        pincode: '',
+        inHouseDoctors:[]
+    });
+    const [professionalDetails, setProfessionalDetails] = useState()
 
     useEffect(()=>{
-        dispatch(checkauthenticated())
-        dispatch(load_user())
-        loadAvailabilitydata()
-        loadSpeciddata()
+        // dispatch(checkauthenticated())
+        // dispatch(load_user())
+        loadData();
     },[])
 
     useEffect(()=>{
@@ -50,22 +63,16 @@ const Clinicappointment = ({isAuthenticated}) => {
     },[availableWeekdays])
 
     useEffect(()=>{
-        console.log(selectedDate);
-    },[selectedDate])
+        console.log(officeData);
+    },[officeData])
 
 
-    async function loadAvailabilitydata(){
-        const config = {
-            headers : {
-                'Content-Type': 'application/json',
-                'Accept' : 'application/json'
-            }
-        }
-        //const res = await axios.get(`${BACKEND_URL}/api/availability/?docid=${doctorid}`,config)
-        const res = await axios.get(`${BACKEND_URL}/fetchavailability?docid=${doctorid}&officeid=${clinicid}`,config)
-        //setDoctordata(res.data.center)
-        console.log(res.data);
-        const arr = res.data
+    async function loadData(){
+        const resp = await getDetailsForBookingAppointments(officeid, doctorid)
+        console.log(resp);
+        setOfficeData(resp.officeDetails)
+        setProfessionalDetails(resp.professional_details)
+        const arr = resp.availabilityDetails
         const result = []
         setAvailabilitydata(arr)
         arr.map(element => {
@@ -77,18 +84,18 @@ const Clinicappointment = ({isAuthenticated}) => {
 
     }
 
-    async function loadSpeciddata(){
-        const config = {
-            headers : {
-                'Content-Type': 'application/json',
-                'Accept' : 'application/json'
-            }
-        }
-        const res = await axios.get(`${BACKEND_URL}/api/docspec/?docid=${doctorid}`,config)
-        console.log(res);
-        setDocspecialization(res.data)
+    // async function loadSpeciddata(){
+    //     const config = {
+    //         headers : {
+    //             'Content-Type': 'application/json',
+    //             'Accept' : 'application/json'
+    //         }
+    //     }
+    //     const res = await axios.get(`${BACKEND_URL}/api/docspec/?docid=${doctorid}`,config)
+    //     console.log(res);
+    //     setDocspecialization(res.data)
 
-    }
+    // }
 
     const handleDateChange = date => {
         setSelectedDate(date);
@@ -138,7 +145,44 @@ const Clinicappointment = ({isAuthenticated}) => {
   return (
     <div>
         <Navbar/>
-        <div className='md:h-screen md:justify-center flex items-center flex-col'>
+        <div className='h-screen bg-green-100 md:grid md:grid-cols-3 gap-4 md:px-16 md:py-8'>
+            <div className='md:col-span-1 shadow-xl rounded-xl bg-white h-fit p-4 space-y-4'>
+                <div>
+                    <h2 className='md:text-2xl font-bold text-green-500'>Dr. {officeData.docname}</h2>
+                    <p>{professionalDetails}</p>
+                </div>
+                <div className="flex space-x-2">
+                    {officeData.service_tags && officeData.service_tags.length > 0 ? (
+                        officeData.service_tags.map((service, index) => (
+                            <p key={index} className='px-2 py-1 border-2 border-green-500 rounded-md'>{service}</p>
+                        ))
+                    ) : (
+                        <p>No services available</p>
+                    )}
+                </div>
+                <img src='assets/medical-5459631.svg' alt='med2' className='h-40'/>
+                <div className='flex items-center space-x-2 bg-gray-100 rounded-md p-2'>
+                    <FaLocationDot className='text-2xl text-red-500'/>
+                    <div >
+                        <p>{officeData.address}</p>
+                        <p>{officeData.pincode}</p>
+                    </div>
+                </div>
+            </div>
+            <div className='md:col-span-2 bg-white shadow-xl h-[80%] rounded-xl'>
+                <Calendar availableWeekdays={availableWeekdays}/>
+                <div className=''>
+                    <h2 className='flex justify-center border-t-2 border-gray-200 pt-4'>Available Slots</h2>
+                    <div className="flex justify-center space-x-2 mt-2">
+                        <p className='p-2 border-2 border-green-500 rounded-md'>10:00 am</p>
+                        <p className='p-2 border-2 border-green-500 rounded-md'>11:00 am</p>
+                        <p className='p-2 border-2 border-green-500 rounded-md'>12:00 am</p>
+                        <p className='p-2 border-2 border-green-500 rounded-md'>1:00 pm</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {/* <div className='md:h-screen md:justify-center flex items-center flex-col'>
             <div className='md:w-2/3 h-auto md:h-auto border-2 border-green-300 grid grid-cols-4 py-12 px-6'>
                 <div className='col-span-3'>
                     <form action="" onSubmit={handleSubmit}>
@@ -191,7 +235,7 @@ const Clinicappointment = ({isAuthenticated}) => {
                                 Complete Booking
                             </button>            
                     </form>
-                </div>
+                </div> 
                 <div className="col-span-1 bg-green-100 border-2 border-green-500 py-6 px-4">
                     <h1 className='font-bold flex justify-center items-center text-lg'>Specializations</h1>
                     <ul>
@@ -203,7 +247,7 @@ const Clinicappointment = ({isAuthenticated}) => {
                     </ul>
                 </div>
             </div>
-        </div>
+        </div>*/}
     </div>
   )
 }
