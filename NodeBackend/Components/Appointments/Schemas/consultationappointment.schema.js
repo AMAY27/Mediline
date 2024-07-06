@@ -2,15 +2,15 @@ const mongoose = require('mongoose')
 
 const appointmentSchema = mongoose.Schema({
     docid : {
-        type: mongoose.Schema.ObjectId,
+        type: mongoose.Schema.Types.ObjectId,
         required: true
     },
     officeid : {
-        type: mongoose.Schema.ObjectId,
+        type: mongoose.Schema.Types.ObjectId,
         required: true
     },
     userid : {
-        type: mongoose.Schema.ObjectId,
+        type: mongoose.Schema.Types.ObjectId,
         required: true
     },
     patient_name : {
@@ -31,6 +31,10 @@ const appointmentSchema = mongoose.Schema({
     },
     time_slot : {
         type: String,
+        required: true
+    },
+    is_completed : {
+        type: Boolean,
         required: true
     },
     prescriptions : [],

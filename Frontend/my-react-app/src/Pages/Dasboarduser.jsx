@@ -55,17 +55,6 @@ const Dasboarduser = () => {
     ];
 
 
-//   async function handleGetAppointments(){
-//     const config = {
-//             headers :{
-//                 'Content-Type' : 'application/json',
-//                 'Accept' : 'application/json'
-//             }
-//         };
-//     const res = await axios.get(`${BACKEND_URL}/api/appointment/?uid=${uid}`,config)
-//     const appList = res.data
-//     setAppointmentList(appList)
-//   }
 
 //   const handleAppointmentDetailsClick = async (appointmentid) => {
 //     const config = {
@@ -121,6 +110,11 @@ const Dasboarduser = () => {
                         ))}
                         </div>
                         <div className='bg-white rounded-r-md md:p-8 md:h-[70%]'>
+                            {activeTab === 'appointment' && 
+                                <div className="flex justify-center items-center">
+                                    <button className='p-2 border-2 border-green-500 hover:bg-green-500 hover:text-white rounded-md' onClick={()=> navigate('/appointmentbook')}>Book New Appointment</button>
+                                </div>
+                            }
                             {activeTab === 'upload' &&<ReportUploadForm/>}
                             {activeTab === 'report' && 
                                 reports.map((report) => (
