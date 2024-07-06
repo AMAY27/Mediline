@@ -34,7 +34,7 @@
 }
 
 .cell {
-    padding-inline: 1rem;
+    padding-inline: 0.5rem;
     padding-block: 0.5rem;
     cursor: pointer;
 }
@@ -44,7 +44,8 @@
 }
 
 .cell.selected {
-    background-color: #007bff;
+    background-color: #22c55e;
+    border-radius: 15px;
     color: white;
 }
 
@@ -56,9 +57,15 @@
     display: none;
 }
 
-@media (max-width: 600px) {
+/* @media (max-width: 600px) {
     .col-center {
         display: none;
+    }
+} */
+
+@media (max-width: 425px) {
+    .cell {
+        padding-inline: 0.5rem;
     }
 }
 

@@ -1,11 +1,26 @@
 // src/Calendar.js
-import React, { useState } from 'react';
-import { format, startOfWeek, endOfWeek, addDays, startOfMonth, endOfMonth, isSameMonth, isSameDay, addMonths, subMonths } from 'date-fns';
+import React, { useEffect, useState } from 'react';
+import { 
+    format, 
+    startOfWeek, 
+    endOfWeek, 
+    addDays, 
+    startOfMonth, 
+    endOfMonth, 
+    isSameMonth, 
+    isSameDay, 
+    addMonths, 
+    subMonths, 
+    isAfter 
+} from 'date-fns';
 import './calendar.css'
 
-const Calendar = ({availableWeekdays}) => {
+const Calendar = ({availableWeekdays, dateClicked}) => {
     const [currentMonth, setCurrentMonth] = useState(new Date());
     const [selectedDate, setSelectedDate] = useState(new Date());
+    useEffect(()=>{
+        console.log(currentMonth);
+    },[currentMonth])
 
     const renderHeader = () => {
         const dateFormat = 'MMMM yyyy';
@@ -28,7 +43,7 @@ const Calendar = ({availableWeekdays}) => {
     };
 
     const renderDays = () => {
-        const dateFormat = 'EE';
+        const dateFormat = 'EEEEEE';
         const days = [];
 
         let startDate = startOfWeek(currentMonth);
@@ -55,13 +70,14 @@ const Calendar = ({availableWeekdays}) => {
         let days = [];
         let day = startDate;
         let formattedDate = '';
+        const todayDate = new Date();
     
         while (day <= endDate) {
             for (let i = 0; i < 7; i++) {
                 formattedDate = format(day, dateFormat);
                 const cloneDay = day;
                 const dayOfWeek = day.getDay();
-                const isSelectable = availableWeekdays.includes(dayOfWeek);
+                const isSelectable = availableWeekdays.includes(dayOfWeek) && (isAfter(day, todayDate) || isSameDay(day, todayDate));
     
                 days.push(
                     <div
@@ -75,7 +91,7 @@ const Calendar = ({availableWeekdays}) => {
                                 : 'not-selectable'
                         }`}
                         key={day}
-                        onClick={isSelectable ? () => onDateClick(cloneDay) : null}
+                        onClick={isSelectable ? () => onDateClick(cloneDay, dayOfWeek) : null}
                     >
                         <span className="number">{formattedDate}</span>
                         <span className="bg">{formattedDate}</span>
@@ -93,8 +109,9 @@ const Calendar = ({availableWeekdays}) => {
         return <div className="body">{rows}</div>;
     };
     
-    const onDateClick = day => {
+    const onDateClick = (day, dayOfWeek) => {
         setSelectedDate(day);
+        dateClicked(day, dayOfWeek)
     };
 
     const nextMonth = () => {
@@ -102,11 +119,17 @@ const Calendar = ({availableWeekdays}) => {
     };
 
     const prevMonth = () => {
-        setCurrentMonth(subMonths(currentMonth, 1));
+        const todayDate = new Date();
+        const currentMonthStart = new Date(todayDate.getFullYear(), todayDate.getMonth(), 1);
+        const currentMonthStartFormatted = format(currentMonth, "yyyy-MM");
+
+        if (format(currentMonthStart, "yyyy-MM") !== currentMonthStartFormatted) {
+            setCurrentMonth(subMonths(currentMonth, 1));
+        }
     };
 
     return (
-        <div className="calendar p-8">
+        <div className="calendar px-4">
             {renderHeader()}
             {renderDays()}
             {renderCells()}
