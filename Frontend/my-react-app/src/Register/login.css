@@ -1,0 +1,8 @@
+#loginParentDiv{
+    background: linear-gradient(to left, rgba(134, 240, 199, 0.034), rgba(134, 240, 199, 0.801)),  url('../../public/assets/medical-5459653.svg');
+    /* background-image: url('../../public/assets/medical-5459653.svg'); */
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+}

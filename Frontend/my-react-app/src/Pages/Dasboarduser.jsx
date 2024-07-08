@@ -16,8 +16,7 @@ import ReportUploadForm from '../Components/ReportUploadForm';
 import ReportListingComponents from '../Components/ReportListingComponents';
 //import { BACKEND_URL } from '../utils/constants';
 
-// const Dasboarduser = ({isAuthenticated}) => {
-const Dasboarduser = () => {
+const Dasboarduser = ({isAuthenticated}) => {
     const BACKEND_URL = import.meta.env.VITE_BACKEND_API_URL;
     const uid = localStorage.getItem('userId')
     const [appointmentList, setAppointmentList] = useState([]);
@@ -35,6 +34,7 @@ const Dasboarduser = () => {
     //     // handleGetAppointments()
     // },[])
     useEffect(()=>{
+        dispatch(checkauthenticated())
         const getReportsforUser = async() =>  {
             const resp = await getReports(uid);
             setReports(resp);
@@ -74,9 +74,9 @@ const Dasboarduser = () => {
 //     setZindexBool(false);
 //   }
 
-//   if(!isAuthenticated){
-//     navigate('/loginuser')
-//   }
+  if(!isAuthenticated){
+    navigate('/loginuser')
+  }
   return (
     <>
     {/* <AppointmentDetails appDetails={appointmentDetails} isOpen={appDetailsOpen} onClose={handleAppointmentDetailsClose} /> */}
@@ -129,9 +129,8 @@ const Dasboarduser = () => {
     </>
   )
 }   
-// const mapStatetoProps = (state) =>({
-//     isAuthenticated: state.auth.isAuthenticated
-//   })
+const mapStatetoProps = (state) =>({
+    isAuthenticated: state.auth.isAuthenticated
+  })
 
-// export default connect(mapStatetoProps, {logout}, null,{checkauthenticated,load_user})(Dasboarduser);
-export default Dasboarduser
+export default connect(mapStatetoProps, {logout}, null,{checkauthenticated,load_user})(Dasboarduser);

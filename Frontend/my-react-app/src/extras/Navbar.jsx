@@ -21,9 +21,9 @@ const Navbar = ({logout, isAuthenticated}) => {
             <Link to={'/dashboard'}><div className='text-black cursor-pointer hover:text-green-300 hover:font-bold'>Dashboard</div></Link>
             <div className='text-black cursor-pointer hover:text-green-300 hover:font-bold'>Profile</div>
             <div className='text-black cursor-pointer hover:text-green-300 hover:font-bold' onClick={logout}>Logout</div>
-            <div className='hidden md:flex items-center space-x-2'>
+            {/* <div className='hidden md:flex items-center space-x-2'>
               <span className='text-black font-bold text-2xl text-green-300'>Welcome, User</span>
-            </div>
+            </div> */}
           </div>
         )
       }else{
