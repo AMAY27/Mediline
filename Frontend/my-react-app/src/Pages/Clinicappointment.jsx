@@ -8,6 +8,7 @@ import { getDetailsForBookingAppointments } from '../Services/api.services';
 import { FaLocationDot } from "react-icons/fa6";
 import Calendar from '../Components/Calendar';
 import { format } from 'date-fns';
+import { useNavigate } from 'react-router-dom';
 //import { BACKEND_URL } from '../utils/constants';
 
 const Clinicappointment = ({isAuthenticated}) => {
@@ -19,12 +20,9 @@ const Clinicappointment = ({isAuthenticated}) => {
     const [availableWeekdays, setAvailableWeekdays] = useState([])
     const [selectableDates, setSelectableDates] = useState([]);
     const [selectedDate, setSelectedDate] = useState(new Date());
+    const navigate = useNavigate();
     // const [selectedweekdayforappointment, setSelectedweekdayforappointment] = useState(null)
     const [availabilityData, setAvailabilitydata] = useState([])
-    const [timeslotinput ,setTimeslotinput] = useState({
-        morning : "",
-        evening : ""
-    })
     const [timeslot, setTimeslot] = useState("")
     const [officeData, setOfficeData] = useState({
         _id:'',
@@ -41,8 +39,8 @@ const Clinicappointment = ({isAuthenticated}) => {
     const [availableTimeSlots, setAvailableTimeSlots] = useState([]);
 
     useEffect(()=>{
-        // dispatch(checkauthenticated())
-        // dispatch(load_user())
+        dispatch(checkauthenticated())
+        dispatch(load_user())
         loadData();
     },[])
 
@@ -108,38 +106,10 @@ const Clinicappointment = ({isAuthenticated}) => {
         setAvailableTimeSlots(availableSlots);
     }
 
-    // async function loadSpeciddata(){
-    //     const config = {
-    //         headers : {
-    //             'Content-Type': 'application/json',
-    //             'Accept' : 'application/json'
-    //         }
-    //     }
-    //     const res = await axios.get(`${BACKEND_URL}/api/docspec/?docid=${doctorid}`,config)
-    //     console.log(res);
-    //     setDocspecialization(res.data)
-
-    // }
 
     const handleSlotClicked = () => {
 
     }
-
-    const handleDateChange = date => {
-        setSelectedDate(date);
-        const selectedWeekday = date.getDay();
-        setSelectedweekdayforappointment(selectedWeekday);
-        console.log(selectedWeekday); 
-        availabilityData.map((key,index)=>{
-            if(parseInt(key.weekday)===selectedWeekday){
-                setTimeslotinput({
-                    morning : key.morning_slot,
-                    evening : key.evening_slot
-                })
-            }
-        })
-
-      };
     
     async function handleSubmit(e){
         e.preventDefault();
@@ -165,9 +135,9 @@ const Clinicappointment = ({isAuthenticated}) => {
         await axios.post(`${BACKEND_URL}/api/appointment/`,body,config)
     }
 
-    // if(!isAuthenticated){
-    //     navigate('/loginuser')
-    //   }
+    if(!isAuthenticated){
+        navigate('/loginuser')
+      }
 
 
   return (
@@ -201,7 +171,7 @@ const Clinicappointment = ({isAuthenticated}) => {
                 <div className="md:col-span-2 px-4 lg:py-8">
                     {/* <h2 className='flex justify-center text-lg font-bold text-green-500'>Book Consultation</h2> */}
                     <form action="">
-                        <div className='mb-4 mx-4'>
+                        <div className='mb-4 sm:mx-4'>
                             <label htmlFor="" className='block text-green-500 text-md font-bold mb-2'>Patient Name</label>
                             <input 
                                 type='text' 
@@ -211,7 +181,7 @@ const Clinicappointment = ({isAuthenticated}) => {
                                 className='border-2 border-gray-200 appearance-none rounded w-full py-2 px-3 bg-gray-100 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
                             />
                         </div>
-                        <div className='mb-4 mx-4'>
+                        <div className='mb-4 sm:mx-4'>
                             <label htmlFor="" className='block text-green-500 text-md font-bold mb-2'>Contact</label>
                             <input 
                                 type='text' 
@@ -221,94 +191,47 @@ const Clinicappointment = ({isAuthenticated}) => {
                                 className='border-2 border-gray-200 appearance-none rounded w-full py-2 px-3 bg-gray-100 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
                             />
                         </div>
-                        <div className='border-2 border-gray-200 rounded bg-gray-100 p-2 mx-4'>
+                        <div className='md:hidden'>
+                            <Calendar availableWeekdays={availableWeekdays} dateClicked={dateSelect}/>
+                            <div className=''>
+                                <h2 className='flex justify-center border-t-2 border-gray-200 pt-4'>Available Slots</h2>
+                                <div className="flex justify-center space-x-2 mt-2 mb-4">
+                                    {availableTimeSlots.length !==0 ? availableTimeSlots.map((slot) => (
+                                        <p className={`${timeslot === slot && 'bg-green-500 text-white'}  p-2 border-2 border-green-500 rounded-md hover:bg-green-500 hover:text-white cursor-pointer`} onClick={()=>setTimeslot(slot)}>{slot}</p>
+                                    )) : 
+                                    (
+                                        <p className='p-4 bg-gray-100 flex justify-center rounded-xl w-full mx-4'>No slots available for this date</p>
+                                    )}
+                                </div>
+                            </div>
+                        </div>
+                        <div className='border-2 border-gray-200 rounded bg-gray-100 p-2 sm:mx-4 mb-4'>
                             <p className='font-bold text-green-500'>Selected Date</p>
                             <p>{format(selectedDate, 'yyyy-MM-dd')}</p>
                             <p className='font-bold text-green-500'>Time Slot</p>
                             <p>{timeslot}</p>
                         </div>
+                        <div className='mb-4 sm:mx-4'>
+                            <button className='flex items-center justify-center border-2 border-green-500 hover:bg-green-500 hover:text-white p-2 rounded w-full' type='submit'>Book Appointment</button>
+                        </div>
                     </form>
                 </div>
-                <div className='md:col-span-2'>
-                    <h2 className='flex items-center justify-center font-bold text-green-500'>Select Appointment Date</h2>
+                <div className='hidden md:block md:col-span-2 pt-4'>
                     <Calendar availableWeekdays={availableWeekdays} dateClicked={dateSelect}/>
                     <div className=''>
                         <h2 className='flex justify-center border-t-2 border-gray-200 pt-4'>Available Slots</h2>
                         <div className="flex justify-center space-x-2 mt-2">
-                            {availableTimeSlots.map((slot) => (
+                            {availableTimeSlots.length !==0 ? availableTimeSlots.map((slot) => (
                                 <p className={`${timeslot === slot && 'bg-green-500 text-white'}  p-2 border-2 border-green-500 rounded-md hover:bg-green-500 hover:text-white cursor-pointer`} onClick={()=>setTimeslot(slot)}>{slot}</p>
-                            ))}
+                            )) : 
+                            (
+                                <p className='p-4 bg-gray-100 flex justify-center rounded-xl w-full mx-4'>No slots available for this date</p>
+                            )}
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-        {/* <div className='md:h-screen md:justify-center flex items-center flex-col'>
-            <div className='md:w-2/3 h-auto md:h-auto border-2 border-green-300 grid grid-cols-4 py-12 px-6'>
-                <div className='col-span-3'>
-                    <form action="" onSubmit={handleSubmit}>
-                        <div className='mb-4 mx-4'>
-                            <label htmlFor="" className='block text-gray-700 text-sm font-bold mb-2'>Enter Name</label>
-                            <input 
-                                type='text' 
-                                placeholder='Patient Name' 
-                                name='name' 
-                                onChange={(e)=>setName(e.target.value)}
-                                className='shadow appearance-none rounded-lg w-1/2 py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
-                            />
-                        </div>  
-                        <div className='mb-4 mx-4'>
-                            <label htmlFor="" className='block text-gray-700 text-sm font-bold mb-2'>Select Date:</label>
-                            <DatePicker
-                                selected={selectedDate}
-                                onChange={handleDateChange}
-                                dateFormat="dd/MM/yyyy"
-                                minDate={new Date()}
-                                maxDate={selectableDates[selectableDates.length - 1]}
-                                filterDate={(date)=>{
-                                    const isSelectable = selectableDates.some((d) => {
-                                        return (
-                                          d.getDate() === date.getDate() &&
-                                          d.getMonth() === date.getMonth() &&
-                                          d.getFullYear() === date.getFullYear()
-                                        );
-                                      });
-                                      return isSelectable;
-                                }}
-                                className='shadow appearance-none rounded-lg w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
-                            />
-                        </div> 
-                        <div className='mb-4 mx-4'>
-                            <label htmlFor="" className='block text-gray-700 text-sm font-bold mb-2'>Time Slot</label>
-                            <select name="timeslot"
-                                onChange={(e)=>setTimeslot(e.target.value)}
-                                className='shadow  appearance-none rounded-lg w-1/2 py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
-                            >
-                                <option value="">Click to select available slots</option>
-                                {timeslotinput.morning && <option value={timeslotinput.morning}>Morning Slot : {timeslotinput.morning}</option>}
-                                {timeslotinput.evening && <option value={timeslotinput.evening}>Evening Slot : {timeslotinput.evening}</option>}
-                            </select>
-                        </div>
-                        <button
-                                className={`mx-2 my-2 bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline`}
-                                type='submit'
-                            >
-                                Complete Booking
-                            </button>            
-                    </form>
-                </div> 
-                <div className="col-span-1 bg-green-100 border-2 border-green-500 py-6 px-4">
-                    <h1 className='font-bold flex justify-center items-center text-lg'>Specializations</h1>
-                    <ul>
-                        {docspecialization.map((ele,index)=>{
-                            return(
-                                <li key={index}>{ele.specialization_name}</li>
-                            )
-                        })}
-                    </ul>
-                </div>
-            </div>
-        </div>*/}
     </div>
   )
 }

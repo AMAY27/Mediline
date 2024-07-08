@@ -30,8 +30,8 @@ export const checkauthenticated = () => async dispatch => {
 
         const body = JSON.stringify({token : localStorage.getItem('access')})
         try {
-            const res = await axios.post('http://localhost:8000/auth/jwt/verify/',body,config)
-            if(res.data.code !== 'token_not_valid'){
+            const res = await axios.post('http://localhost:3000/auth/verify',body,config)
+            if(res.status === 200){
                 dispatch({
                     type: AUTHENTICATED_SUCCESS
                 })
@@ -91,14 +91,23 @@ export const login = (email, password)=> async dispatch => {
     };
     const body = JSON.stringify({email, password});
     try {
-        const res = await axios.post('http://localhost:3000/login',body,config)
-        dispatch({
-            type: LOGIN_SUCCESS,
-            payload: res.data
-        })
-        console.log(res);
-        localStorage.setItem("userId", res.data.user_id)
-        //dispatch(load_user());
+        const res = await axios.post('http://localhost:3000/auth/login',body,config)
+        if(res.status === 200){
+            dispatch({
+                type: LOGIN_SUCCESS,
+                payload: res.data
+            })
+            console.log(res);
+            localStorage.setItem("userId", res.data.userId)
+            localStorage.setItem("access", res.data.token)
+            //dispatch(load_user());
+        }
+        else{
+            dispatch({
+                type: LOGIN_FAIL
+            })
+            console.log(error)
+        }
     } catch (error) {
         dispatch({
             type: LOGIN_FAIL
@@ -115,7 +124,7 @@ export const signup = (name, email, password, re_password)=> async dispatch => {
     };
     const body = JSON.stringify({name, email, password, re_password});
     try {
-        const res = await axios.post('http://localhost:8000/auth/users/',body,config)
+        const res = await axios.post('http://localhost:3000/auth/register',body,config)
         dispatch({
             type: SIGNUP_SUCCESS,
             payload: res.data

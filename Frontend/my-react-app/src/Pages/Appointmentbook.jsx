@@ -5,7 +5,8 @@ import Navbar from '../extras/Navbar';
 import { checkauthenticated, logout, load_user } from '../actions/auth';
 import { useDispatch, connect } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import "./Appointmentbook.css"
+import "./Appointmentbook.css";
+import api from '../utils/axiosHelper';
 //import { BACKEND_URL } from '../utils/constants';
 
 const Appointmentbook = ({isAuthenticated}) => {
@@ -24,7 +25,7 @@ const Appointmentbook = ({isAuthenticated}) => {
 
   useEffect(()=>{
     dispatch(checkauthenticated())
-    dispatch(load_user())
+    // dispatch(load_user())
     handleClinicdata()
     handledoctordata()
     const handleResize = () => {
@@ -66,7 +67,7 @@ const Appointmentbook = ({isAuthenticated}) => {
         'Accept' : 'application/json'
       }
     }
-    const res = await axios.get(`${BACKEND_URL}/office/fetchAllOffice`,config)
+    const res = await api.get(`${BACKEND_URL}/office/fetchAllOffice`,config)
     console.log(res);
     const cliniclist = res.data.office
     setClinicList(cliniclist)
@@ -79,7 +80,7 @@ const Appointmentbook = ({isAuthenticated}) => {
         'Accept' : 'application/json'
       }
     }
-    const res = await axios.get(`http://127.0.0.1:3000/centers`,config)
+    const res = await api.get(`${BACKEND_URL}/centers`,config)
     const centerlist = res.data.centers
     setTestcenters(centerlist)
     console.log(res.data.centers);
@@ -92,7 +93,7 @@ const Appointmentbook = ({isAuthenticated}) => {
         'Accept' : 'application/json'
       }
     }
-    const res = await axios.get(`${BACKEND_URL}/api/doctors/`,config)
+    const res = await api.get(`${BACKEND_URL}/api/doctors/`,config)
     const doclist = res.data
     setDoclist(doclist)
   }
@@ -110,9 +111,9 @@ const Appointmentbook = ({isAuthenticated}) => {
     navigate('/clinicappointment')
     
   }
-  // if(!isAuthenticated){
-  //   navigate('/loginuser')
-  // }
+  if(!isAuthenticated){
+    navigate('/loginuser')
+  }
 
   return (
     <div>

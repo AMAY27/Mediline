@@ -12,7 +12,7 @@ const Loginuser = ({login, isAuthenticated}) => {
   const dispatch = useDispatch()
   useEffect(()=>{
     dispatch(checkauthenticated())
-    dispatch(load_user())
+    //dispatch(load_user())
   },[])
 
   const[values,setValues] = useState({

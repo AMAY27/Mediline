@@ -1,6 +1,7 @@
 import axios from 'axios';
 
 const BACKEND_URL = import.meta.env.VITE_NODE_BACKEND_URL;
+import api from '../utils/axiosHelper';
 
 const uploadReport = async(files, userId) => {
     const body = files;
@@ -11,7 +12,7 @@ const uploadReport = async(files, userId) => {
         }
     }
     try {
-        const reportResponse = await axios.post(`${BACKEND_URL}/uploadReport`, body,config);
+        const reportResponse = await api.post(`${BACKEND_URL}/uploadReport`, body,config);
         return reportResponse;
     } catch (error) {
         return error
@@ -26,7 +27,7 @@ const getReports = async (userid) => {
                 'Accept' : 'application/json'
             }
         };
-        const res = await axios.get(`${BACKEND_URL}/getReports?userid=${userid}`,config);
+        const res = await api.get(`${BACKEND_URL}/getReports?userid=${userid}`,config);
         console.log(res);
         return res.data.reports
     } catch (error) {
@@ -42,7 +43,7 @@ const getDetailsForBookingAppointments = async (officeid, docid) => {
                 'Accept' : 'application/json'
             }
         };
-        const res = await axios.get(`${BACKEND_URL}/detailsForBooking?officeid=${officeid}&docid=${docid}`);
+        const res = await api.get(`${BACKEND_URL}/detailsForBooking?officeid=${officeid}&docid=${docid}`);
         return res.data
     } catch (error) {
         
