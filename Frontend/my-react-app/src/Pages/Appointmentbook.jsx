@@ -257,7 +257,7 @@ const Appointmentbook = ({isAuthenticated}) => {
               </div>
               }
               {testclick && 
-               <div className='grid grid-cols-1 md:grid-cols-3 gap-5 md:my-8'>
+               <div className='grid grid-cols-1 md:grid-cols-3 gap-5 md:py-8 md:px-4 md:overflow-y-scroll md:h-[70%] md:bg-white'>
                 {testcenters.map((value)=>{
                   return(
                     <div className='border-2 border-green-300 shadow-md rounded'>

@@ -1,5 +1,5 @@
-const Testcenter = require('../models/centermodel')
-const Appointment = require('../models/appointmentmodel')
+const Testcenter = require('../Schemas/centermodel')
+const Appointment = require('../Schemas/appointmentmodel')
 const mongoose = require('mongoose');
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');

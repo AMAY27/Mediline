@@ -8,13 +8,23 @@ const ReportListingComponents = ({title, date}) => {
 
   return (
     <div className='border-b-2 border-green-300 p-2 space-y-2'>
+        {/* <tr>
+            <td><h2 className='truncate ...'>{title}</h2></td>
+            <td><h2 className="text-gray-400 italic">{formattedDate}</h2></td>
+            <td>
+                <div className='flex items-center space-x-2 text-green-500 text-xl'>
+                    <FaRegEye/>
+                    <FaFileDownload/>
+                </div>
+            </td>
+        </tr> */}
         <div className='flex justify-between'>
             <div className='flex items-center space-x-2 max-w-[70%]'>
                 <FaFileAlt/>
                 <h2 className='truncate ...'>{title}</h2>
             </div>
             <div className='flex items-center space-x-2 text-green-500 text-xl'>
-                <FaRegEye/>
+                <div className=''><FaRegEye/></div>
                 <FaFileDownload/>
             </div>
         </div>
