@@ -72,6 +72,15 @@ const consultationAppointments = {
             res.status(500).json({error})
             console.log(error);
         }
+    },
+    getAllAppointmentsForUser : async(req,res) => {
+        try {
+            const appointments = await Consultation.find({userid : req.query.userId})
+            res.status(200).json({appointments: appointments})
+        } catch (error) {
+            res.status(500).json({error: error})
+            console.log(error);
+        }
     }
 }
 

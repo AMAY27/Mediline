@@ -7,13 +7,16 @@ import { useState, useEffect } from 'react';
 import { checkauthenticated, load_user } from '../actions/auth';
 import { connect } from 'react-redux';
 import { useDispatch } from 'react-redux';
-import { getReports } from '../Services/api.services'
+import { getReports, getAllAppointmentsForUser } from '../Services/api.services'
 import { Link, Navigate, useNavigate } from 'react-router-dom';
 import { logout } from '../actions/auth'
 import axios from 'axios';
 import AppointmentDetails from '../Components/AppointmentDetails';
 import ReportUploadForm from '../Components/ReportUploadForm';
 import ReportListingComponents from '../Components/ReportListingComponents';
+import PdfViewerComponent from '../Components/PdfViewerComponent';
+import { FaFileAlt, FaRegEye, FaFileDownload   } from "react-icons/fa";
+
 //import { BACKEND_URL } from '../utils/constants';
 
 
@@ -27,7 +30,9 @@ const Dasboarduser = ({isAuthenticated}) => {
     const [activeTab, setActiveTab] = useState('appointment');
     const [zindexBool, setZindexBool] = useState(false);
     const z_index = zindexBool ? "z-[-1]" : "z-0";
-    const dispatch = useDispatch()
+    const dispatch = useDispatch();
+    const [isPdfOpen, setIspdfOpen] = useState(false);
+    const [pdf, setPdf] = useState("")
     // useEffect(()=>{
     //     // dispatch(checkauthenticated())
     //     // dispatch(load_user())
@@ -42,6 +47,16 @@ const Dasboarduser = ({isAuthenticated}) => {
         }
         getReportsforUser();
     },[])
+    useEffect(() => {
+        const getAppointments = async() => {
+            const resp = await getAllAppointmentsForUser(uid);
+            setAppointmentList(resp);
+        }
+        getAppointments();
+    },[])
+    useEffect(()=>{
+        console.log(pdf);
+    },[pdf])
     const [msg , setmsg] = useState('')
     const navigate = useNavigate();
 
@@ -49,6 +64,16 @@ const Dasboarduser = ({isAuthenticated}) => {
         setActiveTab(tab);
       };
     
+
+    const handlepdfViewClick =(pdf) => {
+        console.log(pdf);
+        setIspdfOpen(true)
+        setPdf(pdf)
+    }
+    const handlePdfClose = () => {
+        setIspdfOpen(false)
+        setPdf('')
+    }
     const tabs = [
         { key: 'appointment', label: 'Appointments' },
         { key: 'report', label: 'Reorts and Diagnostics' },
@@ -80,11 +105,12 @@ const Dasboarduser = ({isAuthenticated}) => {
   }
   return (
     <>
+    <PdfViewerComponent isOpen={isPdfOpen} pdf={pdf} onClose={handlePdfClose}/>
     {/* <AppointmentDetails appDetails={appointmentDetails} isOpen={appDetailsOpen} onClose={handleAppointmentDetailsClose} /> */}
       <Navbar/>
-        <div className='md:h-screen md:flex md:flex-col bg-green-100' id='dashboard-user'>
-            <div className='grid grid-cols-1 md:grid-cols-3 gap-4 md:mx-36 md:my-8'>
-                <div className='hidden md:col-span-1 md:grid grid-cols-3 bg-green-300 rounded-xl'>
+        <div className='md:flex md:flex-col bg-green-100' id='dashboard-user'>
+            <div className='h-auto lg:h-screen grid grid-cols-1 md:grid-cols-3 gap-4 md:mx-36 md:my-8'>
+                <div className='h-fit hidden md:col-span-1 md:grid grid-cols-3 bg-green-300 rounded-xl'>
                     <div className='col-span-1 items-center pl-4 h-fit'>
                         <h2 className="text-[3rem] text-white font-bold">Welcome,</h2>
                         <h2 className="text-[3rem] text-white font-bold">User</h2>
@@ -110,16 +136,55 @@ const Dasboarduser = ({isAuthenticated}) => {
                             </div>
                         ))}
                         </div>
-                        <div className='bg-white rounded-r-md md:p-8 md:h-[70%]'>
+                        <div className='bg-white rounded-r-md md:p-8 md:overflow-y-scroll'>
                             {activeTab === 'appointment' && 
-                                <div className="flex justify-center items-center">
-                                    <button className='p-2 border-2 border-green-500 hover:bg-green-500 hover:text-white rounded-md' onClick={()=> navigate('/appointmentbook')}>Book New Appointment</button>
+                                <div className="items-center md:h-[70%]">
+                                    <button className='p-2 mb-4 border-2 border-green-500 hover:bg-green-500 hover:text-white rounded-md' onClick={()=> navigate('/appointmentbook')}>Book New Appointment</button>
+                                    <table className='w-full'>
+                                        <tbody>
+                                            <tr className='border-2 border-gray-200'>
+                                                <td className='p-2 font-bold border-l-2 border-gray-100'>Patient Name</td>
+                                                <td className='p-2 font-bold border-l-2 border-gray-100'>Doctor</td>
+                                                <td className='p-2 font-bold border-l-2 border-gray-100'>Date</td>
+                                                <td className='p-2 font-bold border-l-2 border-gray-100'>Details</td>
+                                            </tr>
+                                            {appointmentList.map((appointment) => (
+                                                <tr className='border-2 border-gray-200'>
+                                                    <td className='border-l-2 border-gray-100 px-2 py-2'>{appointment.patient_name}</td>
+                                                    <td className='border-l-2 border-gray-100 px-2 py-2'>{appointment.doc_name}</td>
+                                                    <td className='border-l-2 border-gray-100 px-2 py-2'>{appointment.appointment_date}</td>
+                                                    <td className='border-l-2 border-gray-100 px-2 py-2 flex justify-center'>
+                                                        <button className='py-1 px-2 border-2 border-green-500 hover:bg-green-500 hover:text-white rounded-md'>
+                                                            Details
+                                                        </button>
+                                                    </td>
+                                                </tr>
+                                            ))}
+                                        </tbody>
+                                    </table>
                                 </div>
                             }
                             {activeTab === 'upload' &&<ReportUploadForm/>}
                             {activeTab === 'report' && 
                                 reports.map((report) => (
-                                    <ReportListingComponents title={report.title} date={report.date}/>
+                                    // <ReportListingComponents title={report.title} date={report.date} pdfUrl={report.s3Key} handlePdfOpen={handlepdfViewClick}/>
+                                    <div className='border-b-2 border-green-300 p-2 space-y-2'>
+                                        <div className='flex justify-between'>
+                                            <div className='max-w-[70%]'>
+                                                <div className="flex items-center space-x-2">
+                                                    <FaFileAlt className='text-gray-500'/>
+                                                    <h2 className='truncate ...'>{report.title}</h2>
+                                                </div>
+                                                <div className="flex items-center">
+                                                    <h2 className="text-gray-400 italic">{report.date}</h2>
+                                                </div>
+                                            </div>
+                                            <div className='flex items-center space-x-2 text-green-500 text-lg'>
+                                                <div className='border-2 border-gray-300 p-1 rounded-md cursor-pointer' onClick={() => handlepdfViewClick(report.url)}><FaRegEye/></div>
+                                                <div className='border-2 border-gray-300 p-1 rounded-md cursor-pointer'><FaFileDownload/></div>
+                                            </div>
+                                        </div>
+                                    </div>
                                 ))
                             }
                         </div>

@@ -1,10 +1,11 @@
 import React from 'react'
 import { FaFileAlt, FaRegEye, FaFileDownload   } from "react-icons/fa";
 
-const ReportListingComponents = ({title, date}) => {
+const ReportListingComponents = ({title, date, pdfUrl, handlePdfOpen}) => {
     const dateString = new Date(date);
     const options = { day: 'numeric', month: 'long', year: 'numeric' };
     const formattedDate = dateString.toLocaleDateString('en-GB', options);
+
 
   return (
     <div className='border-b-2 border-green-300 p-2 space-y-2'>
@@ -19,17 +20,19 @@ const ReportListingComponents = ({title, date}) => {
             </td>
         </tr> */}
         <div className='flex justify-between'>
-            <div className='flex items-center space-x-2 max-w-[70%]'>
-                <FaFileAlt/>
-                <h2 className='truncate ...'>{title}</h2>
+            <div className='max-w-[70%]'>
+                <div className="flex items-center space-x-2">
+                    <FaFileAlt className='text-gray-500'/>
+                    <h2 className='truncate ...'>{title}</h2>
+                </div>
+                <div className="flex items-center">
+                    <h2 className="text-gray-400 italic">{formattedDate}</h2>
+                </div>
             </div>
-            <div className='flex items-center space-x-2 text-green-500 text-xl'>
-                <div className=''><FaRegEye/></div>
-                <FaFileDownload/>
+            <div className='flex items-center space-x-2 text-green-500 text-lg'>
+                <div className='border-2 border-gray-300 p-1 rounded-md cursor-pointer' onClick={() => handlePdfOpen(pdfUrl)}><FaRegEye/></div>
+                <div className='border-2 border-gray-300 p-1 rounded-md cursor-pointer'><FaFileDownload/></div>
             </div>
-        </div>
-        <div className="flex items-center">
-            <h2 className="text-gray-400 italic">{formattedDate}</h2>
         </div>
     </div>
   )

@@ -63,7 +63,7 @@ const Blogpage = () => {
                         <h2 className='text-4xl font-bold p-2'>{author}</h2>
                     </div>
                     <div className='md:h-30 md:w-30'>
-                        <img src="src/assets/ironman.jpg" alt="Tony stark" className='w-fit h-fit'/>
+                        <img src="public/assets/ironman.jpg" alt="Tony stark" className='w-fit h-fit'/>
                     </div>
                     <p className='my-2 p-2 text-justify'>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam eget feugiat justo, vel tristique metus. Fusce sed diam in lorem vulputate facilisis</p>
                 </div>

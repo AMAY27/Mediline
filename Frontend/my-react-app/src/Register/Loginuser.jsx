@@ -37,7 +37,7 @@ const Loginuser = ({login, isAuthenticated}) => {
   }
   return (
     <div>
-      <Navbar/>
+      {/* <Navbar/> */}
       <div className='h-screen md:justify-center flex items-center flex-col' id='loginParentDiv'>
         <div className='bg-white border-2 border-green-500 rounded-xl p-4'>
         <div className='block md:justify-center md:flex md:items-center flex-col'>

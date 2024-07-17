@@ -50,4 +50,20 @@ const getDetailsForBookingAppointments = async (officeid, docid) => {
     }
 }
 
-export {uploadReport, getReports, getDetailsForBookingAppointments}
+const getAllAppointmentsForUser = async (userId) => {
+    try {
+        const config = {
+            headers :{
+                'Content-Type' : 'application/json',
+                'Accept' : 'application/json'
+            }
+        };
+        const res = await api.get(`${BACKEND_URL}/getAppointments?userId=${userId}`, config)
+        console.log(res);
+        return res.data.appointments
+    } catch (error) {
+        console.log(error);
+    }
+}
+
+export {uploadReport, getReports, getDetailsForBookingAppointments, getAllAppointmentsForUser}

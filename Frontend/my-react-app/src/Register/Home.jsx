@@ -17,7 +17,7 @@ const Home = () => {
         <div className='md:justify-center flex items-center rounded-lg mt-5 mx-7 h-40 bg-white-300 ... p-1 md:w-140 md:mx-5 md:mt-6 border-2 border-green-300 hover:bg-green-300'><h1 className='text-xl text-green-700 font-bold'>Discounts</h1></div>
         <div className='md:justify-center flex items-center rounded-lg mt-7 mx-7 h-100 row-start-1 md:row-span-2 border-2 border-green-300 ... p-1 md:w-140 md:mx-5 md:col-span-2 md:mt-6 '
           style={{
-            backgroundImage: "url('src/assets/medical-5459632.svg')",
+            backgroundImage: "url('public/assets/medical-5459632.svg')",
             backgroundSize: 'cover',
             backgroundPosition: 'center',
           }}
