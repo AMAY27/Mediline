@@ -167,24 +167,7 @@ const Dasboarduser = ({isAuthenticated}) => {
                             {activeTab === 'upload' &&<ReportUploadForm/>}
                             {activeTab === 'report' && 
                                 reports.map((report) => (
-                                    // <ReportListingComponents title={report.title} date={report.date} pdfUrl={report.s3Key} handlePdfOpen={handlepdfViewClick}/>
-                                    <div className='border-b-2 border-green-300 p-2 space-y-2'>
-                                        <div className='flex justify-between'>
-                                            <div className='max-w-[70%]'>
-                                                <div className="flex items-center space-x-2">
-                                                    <FaFileAlt className='text-gray-500'/>
-                                                    <h2 className='truncate ...'>{report.title}</h2>
-                                                </div>
-                                                <div className="flex items-center">
-                                                    <h2 className="text-gray-400 italic">{report.date}</h2>
-                                                </div>
-                                            </div>
-                                            <div className='flex items-center space-x-2 text-green-500 text-lg'>
-                                                <div className='border-2 border-gray-300 p-1 rounded-md cursor-pointer' onClick={() => handlepdfViewClick(report.url)}><FaRegEye/></div>
-                                                <div className='border-2 border-gray-300 p-1 rounded-md cursor-pointer'><FaFileDownload/></div>
-                                            </div>
-                                        </div>
-                                    </div>
+                                    <ReportListingComponents title={report.title} date={report.date} pdfUrl={report.url} handlePdfOpen={handlepdfViewClick}/>
                                 ))
                             }
                         </div>
