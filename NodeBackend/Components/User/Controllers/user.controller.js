@@ -136,7 +136,6 @@ const userController = {
                 return { ...report.toObject(), url };
             }));
 
-            console.log(reportUrls);
             res.status(200).json({reports: reportUrls})
         } catch (error) {
             console.error(error);
