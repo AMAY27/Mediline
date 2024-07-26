@@ -8,7 +8,7 @@ const ReportListingComponents = ({title, date, pdfUrl, handlePdfOpen}) => {
 
 
   return (
-    <div className='border-b-2 border-green-300 p-2 space-y-2'>
+    <div className='p-4 space-y-2 rounded-xl shadow-full mb-2'>
         {/* <tr>
             <td><h2 className='truncate ...'>{title}</h2></td>
             <td><h2 className="text-gray-400 italic">{formattedDate}</h2></td>

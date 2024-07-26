@@ -16,6 +16,7 @@ import ReportUploadForm from '../Components/ReportUploadForm';
 import ReportListingComponents from '../Components/ReportListingComponents';
 import PdfViewerComponent from '../Components/PdfViewerComponent';
 import { FaFileAlt, FaRegEye, FaFileDownload   } from "react-icons/fa";
+import { FaCalendar, FaUserDoctor  } from "react-icons/fa6";
 
 //import { BACKEND_URL } from '../utils/constants';
 
@@ -108,9 +109,9 @@ const Dasboarduser = ({isAuthenticated}) => {
     <PdfViewerComponent isOpen={isPdfOpen} pdf={pdf} onClose={handlePdfClose}/>
     {/* <AppointmentDetails appDetails={appointmentDetails} isOpen={appDetailsOpen} onClose={handleAppointmentDetailsClose} /> */}
       <Navbar/>
-        <div className='md:flex md:flex-col bg-green-100' id='dashboard-user'>
+        <div className='md:flex md:flex-col h-full bg-green-100' id='dashboard-user'>
             <div className='h-auto lg:h-screen grid grid-cols-1 md:grid-cols-3 gap-4 md:mx-36 md:my-8'>
-                <div className='h-fit hidden md:col-span-1 md:grid grid-cols-3 bg-green-300 rounded-xl'>
+                <div className='h-fit hidden lg:col-span-1 md:grid grid-cols-3 bg-green-300 rounded-xl'>
                     <div className='col-span-1 items-center pl-4 h-fit'>
                         <h2 className="text-[3rem] text-white font-bold">Welcome,</h2>
                         <h2 className="text-[3rem] text-white font-bold">User</h2>
@@ -153,9 +154,25 @@ const Dasboarduser = ({isAuthenticated}) => {
                     </div>
                     {/* <div className='bg-white rounded-r-md md:p-8 md:h-[70%] md:overflow-y-scroll'> */}
                         {activeTab === 'appointment' && 
-                            <div className="items-center md:h-[70%]  bg-white rounded-r-md md:p-8">
+                            <div className="items-center md:h-[70%] sm:bg-white rounded-r-md p-2 md:p-8">
                                 <button className='p-2 mb-4 border-2 border-green-500 hover:bg-green-500 hover:text-white rounded-md' onClick={()=> navigate('/appointmentbook')}>Book New Appointment</button>
-                                <table className='w-full h-fit md:overflow-y-scroll'>
+                                <div className='sm:hidden mx-2'>
+                                    {appointmentList.map((appointment)=> (
+                                        <div className='p-4 rounded-xl shadow-full bg-white'>
+                                            <div className="flex justify-between">
+                                                <h2 className='font-bold text-lg'>{appointment.patient_name}</h2>
+                                                <h2 className='flex items-center'><FaCalendar className='text-green-500 mr-1'/>{appointment.appointment_date}</h2>
+                                            </div>
+                                            <h2 className='flex items-center'><FaUserDoctor className='text-green-500 mr-1'/>{appointment.doc_name}</h2>
+                                            <div className="flex justify-center">
+                                                <button className='py-1 px-2 bg-green-500 text-white rounded-md shadow-xl'>
+                                                    Details
+                                                </button>
+                                            </div>
+                                        </div>
+                                    ))}
+                                </div>
+                                <table className='hidden sm:table w-full h-fit md:overflow-y-scroll'>
                                     <tbody>
                                         <tr className='border-2 border-gray-200'>
                                             <td className='p-2 font-bold border-l-2 border-gray-100'>Patient Name</td>
