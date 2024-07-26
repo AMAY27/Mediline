@@ -7,6 +7,7 @@ import { useDispatch, connect } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import "./Appointmentbook.css";
 import api from '../utils/axiosHelper';
+import { FaLocationDot } from "react-icons/fa6";
 //import { BACKEND_URL } from '../utils/constants';
 
 const Appointmentbook = ({isAuthenticated}) => {
@@ -185,7 +186,7 @@ const Appointmentbook = ({isAuthenticated}) => {
               }
       </div>
       ) : ( */}
-      <div className='md:h-screen md:flex md:flex-col' id='appointmentParentDiv'>
+      <div className='h-screen md:flex md:flex-col' id='appointmentParentDiv'>
         <div className='grid grid-cols-1 md:grid-cols-3 gap-4 md:m-8'>
           <div className='hidden md:block md:col-span-1 md:h-screen'>
             <div className='border-2 border-green-300 shadow-md rounded px-8 pt-6 pb-8 mb-4 mx-6 bg-white'>
@@ -207,15 +208,15 @@ const Appointmentbook = ({isAuthenticated}) => {
               >
                 <h2 className='text-2xl font-bold md:text-sm p-2'>Test and Diagnosis</h2>
               </div>
-              <div className={`cursor-pointer rounded-t-2xl ml-2 p-2 ${healthclick ? 'border-l-4 border-t-4 border-green-300 bg-white text-green-500' : 'hover:border-green-300 bg-green-300'}`}
+              {/* <div className={`cursor-pointer rounded-t-2xl ml-2 p-2 ${healthclick ? 'border-l-4 border-t-4 border-green-300 bg-white text-green-500' : 'hover:border-green-300 bg-green-300'}`}
                 onClick={handleHealthclick}
               >
                 <h2 className='text-2xl font-bold md:text-sm p-2'>Full Health Checkups</h2>
-              </div>
+              </div> */}
             </div>
             <div className='mx-4 my-2 md:hidden'>
               <select 
-                className='w-full rounded-md py-2 px-2'
+                className='w-full rounded-md py-2 px-2 border-2 border-green-500'
                 onChange={(e)=>{
                   if(e.target.value === "consultation"){
                     handleConsultclick();
@@ -229,10 +230,10 @@ const Appointmentbook = ({isAuthenticated}) => {
               </select>
             </div>
               {consultclick && 
-               <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 md:py-8 md:px-4 md:overflow-y-scroll md:h-[70%] md:bg-white'>
+               <div className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 md:py-8 md:px-4 md:overflow-y-scroll md:h-[70%] md:bg-white'>
                 {clinicList.map((value)=>{
                   return(
-                    <div className='md:shadow-xl mx-4 md:mx-0 rounded-md bg-white md:border-2 border-green-300'>
+                    <div className='md:shadow-xl mx-4 md:mx-0 rounded-md bg-white border-2 border-green-300'>
                       <img src='assets/medical-5459631.svg' alt='med2' className='h-40'/>
                       <h2 className='text-lg md:text-lg font-bold text-center p-2'>Dr. {value.docname}</h2>
                           {/* {docList.map((key)=>{
@@ -245,7 +246,7 @@ const Appointmentbook = ({isAuthenticated}) => {
                               )
                             }
                           })} */}
-                      <h2 className='mx-3 md:text-sm p-1'>Address : {value.address}</h2>
+                      <h2 className='mx-3 md:text-md p-1 flex items-center'><FaLocationDot className='text-red-500 mr-1'/> {value.address}</h2>
                       {/* <h2 className='mx-3 md:text-sm p-1'>City : {value.city}</h2> */}
                       {/* <button className='mx-3 my-2 bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline'>Details</button> */}
                       <div className='px-2'>
@@ -260,11 +261,13 @@ const Appointmentbook = ({isAuthenticated}) => {
                <div className='grid grid-cols-1 md:grid-cols-3 gap-5 md:py-8 md:px-4 md:overflow-y-scroll md:h-[70%] md:bg-white'>
                 {testcenters.map((value)=>{
                   return(
-                    <div className='border-2 border-green-300 shadow-md rounded'>
-                      <h2 className='mx-3 md:text-sm p-1'>Center : {value.center_name}</h2>
-                      <h2 className='mx-3 md:text-sm p-1'>Address : {value.address}</h2>
-                      <button className='mx-3 my-2 bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline'>Details</button>
-                      <button className='mx-2 my-2 bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline' onClick={()=>handleBooktest(value._id)}>Book test</button>
+                    <div className='mx-4 md:mx-0 rounded-md bg-white md:border-2 border-green-300 shadow-md rounded h-fit'>
+                      <h2 className='mx-3 md:text-lg text-green-500 font-bold p-1'>{value.center_name}</h2>
+                      <h2 className='mx-3 md:text-md p-1 flex items-center'><FaLocationDot className='text-red-500 mr-1'/> {value.address}</h2>
+                      {/* <button className='mx-3 my-2 bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline'>Details</button> */}
+                      <div className='flex justify-center'>
+                        <button className='my-2 border-2 border-green-300 w-100 hover:bg-green-500 hover:text-white font-bold py-1 px-4 rounded focus:outline-none focus:shadow-outline' onClick={()=>handleBooktest(value._id)}>Book test</button>
+                      </div>
                     </div> 
                   )
                 })}

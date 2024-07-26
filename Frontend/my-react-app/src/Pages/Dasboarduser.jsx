@@ -120,8 +120,7 @@ const Dasboarduser = ({isAuthenticated}) => {
                     </div>
                 </div>
                 <div className='md:col-span-2'>
-                    <div>
-                        <div className='flex space-x-2'>
+                    <div className='hidden md:flex space-x-2'>
                         {tabs.map((tab, index) => (
                             <div
                                 key={tab.key}
@@ -135,43 +134,67 @@ const Dasboarduser = ({isAuthenticated}) => {
                                 <h2 className='text-sm sm:text-md font-bold p-2'>{tab.label}</h2>
                             </div>
                         ))}
-                        </div>
-                        <div className='bg-white rounded-r-md md:p-8 md:overflow-y-scroll'>
-                            {activeTab === 'appointment' && 
-                                <div className="items-center md:h-[70%]">
-                                    <button className='p-2 mb-4 border-2 border-green-500 hover:bg-green-500 hover:text-white rounded-md' onClick={()=> navigate('/appointmentbook')}>Book New Appointment</button>
-                                    <table className='w-full'>
-                                        <tbody>
-                                            <tr className='border-2 border-gray-200'>
-                                                <td className='p-2 font-bold border-l-2 border-gray-100'>Patient Name</td>
-                                                <td className='p-2 font-bold border-l-2 border-gray-100'>Doctor</td>
-                                                <td className='p-2 font-bold border-l-2 border-gray-100'>Date</td>
-                                                <td className='p-2 font-bold border-l-2 border-gray-100'>Details</td>
-                                            </tr>
-                                            {appointmentList.map((appointment) => (
-                                                <tr className='border-2 border-gray-200'>
-                                                    <td className='border-l-2 border-gray-100 px-2 py-2'>{appointment.patient_name}</td>
-                                                    <td className='border-l-2 border-gray-100 px-2 py-2'>{appointment.doc_name}</td>
-                                                    <td className='border-l-2 border-gray-100 px-2 py-2'>{appointment.appointment_date}</td>
-                                                    <td className='border-l-2 border-gray-100 px-2 py-2 flex justify-center'>
-                                                        <button className='py-1 px-2 border-2 border-green-500 hover:bg-green-500 hover:text-white rounded-md'>
-                                                            Details
-                                                        </button>
-                                                    </td>
-                                                </tr>
-                                            ))}
-                                        </tbody>
-                                    </table>
-                                </div>
-                            }
-                            {activeTab === 'upload' &&<ReportUploadForm/>}
-                            {activeTab === 'report' && 
-                                reports.map((report) => (
-                                    <ReportListingComponents title={report.title} date={report.date} pdfUrl={report.url} handlePdfOpen={handlepdfViewClick}/>
-                                ))
-                            }
-                        </div>
                     </div>
+                    <div className='mx-4 my-2 md:hidden'>
+                        <select 
+                            className='w-full rounded-md py-2 px-2 border-2 border-green-500'
+                            onChange={(e)=>{
+                                if(e.target.value === 'appointment'){
+                                    handleClick('appointment')
+                                } else if(e.target.value === 'report'){
+                                    handleClick('report')
+                                }
+                            }}
+                        >
+                            {tabs.map((tab)=>(
+                                <option value={tab.key}>{tab.label}</option>
+                            ))}
+                        </select>
+                    </div>
+                    {/* <div className='bg-white rounded-r-md md:p-8 md:h-[70%] md:overflow-y-scroll'> */}
+                        {activeTab === 'appointment' && 
+                            <div className="items-center md:h-[70%]  bg-white rounded-r-md md:p-8">
+                                <button className='p-2 mb-4 border-2 border-green-500 hover:bg-green-500 hover:text-white rounded-md' onClick={()=> navigate('/appointmentbook')}>Book New Appointment</button>
+                                <table className='w-full h-fit md:overflow-y-scroll'>
+                                    <tbody>
+                                        <tr className='border-2 border-gray-200'>
+                                            <td className='p-2 font-bold border-l-2 border-gray-100'>Patient Name</td>
+                                            <td className='p-2 font-bold border-l-2 border-gray-100'>Doctor</td>
+                                            <td className='p-2 font-bold border-l-2 border-gray-100'>Date</td>
+                                            <td className='p-2 font-bold border-l-2 border-gray-100'>Details</td>
+                                        </tr>
+                                        {appointmentList.map((appointment) => (
+                                            <tr className='border-2 border-gray-200'>
+                                                <td className='border-l-2 border-gray-100 px-2 py-2'>{appointment.patient_name}</td>
+                                                <td className='border-l-2 border-gray-100 px-2 py-2'>{appointment.doc_name}</td>
+                                                <td className='border-l-2 border-gray-100 px-2 py-2'>{appointment.appointment_date}</td>
+                                                <td className='border-l-2 border-gray-100 px-2 py-2 flex justify-center'>
+                                                    <button className='py-1 px-2 border-2 border-green-500 hover:bg-green-500 hover:text-white rounded-md'>
+                                                        Details
+                                                    </button>
+                                                </td>
+                                            </tr>
+                                        ))}
+                                    </tbody>
+                                </table>
+                            </div>
+                        }
+                        {activeTab === 'upload' &&
+                            <div className='items-center md:h-[70%] md:overflow-y-scroll bg-white rounded-r-md md:p-8'>
+                                <ReportUploadForm/>
+                            </div>
+                        }
+                        {activeTab === 'report' && 
+                            <div className='items-center md:h-[70%] md:overflow-y-scroll bg-white rounded-r-md md:p-8'>
+                                {/* <ReportUploadForm/> */}
+                                {reports.map((report) => (
+                                    <>
+                                        <ReportListingComponents title={report.title} date={report.date} pdfUrl={report.url} handlePdfOpen={handlepdfViewClick}/>
+                                    </>
+                                ))}
+                            </div>  
+                        }
+                    {/* </div> */}
                 </div>
             </div>
         </div>
