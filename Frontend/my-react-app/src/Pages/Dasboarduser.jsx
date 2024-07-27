@@ -101,6 +101,11 @@ const Dasboarduser = ({isAuthenticated}) => {
     return formattedDate
   }
 
+  const handleBookAppointmentClicked = () =>{
+    navigate('/appointmentbook')
+    localStorage.setItem("navTag", "book")
+  }
+
   if(!isAuthenticated){
     navigate('/loginuser')
   }
@@ -155,7 +160,7 @@ const Dasboarduser = ({isAuthenticated}) => {
                     {/* <div className='bg-white rounded-r-md md:p-8 md:h-[70%] md:overflow-y-scroll'> */}
                         {activeTab === 'appointment' && 
                             <div className="items-center md:h-[70%] sm:bg-white rounded-r-md p-2 md:p-8">
-                                <button className='p-2 mb-4 border-2 border-green-500 hover:bg-green-500 hover:text-white rounded-md' onClick={()=> navigate('/appointmentbook')}>Book New Appointment</button>
+                                <button className='p-2 mb-4 border-2 border-green-500 hover:bg-green-500 hover:text-white rounded-md' onClick={handleBookAppointmentClicked}>Book New Appointment</button>
                                 <div className='sm:hidden mx-2'>
                                     {appointmentList.map((appointment)=> (
                                         <div className='p-4 rounded-xl shadow-full bg-white'>
@@ -184,7 +189,7 @@ const Dasboarduser = ({isAuthenticated}) => {
                                             <tr className='border-2 border-gray-200'>
                                                 <td className='border-l-2 border-gray-100 px-2 py-2'>{appointment.patient_name}</td>
                                                 <td className='border-l-2 border-gray-100 px-2 py-2'>{appointment.doc_name}</td>
-                                                <td className='border-l-2 border-gray-100 px-2 py-2 '>{changeDateFormat(appointment.appointment_date)}</td>
+                                                <td className='border-l-2 border-gray-100 px-2 py-2'>{changeDateFormat(appointment.appointment_date)}</td>
                                                 <td className='border-l-2 border-gray-100 px-2 py-2 flex justify-center'>
                                                     <button className='py-1 px-2 border-2 border-green-500 hover:bg-green-500 hover:text-white rounded-md' onClick={() => {handleAppointmentDetailsClick(appointment)}}>
                                                         Details

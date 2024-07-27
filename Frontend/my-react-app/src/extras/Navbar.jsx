@@ -28,19 +28,25 @@ const Navbar = ({logout, isAuthenticated}) => {
             to={'/blogs'}
             onClick={() => handleNavItemClickForBackground("blogs")}
           >
-            <div className={`${activeNavItem === "blogs" ? 'bg-green-200 border-b-4 border-green-400' : ''} px-4 py-6 text-black cursor-pointer text-green-600 font-bold`}>Blogs</div>
+            <div className={`${activeNavItem === "blogs" ? 'bg-green-200 border-b-4 border-green-400' : ''} px-4 py-4 text-black cursor-pointer text-green-600 font-bold`}>Blogs</div>
           </Link>
           <Link 
             to={'/dashboard'}
             onClick={() => handleNavItemClickForBackground("dashboard")}
           >
-            <div className={`${activeNavItem === "dashboard" ? 'bg-green-200 border-b-4 border-green-400' : ''} px-4 py-6 text-black cursor-pointer text-green-600 font-bold`}>Dashboard</div>
+            <div className={`${activeNavItem === "dashboard" ? 'bg-green-200 border-b-4 border-green-400' : ''} px-4 py-4 text-black cursor-pointer text-green-600 font-bold`}>Dashboard</div>
+          </Link>
+          <Link 
+            to={'/appointmentbook'}
+            onClick={() => handleNavItemClickForBackground("book")}
+          >
+            <div className={`${activeNavItem === "book" ? 'bg-green-200 border-b-4 border-green-400' : ''} px-4 py-4 text-black cursor-pointer text-green-600 font-bold`}>Book</div>
           </Link>
           <Link
             onClick={() => handleNavItemClickForBackground("profile")}
           >
             <div 
-              className={`${activeNavItem === "profile" ? 'bg-green-200 border-b-4 border-green-400' : ''} px-4 py-6 text-black cursor-pointer text-green-600 font-bold`}>Profile</div>
+              className={`${activeNavItem === "profile" ? 'bg-green-200 border-b-4 border-green-400' : ''} px-4 py-4 text-black cursor-pointer text-green-600 font-bold`}>Profile</div>
           </Link>
           <div className='text-black cursor-pointer hover:text-green-300 hover:font-bold' onClick={logout}>Logout</div>
           {/* <div className='hidden md:flex items-center space-x-2'>
