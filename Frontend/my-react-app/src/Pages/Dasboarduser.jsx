@@ -56,8 +56,8 @@ const Dasboarduser = ({isAuthenticated}) => {
         getAppointments();
     },[])
     useEffect(()=>{
-        console.log(pdf);
-    },[pdf])
+        console.log(appointmentDetails);
+    },[appointmentDetails])
     const [msg , setmsg] = useState('')
     const navigate = useNavigate();
 
@@ -83,23 +83,16 @@ const Dasboarduser = ({isAuthenticated}) => {
 
 
 
-//   const handleAppointmentDetailsClick = async (appointmentid) => {
-//     const config = {
-//         headers :{
-//             'Content-Type' : 'application/json',
-//             'Accept' : 'application/json'
-//         }
-//     };
-//     const res = await axios.get(`${BACKEND_URL}/api/appointmentdetails/${appointmentid}/`, config)
-//     setAppointmentDetails(res.data);
-//     setZindexBool(true);
-//     setAppDetailsOpen(true);
-//   }
+  const handleAppointmentDetailsClick = async (appointmentDetails) => {
+    setAppointmentDetails(appointmentDetails)
+    setZindexBool(true);
+    setAppDetailsOpen(true);
+  }
 
-//   const handleAppointmentDetailsClose = () => {
-//     setAppDetailsOpen(false);
-//     setZindexBool(false);
-//   }
+  const handleAppointmentDetailsClose = () => {
+    setAppDetailsOpen(false);
+    setZindexBool(false);
+  }
 
   if(!isAuthenticated){
     navigate('/loginuser')
@@ -107,7 +100,7 @@ const Dasboarduser = ({isAuthenticated}) => {
   return (
     <>
     <PdfViewerComponent isOpen={isPdfOpen} pdf={pdf} onClose={handlePdfClose}/>
-    {/* <AppointmentDetails appDetails={appointmentDetails} isOpen={appDetailsOpen} onClose={handleAppointmentDetailsClose} /> */}
+    <AppointmentDetails appDetails={appointmentDetails} isOpen={appDetailsOpen} onClose={handleAppointmentDetailsClose} />
       <Navbar/>
         <div className='md:flex md:flex-col h-full bg-green-100' id='dashboard-user'>
             <div className='h-auto lg:h-screen grid grid-cols-1 md:grid-cols-3 gap-4 md:mx-36 md:my-8'>
@@ -165,7 +158,7 @@ const Dasboarduser = ({isAuthenticated}) => {
                                             </div>
                                             <h2 className='flex items-center'><FaUserDoctor className='text-green-500 mr-1'/>{appointment.doc_name}</h2>
                                             <div className="flex justify-center">
-                                                <button className='py-1 px-2 bg-green-500 text-white rounded-md shadow-xl'>
+                                                <button className='py-1 px-2 bg-green-500 text-white rounded-md shadow-xl' onClick={() => {handleAppointmentDetailsClick(appointment)}}>
                                                     Details
                                                 </button>
                                             </div>
@@ -186,7 +179,7 @@ const Dasboarduser = ({isAuthenticated}) => {
                                                 <td className='border-l-2 border-gray-100 px-2 py-2'>{appointment.doc_name}</td>
                                                 <td className='border-l-2 border-gray-100 px-2 py-2'>{appointment.appointment_date}</td>
                                                 <td className='border-l-2 border-gray-100 px-2 py-2 flex justify-center'>
-                                                    <button className='py-1 px-2 border-2 border-green-500 hover:bg-green-500 hover:text-white rounded-md'>
+                                                    <button className='py-1 px-2 border-2 border-green-500 hover:bg-green-500 hover:text-white rounded-md' onClick={() => {handleAppointmentDetailsClick(appointment)}}>
                                                         Details
                                                     </button>
                                                 </td>
