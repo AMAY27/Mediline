@@ -94,6 +94,13 @@ const Dasboarduser = ({isAuthenticated}) => {
     setZindexBool(false);
   }
 
+  const changeDateFormat = (date) =>{
+    const dateString = new Date(date);
+    const options = { day: 'numeric', month: 'long', year: 'numeric' };
+    const formattedDate = dateString.toLocaleDateString('en-GB', options);
+    return formattedDate
+  }
+
   if(!isAuthenticated){
     navigate('/loginuser')
   }
@@ -167,7 +174,7 @@ const Dasboarduser = ({isAuthenticated}) => {
                                 </div>
                                 <table className='hidden sm:table w-full h-fit md:overflow-y-scroll'>
                                     <tbody>
-                                        <tr className='border-2 border-gray-200'>
+                                        <tr className='border-2 border-gray-200 text-green-500'>
                                             <td className='p-2 font-bold border-l-2 border-gray-100'>Patient Name</td>
                                             <td className='p-2 font-bold border-l-2 border-gray-100'>Doctor</td>
                                             <td className='p-2 font-bold border-l-2 border-gray-100'>Date</td>
@@ -177,7 +184,7 @@ const Dasboarduser = ({isAuthenticated}) => {
                                             <tr className='border-2 border-gray-200'>
                                                 <td className='border-l-2 border-gray-100 px-2 py-2'>{appointment.patient_name}</td>
                                                 <td className='border-l-2 border-gray-100 px-2 py-2'>{appointment.doc_name}</td>
-                                                <td className='border-l-2 border-gray-100 px-2 py-2'>{appointment.appointment_date}</td>
+                                                <td className='border-l-2 border-gray-100 px-2 py-2 '>{changeDateFormat(appointment.appointment_date)}</td>
                                                 <td className='border-l-2 border-gray-100 px-2 py-2 flex justify-center'>
                                                     <button className='py-1 px-2 border-2 border-green-500 hover:bg-green-500 hover:text-white rounded-md' onClick={() => {handleAppointmentDetailsClick(appointment)}}>
                                                         Details

@@ -6,6 +6,7 @@ import { logout } from '../actions/auth'
 import { Navigate, useNavigate, Link } from 'react-router-dom'
 
 const Navbar = ({logout, isAuthenticated}) => {
+  const activeNavItem = localStorage.getItem("navTag")
   const navigate = useNavigate()
   const handleClick = ()=>{
     navigate('/loginuser')
@@ -13,30 +14,51 @@ const Navbar = ({logout, isAuthenticated}) => {
   const handleRegisterclick = ()=>{
     navigate('/register')
   }
-    const GuestauthLinks = () =>{
-      if(isAuthenticated){
-        return(
-          <div className='hidden md:flex items-center space-x-7'>
-            <Link to={'/blogs'}><div className='text-black cursor-pointer hover:text-green-300 hover:font-bold'>Blogs</div></Link>
-            <Link to={'/dashboard'}><div className='text-black cursor-pointer hover:text-green-300 hover:font-bold'>Dashboard</div></Link>
-            <div className='text-black cursor-pointer hover:text-green-300 hover:font-bold'>Profile</div>
-            <div className='text-black cursor-pointer hover:text-green-300 hover:font-bold' onClick={logout}>Logout</div>
-            {/* <div className='hidden md:flex items-center space-x-2'>
-              <span className='text-black font-bold text-2xl text-green-300'>Welcome, User</span>
-            </div> */}
-          </div>
-        )
-      }else{
-        return(
-          
-          <div className='hidden md:flex items-center space-x-2'>
-            <Link to={'/'} className='font-bold mx-4 hover:text-green-500 cursor-pointer'>Home</Link>
-            <button className='mx-2 my-1 bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline' onClick={handleSignIn}>Sign In</button>
-            <button className='mx-2 my-1 bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline' onClick={handleRegisterclick}>Register</button>
-          </div>
-        )
-      }
+
+  const handleNavItemClickForBackground = (tag) => {
+    // setActiveNavItem(tag)
+    localStorage.setItem("navTag", tag)
+  }
+
+  const GuestauthLinks = () =>{
+    if(isAuthenticated){
+      return(
+        <div className='hidden md:flex items-center space-x-7'>
+          <Link 
+            to={'/blogs'}
+            onClick={() => handleNavItemClickForBackground("blogs")}
+          >
+            <div className={`${activeNavItem === "blogs" ? 'bg-green-200 border-b-4 border-green-400' : ''} px-4 py-6 text-black cursor-pointer text-green-600 font-bold`}>Blogs</div>
+          </Link>
+          <Link 
+            to={'/dashboard'}
+            onClick={() => handleNavItemClickForBackground("dashboard")}
+          >
+            <div className={`${activeNavItem === "dashboard" ? 'bg-green-200 border-b-4 border-green-400' : ''} px-4 py-6 text-black cursor-pointer text-green-600 font-bold`}>Dashboard</div>
+          </Link>
+          <Link
+            onClick={() => handleNavItemClickForBackground("profile")}
+          >
+            <div 
+              className={`${activeNavItem === "profile" ? 'bg-green-200 border-b-4 border-green-400' : ''} px-4 py-6 text-black cursor-pointer text-green-600 font-bold`}>Profile</div>
+          </Link>
+          <div className='text-black cursor-pointer hover:text-green-300 hover:font-bold' onClick={logout}>Logout</div>
+          {/* <div className='hidden md:flex items-center space-x-2'>
+            <span className='text-black font-bold text-2xl text-green-300'>Welcome, User</span>
+          </div> */}
+        </div>
+      )
+    }else{
+      return(
+        
+        <div className='hidden md:flex items-center space-x-2'>
+          <Link to={'/'} className='font-bold mx-4 hover:text-green-500 cursor-pointer'>Home</Link>
+          <button className='mx-2 my-1 bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline' onClick={handleSignIn}>Sign In</button>
+          <button className='mx-2 my-1 bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline' onClick={handleRegisterclick}>Register</button>
+        </div>
+      )
     }
+  }
     // const handleLogout = () =>{
     //   logout();
     // }
@@ -116,8 +138,8 @@ const Navbar = ({logout, isAuthenticated}) => {
 
 
   return (
-    <nav className='flex items-center justify-between p-4'>
-      <div className='ml-7 text-black font-bold text-4xl'>Mediline</div>
+    <nav className='flex items-center justify-between'>
+      <div className='ml-7 text-black font-bold text-4xl p-4'>Mediline</div>
       <div className='hidden md:flex w-80' />
       <div className='hidden md:flex w-80' />
       <div className='hidden md:flex w-80' />
