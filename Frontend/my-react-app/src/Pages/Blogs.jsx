@@ -19,8 +19,8 @@ const Blogs = () => {
             term.author.toLowerCase().includes(searchterm.toLowerCase()) ||
             term.tags.some(
                 keyword => keyword.toLowerCase().includes(searchterm.toLowerCase())
-            ));
-
+            )
+        );
         setFilteredList(finalFilteredList);
     },[selectedCategory, searchterm])
     

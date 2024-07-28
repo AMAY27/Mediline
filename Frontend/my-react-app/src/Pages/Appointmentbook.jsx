@@ -14,6 +14,8 @@ const Appointmentbook = ({isAuthenticated}) => {
   const BACKEND_URL = import.meta.env.VITE_NODE_BACKEND_URL;
   const dispatch = useDispatch()
   const [clinicList , setClinicList] = useState([])
+  const [searchedClinicList, setSerchedCLinicList] = useState([])
+  const [searchTermForClinics, setSearchTermForCLinics] = useState("")
   const [testcenters, setTestcenters] = useState([])
   const [docList, setDoclist] = useState([])
   const [testclick, setTestclick ] = useState(false)
@@ -27,8 +29,6 @@ const Appointmentbook = ({isAuthenticated}) => {
   useEffect(()=>{
     dispatch(checkauthenticated())
     // dispatch(load_user())
-    handleClinicdata()
-    handledoctordata()
     const handleResize = () => {
       setIsMobile(window.innerWidth < 768);
       setShowMenu(false); // Close the overlay on resize for mobile
@@ -42,6 +42,24 @@ const Appointmentbook = ({isAuthenticated}) => {
     };
 
   },[])
+
+  useEffect(()=>{
+    handleClinicdata()
+    handledoctordata()
+    const filteredList = clinicList.filter(term =>
+      term.docname.toLowerCase().includes(searchTermForClinics.toLowerCase()) ||
+      term.address.toLowerCase().includes(searchTermForClinics.toLowerCase()) ||
+      term.service_tags.some(
+        keyword => keyword.toLowerCase().includes(searchTermForClinics.toLowerCase())
+      )
+    )
+    setSerchedCLinicList(filteredList)
+  },[searchedClinicList, searchTermForClinics])
+
+  const handleSearchClinicChange = (e) =>{
+    e.preventDefault()
+    setSearchTermForCLinics(e.target.value)
+  }
 
   const handleTestclick = ()=>{
     setTestclick(true)
@@ -119,79 +137,12 @@ const Appointmentbook = ({isAuthenticated}) => {
   return (
     <div>
       <Navbar/>
-      {/* {isMobile ? (
-        <div className='grid grid-cols-1 m-3'>
-          <button
-            className='bg-green-200 p-2 rounded border'
-            onClick={() => setIsOpen(!isOpen)}
-          >
-            {consultclick ? 'Consultation (click to change)' : testclick ? 'Test and Diagnosis (click to change)' : healthclick ? 'Health Checkups (click to change)' : 'Select an Option'}
-          </button>
-          {isOpen && (
-            <div className='absolute bg-white border rounded mt-1 w-48'>
-              <div
-                className={`p-2 border-t border-gray-300 cursor-pointer hover:bg-green-300 ${
-                consultclick ? 'bg-green-300' : ''
-                }`}
-                onClick={handleConsultclick}
-              >
-                Consultation
-              </div>
-              <div
-                className={`p-2 border-t border-gray-300 cursor-pointer hover:bg-green-300 ${
-                testclick ? 'bg-green-300' : ''
-                }`}
-                onClick={handleTestclick}
-              >
-                Test and Diagnosis
-              </div>
-              <div
-                className={`p-2 border-t border-gray-300 cursor-pointer hover:bg-green-300 ${
-                healthclick ? 'bg-green-300' : ''
-                }`}
-                onClick={handleHealthclick}
-              >
-                Full Health Checkups
-              </div>
-            </div>
-      )} */}
-      {/* {consultclick && 
-        <div className='grid grid-cols-1 gap-5 mt-5 mx-6'>
-        {clinicList.map((value)=>{
-          return(
-            <div className='border-2 border-green-300 shadow-md rounded'>
-              <h2 className='text-lg md:text-lg font-bold text-center p-2'>Dr. {value.docname}</h2>
-                  <h2 className='text-sm md:text-sm p-1'>Address : {value.address}</h2>
-                  <h2 className='text-sm md:text-sm p-1'>City : {value.city}</h2>
-                  <button className='mx-3 my-2 bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline'>Details</button>
-                  <button className='mx-2 my-2 bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline' onClick={()=>handleBookconsultation(value.admin_docid, value._id)}>Book appointment</button>
-            </div> 
-          )
-        })}
-      </div>
-      }
-      {testclick && 
-               <div className='grid grid-cols-1 gap-5 mt-5 mx-6'>
-                {testcenters.map((value)=>{
-                  return(
-                    <div className='border-2 border-green-300 shadow-md rounded'>
-                          <h2 className='mx-3 md:text-sm p-1'>Center : {value.center_name}</h2>
-                          <h2 className='mx-3 md:text-sm p-1'>Address : {value.address}</h2>
-                          <button className='mx-3 my-2 bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline'>Details</button>
-                          <button className='mx-2 my-2 bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline' onClick={()=>handleBooktest(value._id)}>Book test</button>
-                    </div> 
-                  )
-                })}
-              </div>
-              }
-      </div>
-      ) : ( */}
       <div className='h-screen md:flex md:flex-col' id='appointmentParentDiv'>
         <div className='grid grid-cols-1 md:grid-cols-3 gap-4 md:m-8'>
           <div className='hidden md:block md:col-span-1 md:h-screen'>
             <div className='border-2 border-green-300 shadow-md rounded px-8 pt-6 pb-8 mb-4 mx-6 bg-white'>
               <h1 className='flex justify-center items-center text-xl font-bold text-green-500'>Clinic and Diagnostic centers</h1>
-              <input className='flex justify-center items-center mt-5 p-3 rounded-xl w-full shadow-xl' placeholder='Search filter coming soon'/>
+              <input className='flex justify-center items-center mt-5 p-3 rounded-xl w-full shadow-xl' placeholder='Search filter coming soon' onChange={handleSearchClinicChange}/>
               <div className='rounded-md shadow-md border-2 border-green-300 py-12 px-4 my-4 bg-yellow-100'>Ads and Placcards</div>
               <div className='rounded-md shadow-md border-2 border-green-300 py-12 px-4 my-4 bg-yellow-100'>Ads and Placcards</div>
             </div>
@@ -231,7 +182,7 @@ const Appointmentbook = ({isAuthenticated}) => {
             </div>
               {consultclick && 
                <div className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 md:py-8 md:px-4 md:overflow-y-scroll md:h-[70%] md:bg-white'>
-                {clinicList.map((value)=>{
+                {searchedClinicList.map((value)=>{
                   return(
                     <div className='md:shadow-xl mx-4 md:mx-0 rounded-md bg-white border-2 border-green-300'>
                       <img src='assets/medical-5459631.svg' alt='med2' className='h-40'/>
@@ -276,7 +227,6 @@ const Appointmentbook = ({isAuthenticated}) => {
           </div>
         </div>
       </div>
-      {/* )} */}
     </div>
   )
 }
