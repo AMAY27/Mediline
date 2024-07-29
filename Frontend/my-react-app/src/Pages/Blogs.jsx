@@ -4,14 +4,25 @@ import { bloglist } from './Bloglist'
 import Blogsnav from '../extras/Blogsnav'
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
+import { useDispatch, connect } from 'react-redux';
+import { checkauthenticated, load_user, logout } from '../actions/auth';
 
 
-const Blogs = () => {
+const Blogs = ({isAuthenticated}) => {
     const list = bloglist
     const [selectedCategory, setSelectedCategory] = useState('All');
     const [searchterm, setSearchterm] = useState('')
     const [filteredList, setFilteredList] = useState([]);
     const navigate = useNavigate()
+    const dispatch = useDispatch()
+
+    useEffect(()=>{
+        dispatch(checkauthenticated())
+    })
+
+    if(!isAuthenticated){
+        navigate('/loginuser')
+    }
     useEffect(()=>{
         const newFilteredList = selectedCategory === 'All' ? list : list.filter(blog => blog.category === selectedCategory);
         const finalFilteredList = newFilteredList.filter(term => 
@@ -94,4 +105,8 @@ const Blogs = () => {
   )
 }
 
-export default Blogs
+const mapStatetoProps = (state) =>({
+    isAuthenticated: state.auth.isAuthenticated
+})
+
+export default connect(mapStatetoProps, {logout}, null,{checkauthenticated,load_user})(Blogs)

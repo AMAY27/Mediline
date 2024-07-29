@@ -6,7 +6,7 @@ import { logout } from '../actions/auth'
 import { Navigate, useNavigate, Link } from 'react-router-dom'
 
 const Navbar = ({logout, isAuthenticated}) => {
-  const activeNavItem = localStorage.getItem("navTag")
+  const activeNavItem = localStorage.getItem("navTag") ? localStorage.getItem("navTag") : "dashboard"
   const navigate = useNavigate()
   const handleClick = ()=>{
     navigate('/loginuser')

@@ -1,9 +1,22 @@
 import React, { useEffect, useState } from 'react'
 import Navbar from '../extras/Navbar'
+import { useDispatch, connect } from 'react-redux';
+import { checkauthenticated, load_user, logout } from '../actions/auth';
+import { useNavigate } from 'react-router-dom';
 
-const Blogpage = () => {
+const Blogpage = ({isAuthenticated}) => {
     const [content, setContent] = useState([])
     const [tags, setTags] = useState([])
+    const dispatch = useDispatch()
+    const navigate = useNavigate()
+
+    useEffect(()=>{
+        dispatch(checkauthenticated())
+    })
+
+    // if(!isAuthenticated){
+    //     navigate('/loginuser')
+    // }
 
     useEffect(()=>{
         setContent(JSON.parse(localStorage.getItem('content')))
@@ -73,4 +86,8 @@ const Blogpage = () => {
   )
 }
 
-export default Blogpage
+const mapStatetoProps = (state) =>({
+    isAuthenticated: state.auth.isAuthenticated
+})
+
+export default connect(mapStatetoProps, {logout}, null,{checkauthenticated,load_user})(Blogpage)

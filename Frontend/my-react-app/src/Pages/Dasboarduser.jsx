@@ -225,6 +225,6 @@ const Dasboarduser = ({isAuthenticated}) => {
 }   
 const mapStatetoProps = (state) =>({
     isAuthenticated: state.auth.isAuthenticated
-  })
+})
 
 export default connect(mapStatetoProps, {logout}, null,{checkauthenticated,load_user})(Dasboarduser);
