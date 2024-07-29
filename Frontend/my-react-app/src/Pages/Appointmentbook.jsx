@@ -17,31 +17,19 @@ const Appointmentbook = ({isAuthenticated}) => {
   const [searchedClinicList, setSerchedCLinicList] = useState([])
   const [searchTermForClinics, setSearchTermForCLinics] = useState("")
   const [testcenters, setTestcenters] = useState([])
-  const [docList, setDoclist] = useState([])
   const [testclick, setTestclick ] = useState(false)
   const [consultclick, setConsultclick ] = useState(true)
-  const [healthclick, setHealthclick ] = useState(false)
-  const [showMenu, setShowMenu] = useState(false);
-  const [isMobile, setIsMobile] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
   const navigate = useNavigate()
 
   useEffect(()=>{
     dispatch(checkauthenticated())
-    // dispatch(load_user())
-    const handleResize = () => {
-      setIsMobile(window.innerWidth < 768);
-      setShowMenu(false); // Close the overlay on resize for mobile
-    };
+  },[])
+
+
+  useEffect(()=>{
     handleTestcenterdata()
     handleClinicdata()
-    handledoctordata()
-    handleResize(); // Initial check
-    window.addEventListener('resize', handleResize);
-    return () => {
-      window.removeEventListener('resize', handleResize);
-    };
-
   },[])
 
   useEffect(()=>{
@@ -53,7 +41,7 @@ const Appointmentbook = ({isAuthenticated}) => {
       )
     )
     setSerchedCLinicList(filteredList)
-  },[searchedClinicList, searchTermForClinics])
+  },[searchTermForClinics])
 
   const handleSearchClinicChange = (e) =>{
     e.preventDefault()
@@ -63,19 +51,11 @@ const Appointmentbook = ({isAuthenticated}) => {
   const handleTestclick = ()=>{
     setTestclick(true)
     setConsultclick(false)
-    setHealthclick(false)
     setIsOpen(!isOpen)
   }
   const handleConsultclick = ()=>{
     setTestclick(false)
     setConsultclick(true)
-    setHealthclick(false)
-    setIsOpen(!isOpen)
-  }
-  const handleHealthclick = ()=>{
-    setTestclick(false)
-    setConsultclick(false)
-    setHealthclick(true)
     setIsOpen(!isOpen)
   }
   const handleClinicdata = async(e)=>{
@@ -89,6 +69,7 @@ const Appointmentbook = ({isAuthenticated}) => {
     console.log(res);
     const cliniclist = res.data.office
     setClinicList(cliniclist)
+    setSerchedCLinicList(cliniclist)
   }
 
   const handleTestcenterdata = async(e)=>{
@@ -104,17 +85,6 @@ const Appointmentbook = ({isAuthenticated}) => {
     console.log(res.data.centers);
   }
 
-  const handledoctordata = async(e)=>{
-    const config = {
-      headers : {
-        'Content-Type':'application/json',
-        'Accept' : 'application/json'
-      }
-    }
-    const res = await api.get(`${BACKEND_URL}/api/doctors/`,config)
-    const doclist = res.data
-    setDoclist(doclist)
-  }
 
   function handleBooktest(id){
     console.log(id);
@@ -157,11 +127,6 @@ const Appointmentbook = ({isAuthenticated}) => {
               >
                 <h2 className='text-2xl font-bold md:text-sm p-2'>Test and Diagnosis</h2>
               </div>
-              {/* <div className={`cursor-pointer rounded-t-2xl ml-2 p-2 ${healthclick ? 'border-l-4 border-t-4 border-green-300 bg-white text-green-500' : 'hover:border-green-300 bg-green-300'}`}
-                onClick={handleHealthclick}
-              >
-                <h2 className='text-2xl font-bold md:text-sm p-2'>Full Health Checkups</h2>
-              </div> */}
             </div>
             <div className='mx-4 my-2 md:hidden'>
               <select 
@@ -232,4 +197,4 @@ const mapStatetoProps= (state)=>({
 
 
 
-export default connect(mapStatetoProps, {logout}, null, {checkauthenticated, load_user}) (Appointmentbook)
+export default connect(mapStatetoProps, {logout}, null, {checkauthenticated})(Appointmentbook)
