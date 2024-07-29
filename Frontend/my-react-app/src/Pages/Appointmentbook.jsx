@@ -34,7 +34,8 @@ const Appointmentbook = ({isAuthenticated}) => {
       setShowMenu(false); // Close the overlay on resize for mobile
     };
     handleTestcenterdata()
-
+    handleClinicdata()
+    handledoctordata()
     handleResize(); // Initial check
     window.addEventListener('resize', handleResize);
     return () => {
@@ -44,8 +45,6 @@ const Appointmentbook = ({isAuthenticated}) => {
   },[])
 
   useEffect(()=>{
-    handleClinicdata()
-    handledoctordata()
     const filteredList = clinicList.filter(term =>
       term.docname.toLowerCase().includes(searchTermForClinics.toLowerCase()) ||
       term.address.toLowerCase().includes(searchTermForClinics.toLowerCase()) ||
@@ -140,11 +139,10 @@ const Appointmentbook = ({isAuthenticated}) => {
       <div className='h-screen md:flex md:flex-col' id='appointmentParentDiv'>
         <div className='grid grid-cols-1 md:grid-cols-3 gap-4 md:m-8'>
           <div className='hidden md:block md:col-span-1 md:h-screen'>
-            <div className='border-2 border-green-300 shadow-md rounded px-8 pt-6 pb-8 mb-4 mx-6 bg-white'>
-              <h1 className='flex justify-center items-center text-xl font-bold text-green-500'>Clinic and Diagnostic centers</h1>
-              <input className='flex justify-center items-center mt-5 p-3 rounded-xl w-full shadow-xl' placeholder='Search filter coming soon' onChange={handleSearchClinicChange}/>
-              <div className='rounded-md shadow-md border-2 border-green-300 py-12 px-4 my-4 bg-yellow-100'>Ads and Placcards</div>
-              <div className='rounded-md shadow-md border-2 border-green-300 py-12 px-4 my-4 bg-yellow-100'>Ads and Placcards</div>
+            <div className='flex justify-center items-center border-2 border-green-300 shadow-md rounded px-8 pt-6 pb-8 mb-4 mx-6 bg-white'>
+              <h1 className='text-xl font-bold text-green-500 text-center'>Clinic and Diagnostic centers @mediline</h1>
+              {/* <div className='rounded-md shadow-md border-2 border-green-300 py-12 px-4 my-4 bg-yellow-100'>Ads and Placcards</div> */}
+              {/* <div className='rounded-md shadow-md border-2 border-green-300 py-12 px-4 my-4 bg-yellow-100'>Ads and Placcards</div> */}
             </div>
           </div>
           <div className='md:col-span-2'>
@@ -181,31 +179,28 @@ const Appointmentbook = ({isAuthenticated}) => {
               </select>
             </div>
               {consultclick && 
-               <div className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 md:py-8 md:px-4 md:overflow-y-scroll md:h-[70%] md:bg-white'>
-                {searchedClinicList.map((value)=>{
-                  return(
-                    <div className='md:shadow-xl mx-4 md:mx-0 rounded-md bg-white border-2 border-green-300'>
-                      <img src='assets/medical-5459631.svg' alt='med2' className='h-40'/>
-                      <h2 className='text-lg md:text-lg font-bold text-center p-2'>Dr. {value.docname}</h2>
-                          {/* {docList.map((key)=>{
-                            if(value.docid===key.id){
-                              return(
-                                <div>
-                                  <img src='src/assets/medical-5459631.svg' alt='med2' className='h-40'/>
-                                  <h2 className='text-2xl mdv :text-lg font-bold text-center p-2'>Dr. {key.first_name} {key.last_name}</h2>
-                                </div>
-                              )
-                            }
-                          })} */}
-                      <h2 className='mx-3 md:text-md p-1 flex items-center'><FaLocationDot className='text-red-500 mr-1'/> {value.address}</h2>
-                      {/* <h2 className='mx-3 md:text-sm p-1'>City : {value.city}</h2> */}
-                      {/* <button className='mx-3 my-2 bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline'>Details</button> */}
-                      <div className='px-2'>
-                        <button className='my-2 border-2 border-green-300 hover:bg-green-500 hover:text-white font-bold py-2 rounded w-full' onClick={()=>handleBookconsultation(value.admin_docid, value._id)}>Book appointment</button>
-                      </div>
-                    </div> 
-                  )
-                })}
+               <div className='md:overflow-y-scroll md:h-[70%] md:bg-white md:py-4'>
+                <div className='flex items-center justify-center'>
+                  <input 
+                    className='bg-gray-100 appearance-none rounded-lg sm:w-[50%] py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-full mx-4' 
+                    placeholder='Search for Doctors, speciality and location' 
+                    onChange={handleSearchClinicChange}
+                  />
+                </div>
+                <div className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 md:py-4 md:px-4 '>
+                  {searchedClinicList.map((value)=>{
+                    return(
+                      <div className='md:shadow-xl mx-4 md:mx-0 rounded-md bg-white border-2 border-green-300'>
+                        <img src='assets/medical-5459631.svg' alt='med2' className='h-40'/>
+                        <h2 className='text-lg md:text-lg font-bold text-center p-2'>Dr. {value.docname}</h2>
+                        <h2 className='mx-3 md:text-md p-1 flex items-center'><FaLocationDot className='text-red-500 mr-1'/> {value.address}</h2>
+                        <div className='px-2'>
+                          <button className='my-2 border-2 border-green-300 hover:bg-green-500 hover:text-white font-bold py-2 rounded w-full' onClick={()=>handleBookconsultation(value.admin_docid, value._id)}>Book appointment</button>
+                        </div>
+                      </div> 
+                    )
+                  })}
+                </div>
               </div>
               }
               {testclick && 
