@@ -4,7 +4,7 @@ import DatePicker from 'react-datepicker'
 import { checkauthenticated, load_user, logout } from '../actions/auth';
 import { useDispatch, connect } from 'react-redux';
 import axios from 'axios'
-import { getDetailsForBookingAppointments } from '../Services/api.services';
+import { getDetailsForBookingAppointments } from '../userServices/api.services';
 import { FaLocationDot } from "react-icons/fa6";
 import Calendar from '../Components/Calendar';
 import { format } from 'date-fns';

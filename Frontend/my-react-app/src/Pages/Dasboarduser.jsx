@@ -7,7 +7,7 @@ import { useState, useEffect } from 'react';
 import { checkauthenticated, load_user } from '../actions/auth';
 import { connect } from 'react-redux';
 import { useDispatch } from 'react-redux';
-import { getReports, getAllAppointmentsForUser } from '../Services/api.services'
+import { getReports, getAllAppointmentsForUser } from '../userServices/api.services'
 import { Link, Navigate, useNavigate } from 'react-router-dom';
 import { logout } from '../actions/auth'
 import axios from 'axios';

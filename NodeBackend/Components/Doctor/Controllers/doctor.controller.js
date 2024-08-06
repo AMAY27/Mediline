@@ -1,6 +1,8 @@
 const bcrypt = require('bcryptjs');
 const Doctor = require('../Schemas/doctor.schema.js');
 const Docavailability = require('../Schemas/docavailability.schema.js')
+const Office = require('../../DoctorOffice/Schemas/office.schema.js')
+const Appointments = require('../../Appointments/Schemas/consultationappointment.schema.js')
 const { createToken } = require('../../../util/TokenCreation.js');
 const cron = require('node-cron');
 
@@ -77,9 +79,17 @@ const doctorController = {
     },
     fetchDocAvailability: async(req,res) => {
         try {
-            console.log(req.query.docid);
             const availability = await Docavailability.find({docid: req.query.docid, officeid: req.query.officeid})
             res.status(200).json({availability})
+        } catch (error) {
+            res.status(500).json({error:error})
+        }
+    },
+    fetchClinicData: async(req,res)=>{
+        try {
+            const clinics = await Office.find({admin_docid: req.query.docid})
+            const appointments = await Appointments.find({docid: req.query.docid, appointment_date: req.query.date})
+            res.status(200).json({clinicData: clinics, appointmentData: appointments})
         } catch (error) {
             res.status(500).json({error:error})
         }
