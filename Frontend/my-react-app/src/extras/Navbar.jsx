@@ -48,7 +48,7 @@ const Navbar = ({logout, isAuthenticated}) => {
             <div 
               className={`${activeNavItem === "profile" ? 'bg-green-200 border-b-4 border-green-400' : ''} px-4 py-4 text-black cursor-pointer text-green-600 font-bold`}>Profile</div>
           </Link>
-          <div className='text-black cursor-pointer hover:text-green-300 hover:font-bold' onClick={logout}>Logout</div>
+          <div className='px-4 py-4 cursor-pointer text-green-600 font-bold hover:bg-green-200 hover:border-b-4 hover:border-green-400' onClick={logout}>Logout</div>
           {/* <div className='hidden md:flex items-center space-x-2'>
             <span className='text-black font-bold text-2xl text-green-300'>Welcome, User</span>
           </div> */}

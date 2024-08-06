@@ -16,7 +16,7 @@ import ReportUploadForm from '../Components/ReportUploadForm';
 import ReportListingComponents from '../Components/ReportListingComponents';
 import PdfViewerComponent from '../Components/PdfViewerComponent';
 import { FaFileAlt, FaRegEye, FaFileDownload   } from "react-icons/fa";
-import { FaCalendar, FaUserDoctor  } from "react-icons/fa6";
+import { FaCalendar, FaPlus, FaUserDoctor  } from "react-icons/fa6";
 
 //import { BACKEND_URL } from '../utils/constants';
 
@@ -159,11 +159,32 @@ const Dasboarduser = ({isAuthenticated}) => {
                     </div>
                     {/* <div className='bg-white rounded-r-md md:p-8 md:h-[70%] md:overflow-y-scroll'> */}
                         {activeTab === 'appointment' && 
-                            <div className="items-center md:h-[70%] sm:bg-white rounded-r-md p-2 md:p-8">
-                                <button className='p-2 mb-4 border-2 border-green-500 hover:bg-green-500 hover:text-white rounded-md' onClick={handleBookAppointmentClicked}>Book New Appointment</button>
+                            <div className="items-center md:h-[70%] bg-white rounded-r-md p-2 md:p-8 md:overflow-y-auto">
+                                {/* <div className='flex justify-end mx-2'>
+                                    <button className='sm:hidden p-2 mb-4 border-2 border-green-500 hover:bg-green-500 hover:text-white rounded-md' onClick={handleBookAppointmentClicked}><FaPlus/></button>
+                                </div> */}
+                                <button className='absolute bottom-0 right-0 sm:hidden p-2 mb-12 rounded-full mx-4 border-2 border-green-500 text-white bg-green-500' onClick={handleBookAppointmentClicked}><FaPlus/></button>
                                 <div className='sm:hidden mx-2'>
+                                    <h2 className='text-lg pb-2 text-green-500 font-bold'>Upcoming Appointments</h2>
                                     {appointmentList.map((appointment)=> (
-                                        <div className='p-4 rounded-xl shadow-full bg-white'>
+                                        appointment.is_completed === false &&
+                                        <div className='p-4 rounded-xl shadow-full bg-white mb-4'>
+                                            <div className="flex justify-between">
+                                                <h2 className='font-bold text-lg'>{appointment.patient_name}</h2>
+                                                <h2 className='flex items-center'><FaCalendar className='text-green-500 mr-1'/>{appointment.appointment_date}</h2>
+                                            </div>
+                                            <h2 className='flex items-center'><FaUserDoctor className='text-green-500 mr-1'/>{appointment.doc_name}</h2>
+                                            <div className="flex justify-center">
+                                                <button className='py-1 px-2 bg-green-500 text-white rounded-md shadow-xl' onClick={() => {handleAppointmentDetailsClick(appointment)}}>
+                                                    Details
+                                                </button>
+                                            </div>
+                                        </div>
+                                    ))}
+                                    <h2 className='text-lg mt-4 pb-2 text-green-500 font-bold'>Previous Appointments</h2>
+                                    {appointmentList.map((appointment)=> (
+                                        appointment.is_completed === true &&
+                                        <div className='p-4 rounded-xl shadow-full bg-white mb-4'>
                                             <div className="flex justify-between">
                                                 <h2 className='font-bold text-lg'>{appointment.patient_name}</h2>
                                                 <h2 className='flex items-center'><FaCalendar className='text-green-500 mr-1'/>{appointment.appointment_date}</h2>
@@ -177,28 +198,57 @@ const Dasboarduser = ({isAuthenticated}) => {
                                         </div>
                                     ))}
                                 </div>
-                                <table className='hidden sm:table w-full h-fit md:overflow-y-scroll'>
-                                    <tbody>
-                                        <tr className='border-2 border-gray-200 text-green-500'>
-                                            <td className='p-2 font-bold border-l-2 border-gray-100'>Patient Name</td>
-                                            <td className='p-2 font-bold border-l-2 border-gray-100'>Doctor</td>
-                                            <td className='p-2 font-bold border-l-2 border-gray-100'>Date</td>
-                                            <td className='p-2 font-bold border-l-2 border-gray-100'>Details</td>
-                                        </tr>
-                                        {appointmentList.map((appointment) => (
-                                            <tr className='border-2 border-gray-200'>
-                                                <td className='border-l-2 border-gray-100 px-2 py-2'>{appointment.patient_name}</td>
-                                                <td className='border-l-2 border-gray-100 px-2 py-2'>{appointment.doc_name}</td>
-                                                <td className='border-l-2 border-gray-100 px-2 py-2'>{changeDateFormat(appointment.appointment_date)}</td>
-                                                <td className='border-l-2 border-gray-100 px-2 py-2 flex justify-center'>
-                                                    <button className='py-1 px-2 border-2 border-green-500 hover:bg-green-500 hover:text-white rounded-md' onClick={() => {handleAppointmentDetailsClick(appointment)}}>
-                                                        Details
-                                                    </button>
-                                                </td>
+                                <button className='hidden sm:block p-2 mb-4 border-2 border-green-500 hover:bg-green-500 hover:text-white rounded-md' onClick={handleBookAppointmentClicked}>Book New Appointment</button>
+                                <div className='hidden sm:block bg-gray-100 p-4 rounded-xl h-auto'>
+                                    <h2 className='text-lg pb-2 text-green-500 font-bold'>Upcoming Appointments</h2>
+                                    <table className='w-full h-fit p-2 bg-white md:overflow-y-auto'>
+                                        <tbody>
+                                            <tr className='border-2 border-gray-200 text-green-500'>
+                                                <td className='p-2 font-bold'>Patient Name</td>
+                                                <td className='p-2 font-bold'>Doctor</td>
+                                                <td className='p-2 font-bold'>Date</td>
+                                                {/* <td className='p-2 font-bold'>Details</td> */}
                                             </tr>
-                                        ))}
-                                    </tbody>
-                                </table>
+                                            {appointmentList.map((appointment) => (
+                                                appointment.is_completed === false &&
+                                                <tr className='border-2 border-gray-200'>
+                                                    <td className='px-2 py-2'>{appointment.patient_name}</td>
+                                                    <td className='px-2 py-2'>{appointment.doc_name}</td>
+                                                    <td className='px-2 py-2'>{changeDateFormat(appointment.appointment_date)}</td>
+                                                    <td className='px-2 py-2 flex justify-center'>
+                                                        <button className='py-1 px-2 border-2 border-green-500 hover:bg-green-500 hover:text-white rounded-md' onClick={() => {handleAppointmentDetailsClick(appointment)}}>
+                                                            Details
+                                                        </button>
+                                                    </td>
+                                                </tr>
+                                            ))}
+                                        </tbody>
+                                    </table>
+                                    <h2 className='text-lg pb-2 text-green-500 font-bold mt-8'>Previous Appointments</h2>
+                                    <table className='w-full h-fit p-2 bg-white md:overflow-y-auto'>
+                                        <tbody>
+                                            <tr className='border-2 border-gray-200 text-green-500'>
+                                                <td className='p-2 font-bold'>Patient Name</td>
+                                                <td className='p-2 font-bold'>Doctor</td>
+                                                <td className='p-2 font-bold'>Date</td>
+                                                {/* <td className='p-2 font-bold'>Details</td> */}
+                                            </tr>
+                                            {appointmentList.map((appointment) => (
+                                                appointment.is_completed === true &&
+                                                <tr className='border-2 border-gray-200'>
+                                                    <td className='px-2 py-2'>{appointment.patient_name}</td>
+                                                    <td className='px-2 py-2'>{appointment.doc_name}</td>
+                                                    <td className='px-2 py-2'>{changeDateFormat(appointment.appointment_date)}</td>
+                                                    <td className='px-2 py-2 flex justify-center'>
+                                                        <button className='py-1 px-2 border-2 border-green-500 hover:bg-green-500 hover:text-white rounded-md' onClick={() => {handleAppointmentDetailsClick(appointment)}}>
+                                                            Details
+                                                        </button>
+                                                    </td>
+                                                </tr>
+                                            ))}
+                                        </tbody>
+                                    </table>
+                                </div>
                             </div>
                         }
                         {activeTab === 'upload' &&
@@ -207,7 +257,7 @@ const Dasboarduser = ({isAuthenticated}) => {
                             </div>
                         }
                         {activeTab === 'report' && 
-                            <div className='items-center md:h-[70%] md:overflow-y-scroll bg-white rounded-r-md md:p-8'>
+                            <div className='items-center md:h-[70%] md:overflow-y-scroll bg-white rounded-r-md p-4 md:p-8'>
                                 {/* <ReportUploadForm/> */}
                                 {reports.map((report) => (
                                     <>
