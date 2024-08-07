@@ -8,8 +8,8 @@ import { Navigate, useNavigate, Link } from 'react-router-dom'
 const Navbar = ({logout, isAuthenticated}) => {
   const activeNavItem = localStorage.getItem("navTag") ? localStorage.getItem("navTag") : "dashboard"
   const navigate = useNavigate()
-  const handleClick = ()=>{
-    navigate('/loginuser')
+  const handleClick = (clickedOption)=>{
+    clickedOption === "user" ? navigate('/loginuser') : navigate('/doc/login')
   }
   const handleRegisterclick = ()=>{
     navigate('/register')
@@ -77,8 +77,8 @@ const Navbar = ({logout, isAuthenticated}) => {
         <div className='fixed inset-0 flex justify-center items-center bg-black bg-opacity-50'>
           <div className='flex items-center grid grid-cols-1 bg-white border-2 border-green-300 rounded-lg w-56 h-56'>
             <h2 className='mx-2 my-2 font-bold text-2xl'>Sign In as: </h2>
-            <button className="mx-2 my-1 bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="button" onClick={handleClick}>User</button>
-            <button className="mx-2 my-1 bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="button">Clinic Manager</button>
+            <button className="mx-2 my-1 bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="button" onClick={() => handleClick("user")}>User</button>
+            <button className="mx-2 my-1 bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="button" onClick={() => handleClick("doctor")}>Doctor</button>
             <button className='mt-4 text-black' onClick={onClose}>
                 Close
               </button>

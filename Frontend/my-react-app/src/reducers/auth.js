@@ -13,7 +13,8 @@ import {
     SIGNUP_FAIL,
     ACTIVATION_SUCCESS,
     ACTIVATION_FAIL,
-    LOGOUT
+    LOGOUT,
+    DOCLOGIN_SUCCESS,
 } from '../actions/types'
 
 const initialState = {
@@ -32,6 +33,14 @@ export default function (state = initialState, action){
                 isAuthenticated: true
             }
         case LOGIN_SUCCESS:
+            localStorage.setItem('access',payload.access);
+            return{
+                ...state,
+                isAuthenticated: true,
+                access: payload.access,
+                refresh: payload.refresh
+            }
+        case DOCLOGIN_SUCCESS:
             localStorage.setItem('access',payload.access);
             return{
                 ...state,

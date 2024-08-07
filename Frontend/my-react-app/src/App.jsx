@@ -18,6 +18,7 @@ import {Provider} from 'react-redux'
 import ReactDOM from 'react-dom'
 import Blogs from './Pages/Blogs'
 import Blogpage from './Pages/Blogpage'
+import Loginclinic from './Register/Loginclinic'
 function App() {
 
   return (
@@ -36,7 +37,8 @@ function App() {
         <Route path='/testcenter' element={<Testcenter/>}/>
         <Route path='/testappointment' element={<Testappointmentbook/>}/>
         <Route path='/clinicappointment' element={<Clinicappointment/>}/>
-        <Route path='/clinicdashboard' element={<Clinicdashboard/>}/>
+        <Route path='/doc/login' element={<Loginclinic/>}/>
+        <Route path='/doc/clinicdashboard' element={<Clinicdashboard/>}/>
         <Route path='/blogs' element={<Blogs/>}/>
         <Route path='/blogpage' element={<Blogpage/>}/>
       </Routes>

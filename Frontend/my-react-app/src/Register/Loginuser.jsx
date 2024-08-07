@@ -1,10 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { Link, Navigate, useNavigate } from 'react-router-dom';
-import {connect} from 'react-redux'
+import {connect, useDispatch} from 'react-redux'
 import {login} from '../actions/auth'
 import { checkauthenticated, load_user } from '../actions/auth'
-
-import { useDispatch } from 'react-redux';
 import Navbar from '../extras/Navbar';
 import './login.css'; 
 

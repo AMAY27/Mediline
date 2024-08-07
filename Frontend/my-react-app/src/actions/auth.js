@@ -16,6 +16,7 @@ import {
     ACTIVATION_SUCCESS,
     ACTIVATION_FAIL,
     LOGOUT,
+    DOCLOGIN_SUCCESS,
 } from './types'
 
 export const checkauthenticated = () => async dispatch => {
@@ -95,6 +96,39 @@ export const login = (email, password)=> async dispatch => {
         if(res.status === 200){
             dispatch({
                 type: LOGIN_SUCCESS,
+                payload: res.data
+            })
+            console.log(res);
+            localStorage.setItem("userId", res.data.userId)
+            localStorage.setItem("access", res.data.token)
+            //dispatch(load_user());
+        }
+        else{
+            dispatch({
+                type: LOGIN_FAIL
+            })
+            console.log(error)
+        }
+    } catch (error) {
+        dispatch({
+            type: LOGIN_FAIL
+        })
+        console.log(error)
+    }
+};
+
+export const docLogin = (email, password)=> async dispatch => {
+    const config = {
+        headers :{
+            'Content-Type' : 'application/json'
+        }
+    };
+    const body = JSON.stringify({email, password});
+    try {
+        const res = await axios.post('http://localhost:3000/doc/login',body,config)
+        if(res.status === 200){
+            dispatch({
+                type: DOCLOGIN_SUCCESS,
                 payload: res.data
             })
             console.log(res);
