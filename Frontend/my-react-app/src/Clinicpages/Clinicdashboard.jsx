@@ -1,10 +1,12 @@
 import axios from 'axios'
 import React, { useEffect, useState } from 'react'
 import Navbar from '../extras/Navbar'
+import { getClinicData } from '../doctorServices/api.docServices'
 
 const Clinicdashboard = () => {
 
   const [appointmentList , setAppointmentList] = useState([])
+  const docid = "6682aae9da94341bcf312699"
 
   useEffect(()=>{
     getClinicappointmentdata()
@@ -13,21 +15,18 @@ const Clinicdashboard = () => {
     console.log(appointmentList)
   },[appointmentList])
 
-    async function getClinicappointmentdata(){
-        const config = {
-            headers : {
-                'Content-Type' : 'application/json',
-                'Accept' : 'application/json'
-            }
-        }
-        const res = await axios.get('http://127.0.0.1:8000/api/clinicappointments/?clinicid=2&date=2023-09-28',config)
-        setAppointmentList(res.data)
-    }
+  const getClinicappointmentdata = async() =>{
+
+  }
+
 
   return (
     <>
       <Navbar/>
-      <div className=''>
+      <div className='md:grid grid-cols-4 bg-green-100'>
+        <div></div>
+      </div>
+      {/* <div className=''>
         <div className='flex justify-center items-start h-auto mt-5'>
           <div className='w-3/4'>
             <h2 className='text-2xl font-bold m-3'>Today's Appointments</h2>
@@ -53,7 +52,7 @@ const Clinicdashboard = () => {
             </table>
           </div>
         </div>
-      </div>
+      </div> */}
     </>
   )
 }
