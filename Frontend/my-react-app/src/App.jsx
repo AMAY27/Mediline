@@ -11,7 +11,6 @@ import Appointmentbook from './Pages/Appointmentbook'
 import Testcenter from './extras/Testcenter'
 import Testappointmentbook from './Pages/Testappointmentbook'
 import Clinicappointment from './Pages/Clinicappointment'
-import Clinicdashboard from './Clinicpages/Clinicdashboard'
 import {BrowserRouter as Router , Routes, Route} from 'react-router-dom'
 import store from './store'
 import {Provider} from 'react-redux'
@@ -19,6 +18,7 @@ import ReactDOM from 'react-dom'
 import Blogs from './Pages/Blogs'
 import Blogpage from './Pages/Blogpage'
 import Loginclinic from './Register/Loginclinic'
+import Doctordashboard from './Doctorpages/Doctordashboard'
 function App() {
 
   return (
@@ -38,7 +38,7 @@ function App() {
         <Route path='/testappointment' element={<Testappointmentbook/>}/>
         <Route path='/clinicappointment' element={<Clinicappointment/>}/>
         <Route path='/doc/login' element={<Loginclinic/>}/>
-        <Route path='/doc/clinicdashboard' element={<Clinicdashboard/>}/>
+        <Route path='/doc/dashboard' element={<Doctordashboard/>}/>
         <Route path='/blogs' element={<Blogs/>}/>
         <Route path='/blogpage' element={<Blogpage/>}/>
       </Routes>

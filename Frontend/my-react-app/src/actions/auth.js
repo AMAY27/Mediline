@@ -132,7 +132,7 @@ export const docLogin = (email, password)=> async dispatch => {
                 payload: res.data
             })
             console.log(res);
-            localStorage.setItem("userId", res.data.userId)
+            localStorage.setItem("docId", res.data.userId)
             localStorage.setItem("access", res.data.token)
             //dispatch(load_user());
         }

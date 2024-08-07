@@ -30,7 +30,7 @@ const Loginclinic = ({docLogin, isAuthenticated}) => {
   }
 
   if(isAuthenticated){
-    navigate('/doc/clinicdashboard')
+    navigate('/doc/dashboard')
   }
   return (
     <div>

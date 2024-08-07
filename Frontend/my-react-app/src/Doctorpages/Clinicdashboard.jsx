@@ -6,7 +6,6 @@ import { getClinicData } from '../doctorServices/api.docServices'
 const Clinicdashboard = () => {
 
   const [appointmentList , setAppointmentList] = useState([])
-  const docid = "6682aae9da94341bcf312699"
 
   useEffect(()=>{
     getClinicappointmentdata()
@@ -22,7 +21,7 @@ const Clinicdashboard = () => {
 
   return (
     <>
-      <Navbar/>
+      {/* <Navbar/> */}
       <div className='md:grid grid-cols-4 bg-green-100'>
         <div></div>
       </div>
