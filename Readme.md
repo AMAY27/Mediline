@@ -6,29 +6,29 @@ MediLine is a comprehensive web application designed to streamline the process o
 ## Features
 
 ### User End (Patients)
-![MediLine Logo](./mediline1.png)
-- 
+![MediLine Logo](./readme-images/mediline1.png)
+
 - **Appointment Booking**: Users can search for doctors or diagnostic services and book appointments based on availability.
-- 
-![MediLine Logo](./mediline4.png)
-- 
-![MediLine Logo](./mediline5.png)
-- 
-![MediLine Logo](./mediline6.png)
+
+![MediLine Logo](./readme-images/mediline4.png)
+
+![MediLine Logo](./readme-images/mediline5.png)
+
+![MediLine Logo](./readme-images/mediline6.png)
 
 - **Appointment Management**: View, reschedule, or cancel upcoming appointments with ease.
-- 
-![MediLine Logo](./mediline2.png)
+
+![MediLine Logo](./readme-images/mediline2.png)
 
 - **Medical Report Management**: Upload, view, and manage your medical reports securely.
 
-![MediLine Logo](./mediline3.png)
+![MediLine Logo](./readme-images/mediline3.png)
 - **User Profile Management**: Update personal information, contact details, and preferred doctors or services.
 - **Mediline Blogs**: Healthcare blogs for readers to get aware in healcare management.
 
-![MediLine Logo](./mediline7.png)
+![MediLine Logo](./readme-images/mediline7.png)
 
-![MediLine Logo](./mediline8.png)
+![MediLine Logo](./readme-images/mediline8.png)
 
 
 ### Doctor Office End
@@ -36,7 +36,7 @@ MediLine is a comprehensive web application designed to streamline the process o
 
 - **Doctor dashboard**: A comprehensive interface to check daily, weekly, and monthly appointments.
 
-![MediLine Logo](./mediline9.png)
+![MediLine Logo](./readme-images/mediline9.png)
 ## Technology Stack
 
 ### Frontend
