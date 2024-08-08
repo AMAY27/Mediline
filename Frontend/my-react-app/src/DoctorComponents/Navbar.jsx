@@ -27,7 +27,7 @@ const Navbar = ({logout, isAuthenticated}) => {
                             <h2 className='text-green-600 font-bold text-4xl'>Mediline</h2>
                             <IoMdClose onClick={handleMenuClose} className='text-2xl text-gray-500'/>
                         </div>
-                        <div className='text-xl m-4 text-green-600 space-y-2'>
+                        <div className='text-xl my-6 mx-4 text-green-600 space-y-2'>
                             <div className="flex items-center space-x-2">
                                 <MdDashboard/>
                                 <h2>Dashboard</h2>
