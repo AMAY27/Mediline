@@ -5,6 +5,32 @@ import { IoMdAdd, IoMdClose  } from "react-icons/io";
 const Appointment = () => {
     const [showMiniDiv, setShowMiniDiv] = useState(false);
     const [prescriptionType, setPrescriptionType] = useState("")
+    const [medicationList, setMedicationList] = useState([])
+    const [testList, setTestList] = useState([])
+    const [medicationDetails, setMedicationDetails] = useState({
+        name : "",
+    })
+    const [testName, setTestName] = useState("")
+
+    const handleMedicationChange = (e) => {
+        setMedicationDetails(p => ({...p, [e.target.name] : e.target.value}))
+    }
+
+    const addMedication = (e) => {
+        e.preventDefault()
+        // if (medicationDetails.name === ""){
+        //     alert("Please add a medication name")
+        // }
+        const isMedicationAlreadyAdded = medicationList.some(
+            (medication) => medication.name === medicationDetails.name
+        );
+        if (isMedicationAlreadyAdded) {
+            alert("Medication already added");
+        } else {
+            setMedicationList([...medicationList, medicationDetails]);
+        }
+        setMedicationDetails({name : ""})
+    }
 
 
     const toggleMiniDiv = () => {
@@ -79,18 +105,22 @@ const Appointment = () => {
                                         onClick={() => setPrescriptionType("")}
                                     />
                                 </div>
-                                <form action="" className='mt-2'>
+                                <form action="" className='mt-2' onSubmit={addMedication}>
                                     <div>
                                         <label htmlFor="">Medication Name</label>
-                                        <input 
+                                        <input
+                                            name='name' 
                                             type="text"
                                             className='ml-2 p-2 bg-white shadow-full rounded-xl' 
                                             placeholder='medication'
+                                            onChange={handleMedicationChange}
+                                            required = "true"
                                         />
                                     </div>
                                     <div className="flex justify-end">
                                         <button 
                                             className='bg-transparent hover:bg-green-600 hover:text-white border-2 border-green-600 rounded-xl shadow-full p-2'
+                                            type='submit'
                                         >
                                             Add
                                         </button>
@@ -111,18 +141,20 @@ const Appointment = () => {
                                         onClick={() => setPrescriptionType("")}
                                     />
                                 </div>
-                                <form action="" className='mt-2'>
+                                <form action="" className='mt-2' onSubmit={addMedication}>
                                     <div>
                                         <label htmlFor="">Test Name</label>
                                         <input 
                                             type="text"
                                             className='ml-2 p-2 bg-white shadow-full rounded-xl' 
                                             placeholder='test and diagnostics'
+                                            required='true'
                                         />
                                     </div>
                                     <div className="flex justify-end">
                                         <button 
                                             className='bg-transparent hover:bg-green-600 hover:text-white border-2 border-green-600 rounded-xl shadow-full p-2'
+                                            type='submit'
                                         >
                                             Add
                                         </button>
@@ -131,6 +163,13 @@ const Appointment = () => {
                             </div>
                         </div>
                     )}
+                    <div>
+                        {medicationList.map((medication)=> (
+                            <div className='bg-gray-100 p-2 shadow-full mb-2'>
+                                {medication.name}
+                            </div>
+                        ))}
+                    </div>
                 </div>
             </div>
         </div>
