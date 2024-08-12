@@ -1,6 +1,8 @@
 import React, { useState } from 'react'; 
 import Navbar from '../DoctorComponents/Navbar'
 import { IoMdAdd, IoMdClose  } from "react-icons/io";
+import { MdDeleteOutline } from "react-icons/md";
+
 
 const Appointment = () => {
     const [showMiniDiv, setShowMiniDiv] = useState(false);
@@ -11,16 +13,19 @@ const Appointment = () => {
         name : "",
     })
     const [testName, setTestName] = useState("")
+    const [isAddButtonClicked, setIsAddButtonClicked] = useState(false)
 
     const handleMedicationChange = (e) => {
         setMedicationDetails(p => ({...p, [e.target.name] : e.target.value}))
     }
 
+    const handleTestChange = (e) => {
+        setTestName(e.target.value)
+    }
+
     const addMedication = (e) => {
         e.preventDefault()
-        // if (medicationDetails.name === ""){
-        //     alert("Please add a medication name")
-        // }
+        setIsAddButtonClicked(true)
         const isMedicationAlreadyAdded = medicationList.some(
             (medication) => medication.name === medicationDetails.name
         );
@@ -30,6 +35,22 @@ const Appointment = () => {
             setMedicationList([...medicationList, medicationDetails]);
         }
         setMedicationDetails({name : ""})
+        setIsAddButtonClicked(false)
+    }
+
+    const addTest = (e) => {
+        e.preventDefault()
+        setIsAddButtonClicked(true)
+        const isTestAlreadyAdded = testList.some(
+            (test) => test === testName
+        );
+        if (isTestAlreadyAdded) {
+            alert("Test already added");
+        } else {
+            setTestList([...testList, testName]);
+        }
+        setTestName("")
+        setIsAddButtonClicked(false)
     }
 
 
@@ -115,12 +136,14 @@ const Appointment = () => {
                                             placeholder='medication'
                                             onChange={handleMedicationChange}
                                             required = "true"
+                                            value={medicationDetails.name}
                                         />
                                     </div>
                                     <div className="flex justify-end">
                                         <button 
                                             className='bg-transparent hover:bg-green-600 hover:text-white border-2 border-green-600 rounded-xl shadow-full p-2'
                                             type='submit'
+                                            disabled={isAddButtonClicked}
                                         >
                                             Add
                                         </button>
@@ -141,7 +164,7 @@ const Appointment = () => {
                                         onClick={() => setPrescriptionType("")}
                                     />
                                 </div>
-                                <form action="" className='mt-2' onSubmit={addMedication}>
+                                <form action="" className='mt-2' onSubmit={addTest}>
                                     <div>
                                         <label htmlFor="">Test Name</label>
                                         <input 
@@ -149,6 +172,8 @@ const Appointment = () => {
                                             className='ml-2 p-2 bg-white shadow-full rounded-xl' 
                                             placeholder='test and diagnostics'
                                             required='true'
+                                            value={testName}
+                                            onChange={handleTestChange}
                                         />
                                     </div>
                                     <div className="flex justify-end">
@@ -163,10 +188,29 @@ const Appointment = () => {
                             </div>
                         </div>
                     )}
-                    <div>
+                    <div className='m-4'>
+                        <h2
+                            className='text-green-600 font-bold text-xl'
+                        >
+                            Prescribed Medications
+                        </h2>
                         {medicationList.map((medication)=> (
-                            <div className='bg-gray-100 p-2 shadow-full mb-2'>
-                                {medication.name}
+                            <div className='bg-gray-100 p-2 shadow-full mx-6 my-4 flex justify-between rounded-xl'>
+                                <h2>{medication.name}</h2>
+                                <MdDeleteOutline className='text-2xl p-1 cursor-pointer rounded-full bg-green-500 text-white'/>
+                            </div>
+                        ))}
+                    </div>
+                    <div className='m-4'>
+                        <h2
+                            className='text-green-600 font-bold text-xl'
+                        >
+                            Prescribed Tests and Diagnostics
+                        </h2>
+                        {testList.map((test)=> (
+                            <div className='bg-gray-100 p-2 shadow-full mx-6 my-4 flex justify-between rounded-xl'>
+                                <h2>{test}</h2>
+                                <MdDeleteOutline className='text-2xl p-1 cursor-pointer rounded-full bg-green-500 text-white'/>
                             </div>
                         ))}
                     </div>
