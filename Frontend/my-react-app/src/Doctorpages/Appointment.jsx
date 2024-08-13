@@ -62,6 +62,22 @@ const Appointment = () => {
         setPrescriptionType(type)
         setShowMiniDiv(!showMiniDiv);
     }
+    const handleDelete = (index, isMedicationArr) => {
+        if(!isMedicationArr){
+            setTestList((prev)=>{
+                const newList = [...prev]
+                newList.splice(index,1)
+                return newList
+            })
+        }
+        else{
+            setMedicationList((prev)=>{
+                const newList = [...prev]
+                newList.splice(index,1)
+                return newList
+            })
+        }
+    }
   return (
     <>
         <Navbar/>
@@ -194,10 +210,16 @@ const Appointment = () => {
                         >
                             Prescribed Medications
                         </h2>
-                        {medicationList.map((medication)=> (
-                            <div className='bg-gray-100 p-2 shadow-full mx-6 my-4 flex justify-between rounded-xl'>
+                        {medicationList.map((medication, index)=> (
+                            <div 
+                                className='bg-gray-100 p-2 shadow-full mx-6 my-4 flex justify-between rounded-xl'
+                                key={index}
+                            >
                                 <h2>{medication.name}</h2>
-                                <MdDeleteOutline className='text-2xl p-1 cursor-pointer rounded-full bg-green-500 text-white'/>
+                                <MdDeleteOutline 
+                                    className='text-2xl p-1 cursor-pointer rounded-full bg-green-500 text-white'
+                                    onClick={()=>handleDelete(index, true)}
+                                />
                             </div>
                         ))}
                     </div>
@@ -207,10 +229,16 @@ const Appointment = () => {
                         >
                             Prescribed Tests and Diagnostics
                         </h2>
-                        {testList.map((test)=> (
-                            <div className='bg-gray-100 p-2 shadow-full mx-6 my-4 flex justify-between rounded-xl'>
+                        {testList.map((test, index)=> (
+                            <div 
+                                className='bg-gray-100 p-2 shadow-full mx-6 my-4 flex justify-between rounded-xl'
+                                key={index}
+                            >
                                 <h2>{test}</h2>
-                                <MdDeleteOutline className='text-2xl p-1 cursor-pointer rounded-full bg-green-500 text-white'/>
+                                <MdDeleteOutline 
+                                    className='text-2xl p-1 cursor-pointer rounded-full bg-green-500 text-white'
+                                    onClick={()=>handleDelete(index, false)}
+                                />
                             </div>
                         ))}
                     </div>
