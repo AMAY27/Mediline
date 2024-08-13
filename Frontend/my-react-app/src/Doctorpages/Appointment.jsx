@@ -1,4 +1,5 @@
 import React, { useState } from 'react'; 
+import usePersistState from '../utils/statePersistance';
 import Navbar from '../DoctorComponents/Navbar'
 import { IoMdAdd, IoMdClose  } from "react-icons/io";
 import { MdDeleteOutline } from "react-icons/md";
@@ -7,8 +8,8 @@ import { MdDeleteOutline } from "react-icons/md";
 const Appointment = () => {
     const [showMiniDiv, setShowMiniDiv] = useState(false);
     const [prescriptionType, setPrescriptionType] = useState("")
-    const [medicationList, setMedicationList] = useState([])
-    const [testList, setTestList] = useState([])
+    const [medicationList, setMedicationList] = usePersistState([],'medicationList')
+    const [testList, setTestList] = usePersistState([],'testList')
     const [medicationDetails, setMedicationDetails] = useState({
         name : "",
     })
@@ -151,7 +152,7 @@ const Appointment = () => {
                                             className='ml-2 p-2 bg-white shadow-full rounded-xl' 
                                             placeholder='medication'
                                             onChange={handleMedicationChange}
-                                            required = "true"
+                                            required = {true}
                                             value={medicationDetails.name}
                                         />
                                     </div>
@@ -187,7 +188,7 @@ const Appointment = () => {
                                             type="text"
                                             className='ml-2 p-2 bg-white shadow-full rounded-xl' 
                                             placeholder='test and diagnostics'
-                                            required='true'
+                                            required={true}
                                             value={testName}
                                             onChange={handleTestChange}
                                         />
