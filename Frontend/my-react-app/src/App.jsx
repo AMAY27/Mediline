@@ -20,31 +20,41 @@ import Blogpage from './Pages/Blogpage'
 import Loginclinic from './Register/Loginclinic'
 import Doctordashboard from './Doctorpages/Doctordashboard'
 import Appointment from './Doctorpages/Appointment'
+import { LocationProvider } from './context/doctorContext'
 function App() {
+  const DoctorRoutes = () => (
+      <LocationProvider>
+          <Routes>
+              <Route path='/login' element={<Loginclinic />} />
+              <Route path='/dashboard' element={<Doctordashboard />} />
+              <Route path='/appointment' element={<Appointment />} />
+              {/* Add more /doc routes here if needed */}
+          </Routes>
+      </LocationProvider>
+  );
+
 
   return (
     <Provider store={store}>
       <Router>
-      <Routes>
-        <Route path='/' element={<Home />}/>
-        <Route path='/loginuser' element={<Loginuser/>}/>
-        <Route path='/register' element = {<Registeruser/>}/>
-        <Route path='/reset_password' element={<Resetpass/>}/>   
-        <Route path='/password/reset/confirm/:uid/:token' element={<Resetpassconfirm/>}/>
-        <Route path='/activate/:uid/:token' element={<Activate/>}/>
-        <Route path='/dashboard' element={<Dasboarduser/>}/>
-        <Route path='/reportupload' element={<Repoertupload/>}/>
-        <Route path='/appointmentbook' element={<Appointmentbook/>}/>
-        <Route path='/testcenter' element={<Testcenter/>}/>
-        <Route path='/testappointment' element={<Testappointmentbook/>}/>
-        <Route path='/clinicappointment' element={<Clinicappointment/>}/>
-        <Route path='/doc/login' element={<Loginclinic/>}/>
-        <Route path='/doc/dashboard' element={<Doctordashboard/>}/>
-        <Route path='/doc/appointment' element={<Appointment/>}/>
-        <Route path='/blogs' element={<Blogs/>}/>
-        <Route path='/blogpage' element={<Blogpage/>}/>
-      </Routes>
-    </Router>
+          <Routes>
+            <Route path='/' element={<Home />}/>
+            <Route path='/loginuser' element={<Loginuser/>}/>
+            <Route path='/register' element = {<Registeruser/>}/>
+            <Route path='/reset_password' element={<Resetpass/>}/>   
+            <Route path='/password/reset/confirm/:uid/:token' element={<Resetpassconfirm/>}/>
+            <Route path='/activate/:uid/:token' element={<Activate/>}/>
+            <Route path='/dashboard' element={<Dasboarduser/>}/>
+            <Route path='/reportupload' element={<Repoertupload/>}/>
+            <Route path='/appointmentbook' element={<Appointmentbook/>}/>
+            <Route path='/testcenter' element={<Testcenter/>}/>
+            <Route path='/testappointment' element={<Testappointmentbook/>}/>
+            <Route path='/clinicappointment' element={<Clinicappointment/>}/>
+            <Route path='/doc/*' element={<DoctorRoutes/>}/>
+            <Route path='/blogs' element={<Blogs/>}/>
+            <Route path='/blogpage' element={<Blogpage/>}/>
+          </Routes>
+      </Router>
     </Provider>
   )
 }

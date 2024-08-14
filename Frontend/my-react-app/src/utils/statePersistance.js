@@ -1,10 +1,10 @@
 import React, {useMemo, useState, useEffect, useRef} from 'react'
 import { useLocation } from 'react-router-dom';
+import { useLocationContext } from '../context/doctorContext';
+
 
 export default function usePersistState(initial_value,id){
-    const location = useLocation();
-    const prevLocationRef = useRef(location);
-
+    const location = useLocationContext();
 
     const _initial_value = useMemo(() => {
         const local_storage_value_str = localStorage.getItem('state:' + id);
@@ -23,11 +23,12 @@ export default function usePersistState(initial_value,id){
     }, [state]);
 
     useEffect(() => {
-        prevLocationRef.current = location;
-        if (prevLocationRef.current.pathname !== location.pathname) {
-            setState(initial_value);
-        }
-        console.log(prevLocationRef, location);
+        // prevLocationRef.current = location;
+        // if (prevLocationRef.current.pathname !== location.pathname) {
+        //     setState(initial_value);
+        // }
+        // console.log(prevLocationRef, location);
+        setState(initial_value);
         
         // Update the ref to the current location
     }, [location]);
