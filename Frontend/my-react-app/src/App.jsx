@@ -20,17 +20,17 @@ import Blogpage from './Pages/Blogpage'
 import Loginclinic from './Register/Loginclinic'
 import Doctordashboard from './Doctorpages/Doctordashboard'
 import Appointment from './Doctorpages/Appointment'
-import { LocationProvider } from './context/doctorContext'
+import { LocationProvider, AppointmentIdProvider } from './context/doctorContext'
 function App() {
   const DoctorRoutes = () => (
-      <LocationProvider>
+      <AppointmentIdProvider>
           <Routes>
               <Route path='/login' element={<Loginclinic />} />
               <Route path='/dashboard' element={<Doctordashboard />} />
               <Route path='/appointment' element={<Appointment />} />
               {/* Add more /doc routes here if needed */}
           </Routes>
-      </LocationProvider>
+      </AppointmentIdProvider>
   );
 
 

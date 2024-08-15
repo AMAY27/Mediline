@@ -73,7 +73,17 @@ export default function (state = initialState, action){
         case LOGOUT:
             localStorage.removeItem('access');
             localStorage.removeItem('refresh');
-            localStorage.removeItem('navTag')
+            localStorage.removeItem('navTag');
+            localStorage.removeItem('appointmentId');
+            localStorage.removeItem('prevAppointmentId');
+            for (let i = 0; i < localStorage.length; i++) {
+                const key = localStorage.key(i);
+                if (key && key.startsWith('state:')) {
+                  localStorage.removeItem(key);
+                  // Decrement the index because we're modifying the length of localStorage
+                  i--;
+                }
+              }
             return{
                 ...state,
                 isAuthenticated: false,

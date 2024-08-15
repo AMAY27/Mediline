@@ -7,6 +7,7 @@ import { Navigate, useNavigate, Link } from 'react-router-dom'
 import { useDispatch } from 'react-redux';
 import { getClinicData } from '../doctorServices/api.docServices';
 import { TbReportSearch } from "react-icons/tb";
+import { useAppointmentIdContext } from '../context/doctorContext';
 
 
 
@@ -44,11 +45,13 @@ const Doctordashboard = ({isAuthenticated}) => {
         dispatch(checkauthenticated())
         getDoctorData()
     },[])
-    useEffect(()=>{
-      clinics.forEach((clinic)=>(
-        console.log(clinic.officename)
-      ))
-    },[clinics])
+
+    const handleAppointmentDetailsClick = (id) => {
+        localStorage.setItem("appointmentId", id)
+        window.dispatchEvent(new Event('storage'))
+        navigate("/doc/appointment")
+    }
+
 
     const changeDateFormat = (date) =>{
         const dateString = new Date(date);
@@ -102,7 +105,10 @@ const Doctordashboard = ({isAuthenticated}) => {
                                 <td className='px-2 py-2'>{appointment.time_slot}</td>
                                 <td className='px-2 py-2'>{changeDateFormat(appointment.appointment_date)}</td>
                                 <td className='px-2 py-2 flex justify-center'>
-                                    <button className='py-1 px-2 border-2 border-green-500 hover:bg-green-500 hover:text-white rounded-md' onClick={() => {handleAppointmentDetailsClick(appointment)}}>
+                                    <button 
+                                        className='py-1 px-2 border-2 border-green-500 hover:bg-green-500 hover:text-white rounded-md' 
+                                        onClick={() => {handleAppointmentDetailsClick(appointment._id)}}
+                                    >
                                         Details
                                     </button>
                                 </td>
