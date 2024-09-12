@@ -153,9 +153,12 @@ const Appointmentbook = ({isAuthenticated}) => {
                   />
                 </div>
                 <div className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 md:py-4 md:px-4 '>
-                  {searchedClinicList.map((value)=>{
+                  {searchedClinicList.map((value, idx)=>{
                     return(
-                      <div className='md:shadow-xl mx-4 md:mx-0 rounded-md bg-white border-2 border-green-300'>
+                      <div 
+                        className='md:shadow-xl mx-4 md:mx-0 rounded-md bg-white border-2 border-green-300' 
+                        key={idx}
+                      >
                         <img src='assets/medical-5459631.svg' alt='med2' className='h-40'/>
                         <h2 className='text-lg md:text-lg font-bold text-center p-2'>Dr. {value.docname}</h2>
                         <h2 className='mx-3 md:text-md p-1 flex items-center'><FaLocationDot className='text-red-500 mr-1'/> {value.address}</h2>
@@ -170,9 +173,12 @@ const Appointmentbook = ({isAuthenticated}) => {
               }
               {testclick && 
                <div className='grid grid-cols-1 md:grid-cols-3 gap-5 md:py-8 md:px-4 md:overflow-y-scroll md:h-[70%] md:bg-white'>
-                {testcenters.map((value)=>{
+                {testcenters.map((value, idx)=>{
                   return(
-                    <div className='mx-4 md:mx-0 rounded-md bg-white md:border-2 border-green-300 shadow-md rounded h-fit'>
+                    <div 
+                      className='mx-4 md:mx-0 rounded-md bg-white md:border-2 border-green-300 shadow-md rounded h-fit'
+                      key={idx}
+                    >
                       <h2 className='mx-3 md:text-lg text-green-500 font-bold p-1'>{value.center_name}</h2>
                       <h2 className='mx-3 md:text-md p-1 flex items-center'><FaLocationDot className='text-red-500 mr-1'/> {value.address}</h2>
                       {/* <button className='mx-3 my-2 bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline'>Details</button> */}

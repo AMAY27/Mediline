@@ -9,7 +9,7 @@ export const getClinicData = async(docid, date) =>{
                 'Accept' : 'application/json'
             }
         };
-        const res = api.get(`${BACKEND_URL}/clinicdata?docid=${docid}&date=${date}`)
+        const res = await api.get(`${BACKEND_URL}/clinicdata?docid=${docid}&date=${date}`)
         return res
     } catch (error) {
         console.log(error);
