@@ -27,7 +27,7 @@ const userSchema = new mongoose.Schema({
     },
     contact : {
         type: String,
-        required: true
+        required: false
     },
     is_active : {
         type: Boolean,
@@ -35,6 +35,10 @@ const userSchema = new mongoose.Schema({
     },
     date_joined : {
         type: Date,
+        required: true
+    },
+    parent_id : {
+        type: mongoose.Schema.Types.ObjectId,
         required: true
     }
 },{collection: 'Users'})
