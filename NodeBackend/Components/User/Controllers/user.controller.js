@@ -8,6 +8,7 @@ const multer = require('multer');
 const { S3Client, PutObjectCommand, GetObjectCommand } = require('@aws-sdk/client-s3');
 const { getSignedUrl } = require('@aws-sdk/s3-request-presigner');
 const { v4: uuidv4 } = require('uuid');
+const userService = require('../services/userServices.js');
 
 const s3 = new S3Client({
     region: process.env.AWS_REGION,
@@ -22,27 +23,23 @@ const upload = multer({ storage: storage });
 
 
 const userController = {
-    registerUser: async (req,res) => {
+    registerUser: async (req, res) => {
         try {
-            const user = await User.findOne({email : req.body.email});
-            if(user){
-                res.status(400).json({status : 'unavail'});
-            }else{
-                const salt = await bcrypt.genSalt(10);
-                let encryptPassword = req.body.password
-                encryptPassword = await bcrypt.hash(encryptPassword, salt);
-                const user = await User.create({
-                    email: req.body.email,
-                    password: encryptPassword,
-                    name: req.body.name,
-                    is_active: req.body.is_active,
-                    date_joined: Date.now()
-                });
-                res.status(201).json({status : 'ok'})
+            // Check if the user already exists using the service function
+            const existingUser = await userService.checkIfUserExists(req.body.email);
+            if (existingUser) {
+                return res.status(400).json({ status: 'unavail', message: 'Email is already taken' });
             }
+            console.log('Creating new user with data:', req.body);
+
+            // Create the new user using the service
+            const newUser = await userService.createUser(req.body);
+
+            // Send response if user is created successfully
+            res.status(201).json({ status: 'ok', message: 'User created successfully', data: newUser });
         } catch (error) {
-            res.status(400).json({status :'error'})
-            console.log(error);
+            console.error(error);
+            res.status(500).json({ status: 'error', message: 'User creation failed', error: error.message });
         }
     },
 
