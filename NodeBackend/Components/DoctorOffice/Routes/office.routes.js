@@ -1,7 +1,7 @@
 const express = require('express')
 const router = express.Router()
 const officeController = require('../Controllers/office.controller')
-const auth = require('../../../middlewares/jwtMiddleware')
+const auth = require('../../../middlewares/jwtMiddleware');
 
 router.post('/officeregister', auth, officeController.registerOffice)
 //router.put('/office/docavailability', officeController.availabilityAddition)
