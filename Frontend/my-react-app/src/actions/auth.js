@@ -158,14 +158,15 @@ export const signup = (name, email, password, re_password)=> async dispatch => {
     };
     const body = JSON.stringify({name, email, password, re_password});
     try {
-        const res = await axios.post('http://localhost:3000/auth/register',body,config)
+        const res = await axios.post('http://localhost:3000/user/signup',body,config)
         dispatch({
             type: SIGNUP_SUCCESS,
             payload: res.data
         })
     } catch (error) {
         dispatch({
-            type: SIGNUP_FAIL
+            type: SIGNUP_FAIL,
+            payload: error.response?.data?.message || 'Signup failed'
         })
         console.log(error)
     }
