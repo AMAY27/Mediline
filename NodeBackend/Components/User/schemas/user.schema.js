@@ -40,6 +40,17 @@ const userSchema = new mongoose.Schema({
         match: [/^\+?[1-9]\d{1,14}$/, 'Please provide a valid phone number'],
         required: false,
     },
+    city: {
+        type: String,
+        trim: true,
+        required: false,
+    },
+    pincode: {
+        type: String,
+        trim: true,
+        match: [/^\d{4,10}$/, 'Please provide a valid pincode'],
+        required: false,
+    },
     is_active: {
         type: Boolean,
         required: true,
