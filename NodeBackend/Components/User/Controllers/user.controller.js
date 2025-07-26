@@ -9,6 +9,7 @@ const { S3Client, PutObjectCommand, GetObjectCommand } = require('@aws-sdk/clien
 const { getSignedUrl } = require('@aws-sdk/s3-request-presigner');
 const { v4: uuidv4 } = require('uuid');
 const userService = require('../services/userServices.js');
+const validateUser = require('../validation/userValidation.js');
 
 const s3 = new S3Client({
     region: process.env.AWS_REGION,
@@ -25,21 +26,54 @@ const upload = multer({ storage: storage });
 const userController = {
     registerUser: async (req, res) => {
         try {
+            // Validate user data
+            const validationErrors = validateUser(req.body.name);
+            if (validationErrors.length > 0) {
+                return res.status(400).json({ status: 'error', message: 'Validation failed', errors: validationErrors });
+            }
+
             // Check if the user already exists using the service function
-            const existingUser = await userService.checkIfUserExists(req.body.email);
+            const existingUser = await userService.checkIfUserExists(req.body.name.email);
             if (existingUser) {
                 return res.status(400).json({ status: 'unavail', message: 'Email is already taken' });
             }
             console.log('Creating new user with data:', req.body);
 
             // Create the new user using the service
-            const newUser = await userService.createUser(req.body);
+            const newUser = await userService.createUser(req.body.name);
 
             // Send response if user is created successfully
             res.status(201).json({ status: 'ok', message: 'User created successfully', data: newUser });
         } catch (error) {
             console.error(error);
             res.status(500).json({ status: 'error', message: 'User creation failed', error: error.message });
+        }
+    },
+
+    checkUserContactExist: async(req, res) => {
+        try {
+            const existingUser = await userService.checkIfUserExistsWithMobile(req.query.contact);
+            console.log(req.query.contact)
+            if(existingUser) {
+                return res.status(400).json({status: 'unavail', message: 'Contact No is already taken'})
+            }
+            res.status(200).json({ status: 'ok', message:'Unique contact number' })
+        } catch (error) {
+            res.status(500).json({ status: 'error', error: error.message });
+        }
+    },
+
+    checkUserEmailExist: async(req, res) => {
+        try {
+            const existingUser = await userService.checkIfUserExistWithEmail(req.query.email);
+            if(existingUser) {
+                return res.status(400).json({status: 'unavail', message: 'Email is already taken'})
+            }
+            res.status(200).json({ status: 'ok', message:'Unique email' })
+        } catch (error) {
+            console.log(error)
+            res.status(500).json({ status: 'error', error: error.message });
+
         }
     },
 

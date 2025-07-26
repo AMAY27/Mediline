@@ -17,8 +17,8 @@ const isValidEmail = (email) => {
 
 // Validate password length
 const isValidPassword = (password) => {
-    if (password.length < 8) {
-        return 'Password must be at least 6 characters long';
+    if (!password || typeof password !== 'string' || password.length < 8) {
+        return 'Password must be at least 8 characters long';
     }
     return null;
 };
@@ -39,6 +39,7 @@ const validateUser = (userData) => {
     const errors = [];
 
     // Check each field for validity
+    console.log("validating user data:", userData);
     const emailError = isValidEmail(userData.email);
     if (emailError) errors.push(emailError);
 

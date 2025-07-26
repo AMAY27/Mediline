@@ -66,4 +66,32 @@ const getAllAppointmentsForUser = async (userId) => {
     }
 }
 
+const verifyContact = async (number) => {
+    try {
+        const config = {
+            headers: {
+                'Content-Type' : 'application/json',
+                'Accept' : 'application/json'
+            }
+        }
+        const res = await api.get(`${BACKEND_URL}/user/checkContactAvailable?`)
+    } catch (error) {
+        
+    }
+}
+
+const verifyEmail = async (email) => {
+    try {
+        const config = {
+            headers: {
+                'Content-Type' : 'application/json',
+                'Accept' : 'application/json'
+            }
+        }
+        const res = await api.get(`${BACKEND_URL}/user/checkEmailAvailable?email=${email}`)
+    } catch (error) {
+        
+    }
+}
+
 export {uploadReport, getReports, getDetailsForBookingAppointments, getAllAppointmentsForUser}

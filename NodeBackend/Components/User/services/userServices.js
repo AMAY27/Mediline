@@ -6,6 +6,14 @@ const checkIfUserExists = async (email) => {
     return await User.findOne({ email });
 };
 
+const checkIfUserExistsWithMobile = async (contact) => {
+    return await User.findOne({contact})
+}
+
+const checkIfUserExistWithEmail = async (email) => {
+    return await User.findOne({ email })
+}
+
 // Service to hash the password
 const hashPassword = async (password) => {
     const salt = await bcrypt.genSalt(10);
@@ -22,6 +30,8 @@ const createUser = async (userData) => {
         gender,
         birthDate,
         contact,
+        city,
+        pincode,
         is_active,
         parent_id
     } = userData;
@@ -34,6 +44,8 @@ const createUser = async (userData) => {
         gender,
         birthDate,
         contact,
+        city,
+        pincode,
         is_active,
         parent_id
     });
@@ -41,5 +53,7 @@ const createUser = async (userData) => {
 
 module.exports = {
     checkIfUserExists,
+    checkIfUserExistsWithMobile,
+    checkIfUserExistWithEmail,
     createUser
 };
